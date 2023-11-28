@@ -1,0 +1,477 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GigHub</title>
+    <link
+      rel="shortcut icon"
+      href="{{ '/media/site/website_logo.png' }}"
+      type="image/x-icon"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+
+    <script src="{% static 'js/show-service-slide.js' %}"></script>
+    <script src="{% static 'js/toggle-header-hamburger.js' %}"></script>
+  </head>
+  <body>
+    <header class="d-flex align-items-center justify-content-between">
+      <div class="d-flex gap-5 align-items-center left-header">
+        <div class="logo fw-bold fs-3">
+          <a href="#"><img src="{{ '/media/site/header_logo.png' }}" alt="logo" /></a>
+        </div>
+        <iconify-icon icon="ci:hamburger-md" class="hamburger"></iconify-icon>
+        <div class="links d-flex fs-5 gap-4 align-items-center">
+          <div class="link d-flex align-items-center gap-1" id="hire-now-link">
+            Hire Now <iconify-icon icon="mingcute:down-fill"></iconify-icon>
+            <div class="ddown-hire rounded-3 p-2 shadow">
+              <a href="" class="text-decoration-none px-3 rounded-3"
+                >Job Posting</a
+              >
+              <a href="" class="text-decoration-none px-3 rounded-3"
+                >Browse Graduates</a
+              >
+            </div>
+          </div>
+          <div class="link d-flex align-items-center gap-1" id="apply-now-link">
+            Apply Now <iconify-icon icon="mingcute:down-fill"></iconify-icon>
+            <div class="ddown-apply rounded-3 p-2 shadow">
+              <a href="" class="text-decoration-none px-3 rounded-3"
+                >Your skills, your work</a
+              >
+              <a href="" class="text-decoration-none px-3 rounded-3"
+                >Top Jobs</a
+              >
+            </div>
+          </div>
+          <div class="link">
+            <a href="" class="text-decoration-none">About Us</a>
+          </div>
+        </div>
+      </div>
+      <a
+        class="login-btn px-4 py-1 rounded-pill fw-bold text-decoration-none fs-5"
+        href="#"
+        class="text-decoration-none"
+        >Login
+      </a>
+    </header>
+    <content>
+      <home class="section">
+        <div
+          class="home-main d-flex justify-content-center align-items-center flex-column gap-3"
+        >
+          <div class="cta fw-bold text-center">
+            FIND YOUR GIG<br />IN THE <span>HUB</span>
+          </div>
+          <div class="sub-cta fw-bold text-center">
+            Discover, Hire, Thrive: Your Hub for Career Connections!
+          </div>
+          <div
+            class="search-the-hub d-flex align-items-center gap-3 px-3 py-2 rounded-pill"
+          >
+            <iconify-icon icon="mingcute:search-2-fill"></iconify-icon>
+            <input
+              id="home-search"
+              type="text"
+              placeholder="Enter skills / designations / companies&Tab;|&Tab;Location"
+            />
+            <button class="px-3 rounded-pill fw-bold">Search</button>
+          </div>
+        </div>
+        <div
+          class="home-footer d-flex justify-content-between align-items-center px-5"
+        >
+          <div class="left">
+            <div class="left-1 fs-3">
+              Explore Opportunities and Take the Next Step
+            </div>
+            <div class="left-2">See the jobs that suits you the best</div>
+          </div>
+          <div class="right">
+            <a
+              href=""
+              class="d-flex align-items-center text-decoration-none gap-1 fs-5 rounded-pill px-3 py-1"
+              >Get Started
+              <iconify-icon icon="mingcute:arrow-right-fill"></iconify-icon
+            ></a>
+          </div>
+        </div>
+      </home>
+      <popular-categories class="section d-flex flex-column align-items-center">
+        <div class="section-title fs-2 fw-bold mt-5">POPULAR CATEGORIES</div>
+        <div class="d-flex popu-cat-main">
+          <div class="left w-50 p-5">
+            <div
+              class="popu-cat text-center p-3 rounded d-flex align-items-center justify-content-center"
+            >
+              Customer Service
+            </div>
+            <div
+              class="popu-cat text-center p-3 rounded d-flex align-items-center justify-content-center"
+            >
+              Education
+            </div>
+            <div
+              class="popu-cat text-center p-3 rounded d-flex align-items-center justify-content-center"
+            >
+              Engineering
+            </div>
+            <div
+              class="popu-cat text-center p-3 rounded d-flex align-items-center justify-content-center"
+            >
+              Finance
+            </div>
+            <div
+              class="popu-cat text-center p-3 rounded d-flex align-items-center justify-content-center"
+            >
+              Healthcare
+            </div>
+            <div
+              class="popu-cat text-center p-3 rounded d-flex align-items-center justify-content-center"
+            >
+              Human Resources
+            </div>
+            <div
+              class="popu-cat text-center p-3 rounded d-flex align-items-center justify-content-center"
+            >
+              Information Technology (IT)
+            </div>
+            <div
+              class="popu-cat text-center p-3 rounded d-flex align-items-center justify-content-center"
+            >
+              Sales and Marketing
+            </div>
+          </div>
+          <div
+            class="right w-50 d-flex align-items-center justify-content-center"
+          >
+            <img
+              src="{{  '/media/site/popular_categories.gif' }}"
+              alt="popular categories"
+              class="gif-popu-cat"
+            />
+          </div>
+        </div>
+      </popular-categories>
+      <services class="section d-flex flex-column align-items-center">
+        <div class="section-title fs-2 fw-bold mt-5">SERVICES</div>
+        <div class="service-slide-1 w-100">
+          <div class="w-50 left">
+            <img src="{{ '/media/site/hire.gif' }}" class="gif-hire" />
+          </div>
+          <div class="w-50 right">
+            <div class="d-flex flex-column justify-content-between">
+              <div class="cta-popu1 fw-bold fs-4 mt-3 text-center">
+                HIRE YOU TALENT CONVENIENTLY
+              </div>
+              <ul>
+                <li class="mt-4">
+                  <div class="label d-flex align-items-center gap-1 fw-bold">
+                    <img
+                      class="services-icon"
+                      src="{{ '/media/site/JoinTheHub.png' }}"
+                    />
+                    JOIN THE HUB
+                  </div>
+                  <div class="services-description">
+                    Seamlessly become a part of our vibrant community.
+                  </div>
+                </li>
+                <li class="mt-4">
+                  <div class="label d-flex align-items-center gap-1 fw-bold">
+                    <img class="services-icon" src="{{ '/media/site/PostaJob.png' }}" />
+                    POST A JOB
+                  </div>
+                  <div class="services-description">
+                    Craft a compelling job listing that attracts the right
+                    candidates
+                  </div>
+                </li>
+                <li class="mt-4">
+                  <div class="label d-flex align-items-center gap-1 fw-bold">
+                    <img
+                      class="services-icon"
+                      src="{{ '/media/site/StrikeaDeal.png' }}"
+                    />
+                    STRIKE A DEAL
+                  </div>
+                  <div class="services-description">
+                    Reach agreements efficiently, ensuring a smooth
+                    collaboration process
+                  </div>
+                </li>
+                <li class="mt-4">
+                  <div class="label d-flex align-items-center gap-1 fw-bold">
+                    <img
+                      class="services-icon"
+                      src="{{ '/media/site/ReviewApplicants.png' }}"
+                    />REVIEW APPLICANTS
+                  </div>
+                  <div class="services-description">
+                    Explore detailed profiles and easily identify the perfect
+                    fit for your team.
+                  </div>
+                </li>
+                <li class="mt-4">
+                  <div class="label d-flex align-items-center gap-1 fw-bold">
+                    <img
+                      class="services-icon"
+                      src="{{ '/media/site/StartWorkingTogether.png' }}"
+                    />
+                    START WORKING TOGETHER
+                  </div>
+                  <div class="services-description">
+                    Experience the convenience of hiring exceptional talent with
+                    just a few clicks
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="circles">
+              <div class="circle"></div>
+              <div class="circle"></div>
+            </div>
+            <div class="d-flex justify-content-end pe-5">
+              <button
+                id="show-service-slide-1"
+                class="fs-3 px-3 py-1 rounded-pill d-flex align-items-center"
+              >
+                <iconify-icon icon="mingcute:arrow-right-fill"></iconify-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="service-slide-2 w-100">
+          <div class="w-50 left">
+            <div class="d-flex flex-column justify-content-between">
+              <div class="cta-popu1 fw-bold fs-4 mt-5 text-center">
+                APPLY JOB FASTER!!
+              </div>
+              <ul>
+                <li class="mt-4">
+                  <div class="label d-flex align-items-center gap-1 fw-bold">
+                    <img
+                      class="services-icon"
+                      src="{{ '/media/site/profileoptimization.png' }}"
+                    />
+                    PROFILE OPTIMIZATION
+                  </div>
+                  <div class="services-description">
+                    Tailor your professional identity with precision. Showcase
+                    your skills, experiences, and achievements to stand out in
+                    the competitive job market.
+                  </div>
+                </li>
+                <li class="mt-4">
+                  <div class="label d-flex align-items-center gap-1 fw-bold">
+                    <img
+                      class="services-icon"
+                      src="{{ '/media/site/SHOWCASEYOURPORTFOLIO.png' }}"
+                    />
+                    SHOWCASE YOUR PORTFOLIO
+                  </div>
+                  <div class="services-description">
+                    Elevate your application with a visual portfolio. Let your
+                    work speak for itself and leave a lasting impression on
+                    potential employers.
+                  </div>
+                </li>
+                <li class="mt-4">
+                  <div class="label d-flex align-items-center gap-1 fw-bold">
+                    <img
+                      class="services-icon"
+                      src="{{ '/media/site/ONECLICKAPPLY.png' }}"
+                    />
+                    ONE CLICK APPLY
+                  </div>
+                  <div class="services-description">
+                    Streamline your job application process. With just one
+                    click, express your interest and qualifications for multiple
+                    opportunities, saving you time and maximizing your chances
+                    of landing the job faster.
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="circles">
+              <div class="circle"></div>
+              <div class="circle"></div>
+            </div>
+            <div class="ps-5">
+              <button
+                id="show-service-slide-2"
+                class="fs-3 px-3 py-1 rounded-pill d-flex align-items-center"
+              >
+                <iconify-icon icon="mingcute:arrow-left-fill"></iconify-icon>
+              </button>
+            </div>
+          </div>
+          <div
+            class="w-50 right d-flex justify-content-center align-items-center"
+          >
+            <img src="{{ '/media/site/apply.gif' }}" class="gif-hire" />
+          </div>
+        </div>
+
+        <div
+          class="services-advantages d-flex justify-content-evenly flex-wrap px-5"
+        >
+          <div class="advantage text-center">
+            <img src="{{ '/media/site/PersonalUse.png' }}" />
+            <div class="label fw-bold">YOUR PERSONAL USE</div>
+            <div class="advantages-description">
+              Unleash your potential, master your space. Your journey to success
+              starts here
+            </div>
+          </div>
+          <div class="advantage text-center">
+            <img src="{{ '/media/site/GobFeed.png' }}" />
+            <div class="label fw-bold">JOB FEED</div>
+            <div class="advantages-description">
+              Job hunting made easy, job posting made seamless. GigHub's Job
+              Feed: Where opportunities meet simplicity.
+            </div>
+          </div>
+          <div class="advantage text-center">
+            <img src="{{ '/media/site/Review.png' }}" />
+            <div class="label fw-bold">REVIEW</div>
+            <div class="advantages-description">
+              Explore with confidence! GigHub's Review: Your guide to credible
+              companies and graduates. Stay true to your goals.
+            </div>
+          </div>
+          <div class="advantage text-center">
+            <img src="{{ '/media/site/Connect.png' }}" />
+            <div class="label fw-bold">CONNECT</div>
+            <div class="advantages-description">
+              Say goodbye to the hustle, hello to Hub! GigHub Connect: Where
+              gigs find you. Effortless connections, boundless opportunities.
+            </div>
+          </div>
+        </div>
+
+        <div class="services-cta d-flex px-5">
+          <div class="left w-50">
+            <img src="{{ '/media/site/ElevateYourCareer.png' }}" />
+          </div>
+          <div
+            class="right w-50 d-flex align-items-center justify-content-center flex-column gap-4"
+          >
+            <div class="cta text-center fw-bold">
+              ELEVATE YOUR CAREER, ELEVATE YOUR LIFE
+            </div>
+            <div class="sub-cta text-center">
+              Your gateway to a world of professional growth and fulfillment.
+              Explore diverse opportunities, connect with top employers, and
+              embark on a journey to success.
+              <br /><br />
+              Transform your career, and in turn, transform your life.
+            </div>
+            <a
+              href=""
+              class="text-decoration-none px-5 py-2 rounded-pill fw-bold"
+            >
+              Start Your Ascent
+            </a>
+          </div>
+        </div>
+      </services>
+      <reviews class="section d-flex flex-column align-items-center">
+        <div class="section-title fs-2 fw-bold mt-5">REVIEWS</div>
+        <div
+          class="reviews mt-5 w-100 d-flex align-items-center justify-content-evenly gap-3"
+        >
+          <div
+            class="review d-flex flex-column justify-content-center align-items-center text-center py-3 px-5 shadow rounded-4 gap-1"
+          >
+            <div class="name">JOHN D.</div>
+            <img
+              class="rounded-circle"
+              src="{{ '/media/site/JohnD.png' }}"
+              alt="reviewee"
+            />
+            <div class="rating">
+              <iconify-icon icon="noto:star"></iconify-icon
+              ><iconify-icon icon="noto:star"></iconify-icon
+              ><iconify-icon icon="noto:star"></iconify-icon
+              ><iconify-icon icon="noto:star"></iconify-icon
+              ><iconify-icon icon="noto:star"></iconify-icon>
+            </div>
+            <div class="comment">“GigHub a top-tier job portal”</div>
+            <iconify-icon
+              icon="mingcute:down-fill"
+              class="more-review"
+            ></iconify-icon>
+          </div>
+          <div
+            class="review d-flex flex-column justify-content-center align-items-center text-center py-3 px-5 shadow rounded-4 gap-1"
+          >
+            <div class="name">GABRIEL V.</div>
+            <img
+              class="rounded-circle"
+              src="{{ '/media/site/AnnaC.png' }}"
+              alt="reviewee"
+            />
+            <div class="rating">
+              <iconify-icon icon="noto:star"></iconify-icon
+              ><iconify-icon icon="noto:star"></iconify-icon
+              ><iconify-icon icon="noto:star"></iconify-icon
+              ><iconify-icon icon="noto:star"></iconify-icon
+              ><iconify-icon icon="noto:star"></iconify-icon>
+            </div>
+            <div class="comment">“A Game-Changer in Hiring Top Talent”</div>
+            <iconify-icon
+              icon="mingcute:down-fill"
+              class="more-review"
+            ></iconify-icon>
+          </div>
+          <div
+            class="review d-flex flex-column justify-content-center align-items-center text-center py-3 px-5 shadow rounded-4 gap-1"
+          >
+            <div class="name">JANNA A.</div>
+            <img
+              class="rounded-circle"
+              src="{{ '/media/site/JannaA.png' }}"
+              alt="reviewee"
+            />
+            <div class="rating">
+              <iconify-icon icon="noto:star"></iconify-icon
+              ><iconify-icon icon="noto:star"></iconify-icon
+              ><iconify-icon icon="noto:star"></iconify-icon
+              ><iconify-icon icon="noto:star"></iconify-icon
+              ><iconify-icon icon="noto:star"></iconify-icon>
+            </div>
+            <div class="comment">“GigHub's support team impressed me”</div>
+            <iconify-icon
+              icon="mingcute:down-fill"
+              class="more-review"
+            ></iconify-icon>
+          </div>
+        </div>
+      </reviews>
+      <footer
+        class="d-flex flex-column gap-3 justify-content-center align-items-center"
+      >
+        <div class="links w-100 d-flex justify-content-center gap-5">
+          <a class="text-decoration-none" href="">About Us</a>
+          <a class="text-decoration-none" href="">Contact Us</a>
+          <a class="text-decoration-none" href="">Privacy Policy</a>
+          <a class="text-decoration-none" href="">Terms & Conditions</a>
+        </div>
+        <div class="copyright fs-4">© 2023 - 2024 GigHub® Global Inc.</div>
+      </footer>
+    </content>
+  </body>
+</html>

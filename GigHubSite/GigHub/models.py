@@ -3,12 +3,14 @@ from django.db import models
 # Create your models here.
 
 class User(models.Model):
+    image = models.ImageField(default="placeholder.png")
     USER_ROLES = [
         ('A','Admin'),
         ('JS','Job Seeker'),
         ('JP','Job Provider')
     ]
     role = models.CharField(max_length=2, choices=USER_ROLES)
+    password = models.CharField(max_length=255, default="GigHub2023")
     fName = models.CharField(max_length=255)
     lName = models.CharField(max_length=255)
     mName = models.CharField(max_length=255,null=True)
