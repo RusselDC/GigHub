@@ -34,7 +34,7 @@ body {
   user-select: none; /* Disable selection for all other browsers */
   color: var(--black) !important;
 
-  background-image: url("/media/site/bg_body.png");
+  background-image: url("/media/site/bg_body.png"); 
   background-size: cover;
   background-repeat: repeat-y;
 }
