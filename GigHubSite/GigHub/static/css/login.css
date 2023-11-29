@@ -13,6 +13,7 @@
   --gainsboro: #d9d9d9;
   --white-smoke: #efefef;
   --dark-gray: #acacac;
+  --red: #d73d3d;
 }
 * {
   box-sizing: border-box;
@@ -34,7 +35,7 @@ body {
   user-select: none; /* Disable selection for all other browsers */
   color: var(--black) !important;
 
-  background-image: url("/media/site/bg_body.png"); 
+  background-image: url("/media/site/bg_body.png");
   background-size: cover;
   background-repeat: repeat-y;
 }
@@ -85,12 +86,24 @@ content form {
 form label {
   color: var(--mango-tango);
 }
-form input[type="email"],
-form input[type="password"] {
+form input[type="email"] {
   border: solid 4px var(--gainsboro);
   width: 100%;
   outline: none;
   background-color: var(--white-smoke);
+}
+.pass-input {
+  border: solid 4px var(--gainsboro);
+  background-color: var(--white-smoke);
+}
+.pass-input iconify-icon {
+  font-size: 1.5rem;
+  color: var(--dark-gray);
+}
+.pass-input input {
+  border: none;
+  outline: none;
+  background: none;
 }
 form input[type="checkbox"] {
   height: 20px;
@@ -145,12 +158,37 @@ form .or {
   font-size: 1.5rem;
   cursor: pointer;
 }
-form button {
+.empty {
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--red);
+  visibility: hidden;
+}
+.empty.active {
+  visibility: visible;
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25%,
+  75% {
+    transform: translateX(-3px);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+}
+
+form .submit-form {
+  color: var(--black);
+  cursor: pointer;
   background-color: var(--topaz);
   border: solid 3px var(--topaz);
   transition: var(--transition-1);
 }
-form button:hover {
+form .submit-form:hover {
   background-color: var(--isabelline);
   border: solid 3px var(--mango-tango);
   color: var(--mango-tango);
