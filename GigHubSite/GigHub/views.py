@@ -10,9 +10,6 @@ from .models import Profile
 
 
 # Create your views here.
-
-
-
 def index(request):
     template = "index.html"
     if request.user.is_authenticated:
