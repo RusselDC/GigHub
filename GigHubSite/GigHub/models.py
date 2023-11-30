@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
+import random
 # Create your models here.
 
 class Profile(models.Model):
@@ -89,7 +91,18 @@ class JobApplication(models.Model):
     applicationStatus = models.CharField(max_length=30, choices=STATUS_CHOICES)
 
     
+class passwordOTP(models.Model):
+    userID = models.ForeignKey(User, on_delete=models.CASCADE)
+    isActivated = models.BooleanField(default=False)
+    code = models.CharField(max_length=10)
+    date = models.DateTimeField(default=datetime.now())
+    def save(self, *args, **kwargs):
+        if not self.date:
+            self.date = datetime.now()
+        super().save(*args, **kwargs)
 
+    def __str__(self) -> str:
+        return f"{self.userID.username}"
     
     
 

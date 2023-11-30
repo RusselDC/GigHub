@@ -41,48 +41,63 @@
         <span>Log in</span>&nbsp;to Ignite Your Journey!
       </div>
       <form
-        action="{% url 'GigHub:changePass' %}"
+        method="POST"
+        action="{% url 'GigHub:verify' %}"
         class="rounded-4 shadow py-4 px-5 d-flex flex-column align-items-center"
-      >
+      > 
+      {% if errorMSG %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>{{ errorMSG }}</strong> You should check in on some of those fields below.
+        </div>
+        {% endif %}
+      {% csrf_token %}
         <img src="{{ '/media/site/verifyEmail.png' }}" />
         <div class="form-cta fw-bold">Verify Email</div>
+        
         <div class="form-cta-desc text-center w-75 my-3">
           Enter the 6-digit code sent to your email to verify your account
           securely. If you haven't received the code, check your inbox or spam
           folder.
         </div>
+        <input type="hidden" value="{{creds.email}}" name="email">
         <div class="d-flex justify-content-evenly">
           <input
+            name="otp[]"
             type="number"
             class="rounded-3 py-2 px-2 shadow-sm"
             maxlength="1"
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
           />
           <input
+            name="otp[]"
             type="number"
             class="rounded-3 py-2 px-2 shadow-sm"
             maxlength="1"
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
           />
           <input
+            name="otp[]"
             type="number"
             class="rounded-3 py-2 px-2 shadow-sm"
             maxlength="1"
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
           />
           <input
+            name="otp[]"
             type="number"
             class="rounded-3 py-2 px-2 shadow-sm"
             maxlength="1"
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
           />
           <input
+            name="otp[]"
             type="number"
             class="rounded-3 py-2 px-2 shadow-sm"
             maxlength="1"
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
           />
           <input
+            name="otp[]"
             type="number"
             class="rounded-3 py-2 px-2 shadow-sm"
             maxlength="1"
@@ -91,7 +106,7 @@
         </div>
         <button class="my-4 resend fw-bold">Resend Code</button>
         <div class="submit-form d-flex justify-content-center">
-          <button class="rounded-pill px-4 py-1 fw-bold">Send</button>
+          <button type="submit" class="rounded-pill px-4 py-1 fw-bold">Send</button>
         </div>
       </form>
     </content>
