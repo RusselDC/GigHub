@@ -39,7 +39,8 @@
         Unlock Your Potential:&nbsp;
         <span>Log in</span>&nbsp;to Ignite Your Journey!
       </div>
-      <form action="" class="rounded-4 shadow py-4 px-5">
+      <form action="{% url 'GigHub:login' %}" method="POST" class="rounded-4 shadow py-4 px-5">
+        {% csrf_token %}
         <label for="email" class="fw-bold">Email Address</label>
         <br />
         <input
@@ -48,6 +49,7 @@
           placeholder="Email Address"
           autocomplete="email"
           class="rounded-2 px-2 py-1"
+          name="email"
         />
         <div class="empty empty-email ms-1">Email address cannot be blank.</div>
 
@@ -62,6 +64,8 @@
             class="flex-grow-1"
             placeholder="Password"
             autocomplete="current-password"
+            name="password"
+            
           />
           <iconify-icon
             icon="fluent:eye-off-16-filled"
@@ -81,10 +85,7 @@
           >
         </div>
         <div class="d-flex justify-content-center mt-4">
-          <a
-            class="submit-form text-decoration-none rounded-pill px-4 py-1 fw-bold"
-            >Login</a
-          >
+          <button type="submit" class="submit-form text-decoration-none rounded-pill px-4 py-1 fw-bold"> Login </button>
         </div>
         <div class="d-flex gap-3 align-items-center my-3">
           <div class="flex-grow-1"><hr class="hr" /></div>
