@@ -2,9 +2,10 @@ from venv import logger
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth import authenticate, login as auth_login, logout 
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.shortcuts import get_object_or_404
 from .models import Profile
+
 
 
 
@@ -14,14 +15,26 @@ from .models import Profile
 
 def index(request):
     template = "index.html"
-    return render(request, template)
-
+    if request.user.is_authenticated:
+        if 'user_profile' in request.session:
+            
+            session_arr = request.session['user_profile']
+            return render(request, template, context={'session_arr': session_arr})
+        else:
+            return render(request, template, context={'error_message': 'User profile not found in session'})
+    else:
+        return render(request, template)
 
 def login(request):
+    template = "login.html"
     if request.method == "GET":
-        template = "login.html"
-        return render(request, template)
+        if(request.user.is_authenticated):
+            return redirect('GigHub:index')
+        else:
+            return render(request, template)
+        
     elif request.method == "POST":
+        remember_me = request.POST.get('remember', False)
         if request.user.is_authenticated:
             if 'user_profile' in request.session:
                 del request.session['user_profile']
@@ -32,7 +45,7 @@ def login(request):
             profile = Profile.objects.get(userID=user)
             image_url = profile.image.url if profile.image else ''
             birth_date_str = profile.birthDate.strftime('%Y-%m-%d') if profile.birthDate else ''
-            request.session['user_profile'] = {
+            userData = request.session['user_profile'] = {
                 'user_id' : profile.id,
                 'image' : image_url,
                 'role' : profile.role,
@@ -49,9 +62,11 @@ def login(request):
                 'city':profile.city,
                 'province':profile.province
             }
-            return HttpResponse("succesfully logged in")
+           
+            
+            return redirect('GigHub:index')
         else:
-            return HttpResponse("Invalid credentials")
+            return render(request, template, context={'errorMsg' : 'Invalid Credentials'})
 
         
         
@@ -71,3 +86,11 @@ def changePass(request):
     if request.method == "GET":
         template = "newPassword.html"
         return render(request, template)
+    
+def logout(request):
+    if request.user.is_authenticated:
+        if 'user_profile' in request.session:
+            del request.session['user_profile']
+        auth_logout(request)
+    return redirect('GigHub:index')
+

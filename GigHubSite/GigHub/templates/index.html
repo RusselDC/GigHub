@@ -60,12 +60,21 @@
           </div>
         </div>
       </div>
+      {% if not session_arr %}
       <a
         class="login-btn px-4 py-1 rounded-pill fw-bold text-decoration-none fs-5"
         href="{% url 'GigHub:login' %}"
         class="text-decoration-none"
         >Login
       </a>
+      {% else %}
+      <a
+        class="login-btn px-4 py-1 rounded-pill fw-bold text-decoration-none fs-5"
+        href="{% url 'GigHub:logout' %}"
+        class="text-decoration-none"
+        >Log out
+      </a>
+      {% endif %}
     </header>
     <content>
       <home class="section">

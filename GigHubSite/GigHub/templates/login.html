@@ -39,15 +39,20 @@
         Unlock Your Potential:&nbsp;
         <span>Log in</span>&nbsp;to Ignite Your Journey!
       </div>
-      <form action="{% url 'GigHub:login' %}" method="POST" class="rounded-4 shadow py-4 px-5">
+      <form action="{% url 'GigHub:login' %}" method="POST" class="rounded-4 shadow py-4 px-5" id="loginForm">
+        {% if errorMsg %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>{{ errorMsg }}</strong> You should check in on some of those fields below.
+        </div>
+        {% endif %}
         {% csrf_token %}
         <label for="email" class="fw-bold">Email Address</label>
         <br />
         <input
+          autocomplete="off"
           type="email"
           id="email"
           placeholder="Email Address"
-          autocomplete="email"
           class="rounded-2 px-2 py-1"
           name="email"
         />
@@ -59,23 +64,29 @@
           class="pass-input rounded-2 d-flex align-items-center gap-2 px-2 py-1 w-100"
         >
           <input
+            autocomplete="off"
             type="password"
             id="password"
             class="flex-grow-1"
             placeholder="Password"
-            autocomplete="current-password"
             name="password"
-            
           />
           <iconify-icon
-            icon="fluent:eye-off-16-filled"
+            icon="mdi:eye-off"
             id="password-eye"
+            onclick="togglePassword(this,'password-eye2','text')"
+          ></iconify-icon>
+          <iconify-icon
+            icon="heroicons-solid:eye"
+            id="password-eye2"
+            onclick="togglePassword(this,'password-eye','password')"
+            style="display: none;"
           ></iconify-icon>
         </label>
         <div class="empty empty-pass ms-1">Password cannot be blank.</div>
         <div class="d-flex justify-content-between align-items-center gap-1">
           <div class="d-flex align-items-center gap-1">
-            <input type="checkbox" name="remember-me" id="remember-me" />
+            <input type="checkbox" name="remember" id="remember-me" />
             <label for="remember-me" class="remember-me-class">
               Remember Me
             </label>
@@ -85,7 +96,7 @@
           >
         </div>
         <div class="d-flex justify-content-center mt-4">
-          <button type="submit" class="submit-form text-decoration-none rounded-pill px-4 py-1 fw-bold"> Login </button>
+          <a class="submit-form text-decoration-none rounded-pill px-4 py-1 fw-bold" onclick="validateLogin()"> Login </a>
         </div>
         <div class="d-flex gap-3 align-items-center my-3">
           <div class="flex-grow-1"><hr class="hr" /></div>
