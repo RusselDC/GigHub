@@ -168,4 +168,50 @@ def logout(request):
     return redirect('GigHub:index')
 
 
+def Profilechange(request):
+    if request.method == "GET":
+        user = User.objects.get(id=request.user.id)
+        profile = Profile.objects.get(userID=user)
+        image_url = profile.image.url if profile.image else ''
+        birth_date_str = profile.birthDate.strftime('%Y-%m-%d') if profile.birthDate else ''
+        request.session['user_profile'] = {
+                'user_id' : profile.id,
+                'image' : image_url,
+                'role' : profile.role,
+                'fName' : profile.fName,
+                'lName' : profile.lName,
+                'mName' : profile.mName,
+                'contact' : profile.contactNo,
+                'civilStatus' : profile.civilStatus,
+                'sex' : profile.sex,
+                'active' : profile.is_active,
+                'bDay' : birth_date_str,
+                'house' : profile.houseNo,
+                'street':profile.street,
+                'city':profile.city,
+                'province':profile.province
+        }
+        #return render(request, template, context={'profile':request.session['user_profile']})
+        return HttpResponse(request.session['user_profile'])
+    elif request.method == "POST":
+        user = User.objects.get(id=request.user.id)
+        profile = Profile.objects.get(userID=user)
+        profile.role = "JS"
+        profile.fName = "Jose"
+        profile.lName = "Santos"
+        profile.mName = "Dela Cruz"
+        profile.contactNo = "09215774055"
+        profile.civilStatus = "Married"
+        profile.sex = "M"
+        profile.birthDate = "2002-05-03"
+        profile.houseNo = "0666"
+        profile.street = "Purok 666"
+        profile.city = "Malolos"
+        profile.province = "Bulacan"
+        profile.save()
+        #return render(request, template="edit.html",context={'success':'Profile has been saved'})
+
+
+
+
 
