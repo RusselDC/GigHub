@@ -225,7 +225,7 @@ def register(request):
         user = User.objects.create_user(username=email, password=password)
         
 
-
-
+def register_education(request):
+    return render(request, "register_education.html")
 
 
