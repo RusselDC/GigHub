@@ -8,6 +8,7 @@ from .models import Profile, passwordOTP
 from django.test import Client
 from .utils import send_email
 from django.contrib.auth.models import User
+from datetime import datetime
 import random
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -215,14 +216,33 @@ def register(request):
     if request.method == "GET":
         return render(request, "register.html")
     else :
+        imgSave = ""
+        placeholder = 'profiles/placeholder.jpg'
+        if request.user.is_authenticated:
+            auth_logout(request)
         img = request.FILES.get('picture')
-        fname = request.POST['fName']
         lname = request.POST['lName']
         mname = request.POST['mName']
+        fname = request.POST['fName']
         contact = request.POST['mobile']
         email = request.POST['email']
         password = request.POST['password']
+        role = request.POST['role']
+        sex = request.POST['sex']
+        bdate = request.POST['bdate']
+        user_check  = User.objects.filter(username=email)
+        
+        if img:
+            imgSave = img
+        else:
+            imgSave = placeholder
+
+        if user_check.exists():
+            return render(request, "register.html", {'errorMSG': 'Email Already Used'})
         user = User.objects.create_user(username=email, password=password)
+        profile = Profile.objects.create(userID=user,image=imgSave,role=role,fName=fname,mName=mname,lName=lname,contactNo=contact,sex=sex,birthDate=bdate)
+        return redirect('GigHub:login')
+
         
 
 
