@@ -195,9 +195,9 @@ input:not(.pass-input input) {
 .mnum_msg.active,
 .email_msg.active,
 .pass_msg.active,
-.cpass_msg.active
-.bdate_msg.active
-.role_msg.active
+.cpass_msg.active,
+.bdate_msg.active,
+.role_msg.active,
 .sex_msg.active {
   visibility: visible;
 }
