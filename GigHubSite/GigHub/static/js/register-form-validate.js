@@ -173,20 +173,6 @@ function validate() {
     });
   }
 
-  // alert(isValid);
-  // if (isValid) {
-  //   const form = document.getElementById("regForm");
-  //   Swal.fire({
-  //     title: "Are you sure with the details inserted?",
-  //     showCancelButton: true,
-  //     confirmButtonText: "Yes",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       form.submit();
-  //     }
-  //   });
-  // }
-
   const elements = [
     ".lname_msg",
     ".fname_msg",
