@@ -20,6 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
     <link rel="stylesheet" href="{% static 'css/register_educational.css' %}" />
   </head>
   <body>
@@ -44,25 +45,31 @@
       </div>
       <form
         id="regForm"
-        action="{% url 'GigHub:register' %}"
+        action="{% url 'GigHub:register_education' %}"
         class="rounded-4 shadow py-4 px-5 d-flex flex-column align-items-center"
         method="POST"
         enctype="multipart/form-data"
       >
         {% csrf_token %}
         <h5 class="fw-bold w-100 mb-3">Educational Attainment</h5>
-        <label class="form_labels w-100 fw-bold" for="hloed">
+        <label class="form_labels w-100 fw-bold" for="hloed"style="display: none;">
           Highest Level of Education
         </label>
-        <input type="text" id="hloed" class="rounded-2 px-2 py-1 w-100" />
-        <div class="hloed_msg msg ps-1 mb-3 w-100">
+        <input type="text" id="hloed" class="rounded-2 px-2 py-1 w-100" autocomplete="off" style="display: none;" value="aria" />
+
+        <div class="hloed_msg msg ps-1 mb-3 w-100" style="display: none;">
           This field cannot be empty.
         </div>
 
         <label class="form_labels w-100 fw-bold" for="inst_att">
           Institution Attended
         </label>
-        <input type="text" id="inst_att" class="rounded-2 px-2 py-1 w-100" />
+        <input list="Institutions" id="inst_att" class="rounded-2 px-2 py-1 w-100" autocomplete="off" name="ins"/>
+        <datalist id="Institutions" class="rounded-2 px-2 py-1 w-100">
+          {% for ins in Institutions %}
+              <option value="{{ ins }}" ></option>
+          {% endfor %}
+        </datalist>
         <div class="inst_att_msg msg ps-1 mb-3 w-100">
           This field cannot be empty.
         </div>
@@ -73,12 +80,18 @@
               Course
             </label>
             <input
-              type="text"
+              list="Courses"
               name="course"
               id="course"
               class="px-2 py-1 rounded-2 w-100"
-              autocomplete="tel"
+              autocomplete="off"
+              onblur="getMajors(this.value)"
             />
+            <datalist id="Courses">
+              {% for ins in Courses %}
+                  <option value="{{ ins }}" ></option>
+              {% endfor %}
+            </datalist>
             <div class="course_msg msg ps-1">This field cannot be empty.</div>
           </div>
           <div class="half-col">
@@ -86,26 +99,26 @@
               Specialization
             </label>
             <input
-              type="text"
+              onfocus="check(this)"
+              list="majorsList"
               name="specialization"
               id="specialization"
               class="px-2 py-1 rounded-2 w-100"
-              autocomplete="email"
+              autocomplete="off"
+              readonly
             />
+            <datalist id="majorsList">
+
+            </datalist>
             <div class="msg ps-1 specialization_msg">
               This field cannot be empty.
             </div>
           </div>
         </div>
-        <label
-          class="graduate_label d-flex align-items-center gap-1 w-100 my-3"
-        >
-          <input type="checkbox" class="graduate" /> Graduate?
-        </label>
         <label class="form_labels w-100 fw-bold" for="gradDate">
           Graduation Date
         </label>
-        <input type="date" id="gradDate" class="rounded-2 px-2 py-1 w-100" />
+        <input type="number" id="gradDate" name="year"  class="rounded-2 px-2 py-1 w-100" />
         <div class="gradDate_msg msg ps-1 mb-3 w-100">
           This field cannot be empty.
         </div>
@@ -118,4 +131,62 @@
     </content>
     <script src="{% static 'js/register_educational-form-validate.js' %}"></script>
   </body>
+  <script>
+    function check(element)
+    {
+      let course = document.querySelector('#course');
+      if(course.value === "")
+      {
+        Swal.fire({
+        icon: "error",
+        text: "Please insert a degree first!",
+        });
+      }else{
+        element.removeAttribute('readonly')
+      }
+    }
+
+    function getMajors(value)
+    {
+      let list = document.getElementById('majorsList');
+      majorsList.innerHTML = "";
+      $.ajax({
+        type:"GET",
+        url:'/getMajors/'+value+'/',
+        success:function(data)
+        {
+          if(data.status)
+          {
+            
+            data.message.forEach((item)=>{
+              var option = document.createElement('option');
+              option.value = item.name
+              list.appendChild(option);
+            })
+          }else
+          {
+            majorsList.innerHTML = "";
+          }
+        },erorr:function(err)
+        {
+          console.log(err)
+        }
+        
+      })
+    }
+
+          document.getElementById('gradDate').addEventListener('input', function () {
+            var input = this.value.trim();
+            
+
+            // Check if the input matches the desired pattern
+            if (!/^\d{0,4}$/.test(input)) {
+                // If not, restrict input to the first four characters
+                this.value = input.slice(0, 4);
+                
+            } else {
+                
+            }
+        });
+  </script>
 </html>

@@ -19,19 +19,7 @@ function validate() {
     });
   }
 
-  if (specialization === "") {
-    $(".specialization_msg").addClass("active");
-    $("#specialization").css({
-      "border-color": "var(--red)",
-      animation: "shake 0.5s",
-    });
-  } else {
-    $(".specialization_msg").removeClass("active");
-    $("#specialization").css({
-      "border-color": "",
-      animation: "",
-    });
-  }
+ 
 
   if (course === "") {
     $(".course_msg").addClass("active");
@@ -98,7 +86,7 @@ function validate() {
       cancelButtonText: "No, cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        // form.submit();
+        form.submit();
       }
     });
   }
@@ -159,23 +147,7 @@ $(document).ready(function () {
     }
   });
 
-  $("#specialization").on("keyup", function () {
-    var specialization = $("#specialization").val();
-
-    if (specialization === "") {
-      $(".specialization_msg").addClass("active");
-      $("#specialization").css({
-        "border-color": "var(--red)",
-        animation: "shake 0.5s",
-      });
-    } else {
-      $(".specialization_msg").removeClass("active");
-      $("#specialization").css({
-        "border-color": "",
-        animation: "",
-      });
-    }
-  });
+  
 
   $("#gradDate").on("change", function () {
     var gradDate = $("#gradDate").val();

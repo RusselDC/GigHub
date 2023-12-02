@@ -144,7 +144,7 @@ class collegeTaken(models.Model):
     userID = models.ForeignKey(Profile, on_delete=models.CASCADE)
     institution = models.ManyToManyField(Institution)
     degree = models.ManyToManyField(Degrees)
-    major = models.ManyToManyField(Majors)
+    major = models.ManyToManyField(Majors, blank=True)
     yearGraduated = models.CharField(max_length=4)
 
     

@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from datetime import datetime
 import random
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
@@ -321,12 +321,56 @@ def addJobPosting(request):
             newJ.jobRequirements.add(skill)
             newJ.save()
 
-
-
-
-
-
 def register_education(request):
-    return render(request, "register_education.html")
+    if request.method == "GET":
+        return render(request, "register_education.html",{'Institutions': Institution.objects.all() , 'Courses' : Degrees.objects.all()})
+    else:
+        profile = Profile.objects.get(userID=request.user)
+        inst = request.POST['ins']
+        course = request.POST['course']
+        spec = request.POST['specialization']
+        year = request.POST['year']
+
+        ins, insC = Institution.objects.get_or_create(name__iexact=inst)
+        if insC or not ins.name:
+            ins.name = inst
+            ins.save()
+        deg, degC = Degrees.objects.get_or_create(name__iexact=course)
+        if degC or not deg.name:
+            deg.name = course
+            deg.save()
+        if spec is not "":
+            maj, majC = Majors.objects.get_or_create(name__iexact=spec)
+            if majC or not maj.name:
+                maj.name = spec
+                maj.save()
+    
+        college_taken_instance = collegeTaken.objects.create(userID=profile, yearGraduated=year)
+        college_taken_instance.institution.add(ins)
+        college_taken_instance.degree.add(deg)
+        if spec is not "":
+            college_taken_instance.major.add(maj)
+        college_taken_instance.save()
+
+
+
+
+
+def getMajors(request,degreeName):
+    try:
+        degree = Degrees.objects.get(name__iexact=degreeName)
+        try:
+            majors_queryset = Majors.objects.filter(degree=degree)
+            majors_data = []
+            for major in majors_queryset:
+                major_data = { 'name' : major.name }
+                majors_data.append(major_data)
+            return JsonResponse({'status' : True ,'message':majors_data})
+        except Majors.DoesNotExist:
+            return JsonResponse({'status' : False ,'message': 'No Major Found'})
+    except Degrees.DoesNotExist:
+        return JsonResponse({'status' : False ,'message': 'Degree not found'})
+
+    
 
 
