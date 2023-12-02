@@ -371,6 +371,7 @@ def getMajors(request,degreeName):
     except Degrees.DoesNotExist:
         return JsonResponse({'status' : False ,'message': 'Degree not found'})
 
-    
 
 
+def register_work(request):
+    return render(request, "register_work.html")
