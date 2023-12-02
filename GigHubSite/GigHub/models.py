@@ -8,6 +8,29 @@ import random
 class Skills(models.Model):
     name = models.CharField(max_length=255)
 
+    def __str__(self) -> str:
+        return f"{self.name}"
+
+class Institution(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return f"{self.name}"
+
+class Degrees(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return f"{self.name}"
+    
+class Majors(models.Model):
+    degree = models.ForeignKey(Degrees, on_delete=models.DO_NOTHING)
+    name = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return f"{self.name}"
+
+
 class Profile(models.Model):
     userID = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to='profiles/', default='profiles/placeholder.png')
@@ -36,6 +59,7 @@ class Profile(models.Model):
     sex = models.CharField(max_length=1,choices=GENDER_CHOICES,  null=True)
     birthDate = models.DateField('date_born',  null=True)
     houseNo = models.CharField(max_length=255, null=True)
+    baranggay = models.CharField(max_length=255, null=True)
     street = models.CharField(max_length=255, null=True)
     city = models.CharField(max_length=255, null=True)
     province = models.CharField(max_length=255, null=True)
@@ -44,7 +68,7 @@ class Profile(models.Model):
 
 
     def __str__(self) -> str:
-        return f"{self.fName} {self.lName}"
+        return f"{self.userID.username} : {self.fName} {self.lName}"
 
 
 
@@ -78,13 +102,16 @@ class JobPostings(models.Model):
     #        return []
         
     def setSalary(self, values):
-        self.salaryRange = ','.join(map(str, values))
+        return ','.join(map(str, values))
 
     def getSalary(self):
         if self.salaryRange:
             return self.salaryRange.split(',')
         else:
             return []
+        
+    def __str__(self) -> str:
+        return f"{self.companyID.companyName} : {self.jobTitle} - {self.deadLine}"
                
 class JobApplication(models.Model):
     applicantID = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -96,7 +123,7 @@ class JobApplication(models.Model):
         ('rejected','Rejected'),
         ('hired','Hired')
     ]
-    applicationStatus = models.CharField(max_length=30, choices=STATUS_CHOICES)
+    applicationStatus = models.CharField(max_length=30, choices=STATUS_CHOICES, default='Applied')
 
     
 class passwordOTP(models.Model):
@@ -111,6 +138,15 @@ class passwordOTP(models.Model):
 
     def __str__(self) -> str:
         return f"{self.userID.username}"
+
+
+class collegeTaken(models.Model):
+    userID = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    institution = models.ManyToManyField(Institution)
+    degree = models.ManyToManyField(Degrees)
+    major = models.ManyToManyField(Majors)
+    yearGraduated = models.CharField(max_length=4)
+
     
 
     

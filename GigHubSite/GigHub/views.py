@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.shortcuts import get_object_or_404
-from .models import Profile, passwordOTP
+from .models import Profile, passwordOTP, Skills,collegeTaken, Institution, Degrees, Majors, Company, JobPostings
 from django.test import Client
 from .utils import send_email
 from django.contrib.auth.models import User
@@ -243,7 +243,88 @@ def register(request):
         profile = Profile.objects.create(userID=user,image=imgSave,role=role,fName=fname,mName=mname,lName=lname,contactNo=contact,sex=sex,birthDate=bdate)
         return redirect('GigHub:login')
 
-        
+
+def addSkills(request):
+    if not request.user.is_authenticated:
+        return redirect('GigHub:index')
+    else:
+        skill_names = ['Python','PHP','Java','C#']
+        profile = Profile.objects.get(userID=request.user)
+
+        for skill_name in skill_names:
+            skill, created = Skills.objects.get_or_create(name__iexact=skill_name)
+            if created or not skill.name:
+            # If created or if the existing record has an empty name, set the name
+                skill.name = skill_name
+                skill.save()
+            profile.skills.add(skill)
+
+def addCollege(request):
+    profile = Profile.objects.get(userID=request.user)
+    institution_name = "Bulacan State University"
+    degree_name = "Bachelor of Science in Information Technology"
+    major_name = "Web and Mobile Application Development"
+    year = "2024"
+
+    ins, created = Institution.objects.get_or_create(name__iexact=institution_name)
+    if created or not ins.name:
+        ins.name = institution_name
+        ins.save()
+    deg, createds = Degrees.objects.get_or_create(name__iexact=degree_name)
+    if createds or not deg.name:
+        deg.name = degree_name
+        deg.save()
+    maj, createdss = Majors.objects.get_or_create(degree=deg, name__iexact=major_name)
+    if createdss or not maj.name:
+        maj.name = major_name
+        maj.save()
+   
+    college_taken_instance = collegeTaken.objects.create(userID=profile, yearGraduated=year)
+    college_taken_instance.institution.add(ins)
+    college_taken_instance.degree.add(deg)
+    college_taken_instance.major.add(maj)
+    college_taken_instance.save()
+
+def addCompany(request):
+    profile = Profile.objects.get(userID=request.user)
+    coName = "DenCare"
+    coAddress = "Hagonoy, Bulacan"
+    coEmail = "dencare2023@gmail.com"
+    coNumber = "09215774058"
+    Company.objects.create(employerID=profile, companyName=coName, companyAddress=coAddress, companyEmail=coEmail, contactNumber=coNumber)
+
+def addJobPosting(request):
+    profile = Profile.objects.get(userID=request.user)
+    company = Company.objects.get(employerID=profile)
+    jTitle = "Backend Developer"
+    jDesc = 'We are seeking a highly skilled Backend Developer to join our team at [Your Company Name]. As a Backend Developer, you will play a crucial role in designing, implementing, and maintaining the server-side logic that powers our innovative [industry/domain]-focused solutions. Your responsibilities will include crafting robust APIs, managing databases, and collaborating with cross-functional teams to deliver high-performance software. In this role, you will be responsible for designing and developing server-side solutions, creating RESTful APIs, and optimizing database schemas. You will work closely with front-end developers to ensure seamless communication between the server and client. Code quality is paramount, and you will actively participate in code reviews, contributing to a culture of excellence and continuous improvement.'
+    jLocation = "Hagonoy, Bulacan"
+    sRange = ['50.000.00','100.000.00']
+    dLine = '2024-01-01'
+    jRequirements = ['PHP','Backend','Rest API','Postman','PHPUnit']
+
+    newJ = JobPostings()
+    newJ.companyID = company
+    newJ.jobTitle = jTitle
+    newJ.jobDescription = jDesc
+    newJ.jobLocation = jLocation
+    newJ.salaryRange = newJ.setSalary(sRange)
+    newJ.deadLine = dLine
+
+    newJ.save()
+
+    for skill_name in jRequirements:
+            skill, created = Skills.objects.get_or_create(name__iexact=skill_name)
+            if created or not skill.name:
+                skill.name = skill_name
+                skill.save()
+            newJ.jobRequirements.add(skill)
+            newJ.save()
+
+
+
+
+
 
 
 

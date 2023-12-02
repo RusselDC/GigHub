@@ -21,8 +21,10 @@ function validate() {
   var email = $("#email").val();
   var pass = $("#password").val();
   var cpass = $("#cpassword").val();
+  var check = document.getElementById('iagree');
   var rolePicker = $("#rolePicker");
   var sex = $("#sex");
+  var isValid = true;
   var bdate = $("#bdate");
 
   if (bdate.val() === "") {
@@ -223,6 +225,15 @@ function validate() {
     });
   }
 
+  if(!check.checked)
+  {
+    Swal.fire({
+      icon: "error",
+      text: "Please read the terms of service!",
+    });
+    isValid = false;
+  }
+
   const elements = [
     ".lname_msg",
     ".fname_msg",
@@ -254,17 +265,7 @@ function validate() {
   }
 }
 
-$(document).ready(function () {
-  $("#rolePicker, #sex, #bdate").on("change", function () {
-    validate();
-  });
 
-  $(
-    "#lastname, #firstname, #minitial, #mobile, #email, #password, #cpassword"
-  ).on("keyup", function () {
-    validate();
-  });
-});
 function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);

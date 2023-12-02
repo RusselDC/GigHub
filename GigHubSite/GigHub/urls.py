@@ -12,5 +12,9 @@ urlpatterns = [
     path('verify/',views.verify, name="verify"),
     path('changePass/',views.changePass, name="changePass"),
     path('logout/', views.logout, name="logout"),
-    path('changeProfile/', views.Profilechange, name="changeProfile")
+    path('changeProfile/', views.Profilechange, name="changeProfile"),
+    path('addSkills/', views.addSkills, name="addSkills"),
+    path('addCollege/',views.addCollege, name="addCollege"),
+    path('addCompany/',views.addCompany, name="addCompany"),
+    path('addPosting/',views.addJobPosting, name="addJobPosting")
 ]
