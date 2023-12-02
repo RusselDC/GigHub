@@ -326,7 +326,7 @@ def addJobPosting(request):
 
 
 
-
-
+def register_education(request):
+    return render(request, "register_education.html")
 
 

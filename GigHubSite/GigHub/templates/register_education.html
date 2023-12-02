@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up | GigHub</title>
+    <link
+      rel="shortcut icon"
+      href="{{ '/media/site/website_logo.png' }}"
+      type="image/x-icon"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/register_educational.css' %}" />
+  </head>
+  <body>
+    <header
+      class="d-flex align-items-center justify-content-between position-fixed top-0"
+    >
+      <a href="{% url 'GigHub:index' %}" class="d-flex align-items-center">
+        <img src="{{ '/media/site/header_logo.png' }}" alt="logo" />
+      </a>
+      <a
+        href="{% url 'GigHub:login' %}"
+        class="register-link text-decoration-none fw-bold"
+      >
+        <span>Already registered?</span>
+        <span class="sign-up-link">&nbsp;Sign in&nbsp;</span
+        ><span>here</span></a
+      >
+    </header>
+    <content class="d-flex flex-column gap-3 align-items-center py-5">
+      <div class="cta fw-bold w-75">
+        Craft Your&nbsp;<span>Professional</span><br />Story Today!
+      </div>
+      <form
+        id="regForm"
+        action="{% url 'GigHub:register' %}"
+        class="rounded-4 shadow py-4 px-5 d-flex flex-column align-items-center"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %}
+        <h5 class="fw-bold w-100 mb-3">Educational Attainment</h5>
+        <label class="form_labels w-100 fw-bold" for="hloed">
+          Highest Level of Education
+        </label>
+        <input type="text" id="hloed" class="rounded-2 px-2 py-1 w-100" />
+        <div class="hloed_msg msg ps-1 mb-3 w-100">
+          This field cannot be empty.
+        </div>
+
+        <label class="form_labels w-100 fw-bold" for="inst_att">
+          Institution Attended
+        </label>
+        <input type="text" id="inst_att" class="rounded-2 px-2 py-1 w-100" />
+        <div class="inst_att_msg msg ps-1 mb-3 w-100">
+          This field cannot be empty.
+        </div>
+
+        <div class="row2 d-flex flex-wrap col-12">
+          <div class="half-col">
+            <label for="course" class="form_labels fw-bold w-100">
+              Course
+            </label>
+            <input
+              type="text"
+              name="course"
+              id="course"
+              class="px-2 py-1 rounded-2 w-100"
+              autocomplete="tel"
+            />
+            <div class="course_msg msg ps-1">This field cannot be empty.</div>
+          </div>
+          <div class="half-col">
+            <label for="specialization" class="form_labels fw-bold w-100">
+              Specialization
+            </label>
+            <input
+              type="text"
+              name="specialization"
+              id="specialization"
+              class="px-2 py-1 rounded-2 w-100"
+              autocomplete="email"
+            />
+            <div class="msg ps-1 specialization_msg">
+              This field cannot be empty.
+            </div>
+          </div>
+        </div>
+        <label
+          class="graduate_label d-flex align-items-center gap-1 w-100 my-3"
+        >
+          <input type="checkbox" class="graduate" /> Graduate?
+        </label>
+        <label class="form_labels w-100 fw-bold" for="gradDate">
+          Graduation Date
+        </label>
+        <input type="date" id="gradDate" class="rounded-2 px-2 py-1 w-100" />
+        <div class="gradDate_msg msg ps-1 mb-3 w-100">
+          This field cannot be empty.
+        </div>
+        <a
+          onclick="validate()"
+          class="submit-form text-decoration-none rounded-pill px-4 py-1 fw-bold align-self-end"
+          >Next</a
+        >
+      </form>
+    </content>
+    <script src="{% static 'js/register_educational-form-validate.js' %}"></script>
+  </body>
+</html>
