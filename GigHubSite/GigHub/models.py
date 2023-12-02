@@ -4,6 +4,13 @@ from datetime import datetime
 import random
 # Create your models here.
 
+
+class Skills(models.Model):
+    name = models.CharField(max_length=255)
+
+
+
+
 class Profile(models.Model):
     userID = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to='profiles/', default='profiles/placeholder.png')
@@ -12,12 +19,17 @@ class Profile(models.Model):
         ('JS','Job Seeker'),
         ('JP','Job Provider')
     ]
-    role = models.CharField(max_length=2, choices=USER_ROLES)
+    role = models.CharField(max_length=2, choices=USER_ROLES)   
     fName = models.CharField(max_length=255)
     lName = models.CharField(max_length=255)
     mName = models.CharField(max_length=255,null=True)
     contactNo = models.CharField(max_length=13)
-    civilStatus = models.CharField(max_length=20)
+    STATUS_CHOICES = [
+        ('S','Single'),
+        ('M','Married'),
+        ('D','Divorced')
+    ]
+    civilStatus = models.CharField(max_length=20,choices=STATUS_CHOICES)
     GENDER_CHOICES = [
         ('M','Male'),
         ('F','Female')
@@ -30,6 +42,7 @@ class Profile(models.Model):
     street = models.CharField(max_length=255, null=True)
     city = models.CharField(max_length=255, null=True)
     province = models.CharField(max_length=255, null=True)
+    skills = models.ManyToManyField(Skills)
 
 
     def __str__(self) -> str:
@@ -52,20 +65,20 @@ class JobPostings(models.Model):
     companyID = models.ForeignKey(Company, on_delete=models.Case)
     jobTitle = models.CharField(max_length=255) #input field
     jobDescription = models.TextField() #text field na malaki
-    jobRequirements = models.CharField(max_length=255, blank=True, null=True) #multiple input fields na may same names like requirements[] para mareturn sila as array sa backend
     jobLocation = models.CharField(max_length=255) # input field
     salaryRange = models.CharField(max_length=255, blank=True, null=True) # dalawang input fields na may name na salary1 and salary2
     deadLine = models.DateField("application_deadline")
+    jobRequirements = models.ManyToManyField(Skills) #multiple input fields na may same names like requirements[] para mareturn sila as array sa backend
 
 
-    def setJobRequirements(self, values):
-        self.jobRequirements = ','.join(map(str,values))
+    #def setJobRequirements(self, values):
+    #    self.jobRequirements = ','.join(map(str,values))
 
-    def getJobRequirements(self):
-        if self.jobRequirements:
-            return self.jobRequirements.split(',')
-        else:
-            return []
+    #def getJobRequirements(self):
+    #    if self.jobRequirements:
+    #        return self.jobRequirements.split(',')
+    #    else:
+    #        return []
         
     def setSalary(self, values):
         self.salaryRange = ','.join(map(str, values))
