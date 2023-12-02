@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -49,9 +48,8 @@
         class="rounded-4 shadow py-4 px-5 d-flex flex-column align-items-center"
         method="POST"
         enctype="multipart/form-data"
- 
       >
-      {% csrf_token %}
+        {% csrf_token %}
         <div class="add-profile d-flex flex-column">
           <label for="profile_picture" class="img">
             <img
@@ -188,38 +186,45 @@
             </div>
           </div>
         </div>
-        
+
         <div class="fullname col-12 d-flex align-items-center flex-wrap">
           <div class="name">
-            <label for="role" class="form_labels fw-bold w-100">
+            <label for="rolePicker" class="form_labels fw-bold w-100">
               Role
             </label>
             <select name="role" id="rolePicker" class="rounded-2 px-2 py-1">
-              <option value="" selected disabled>PLEASE SELECT AN OPTION</option>
+              <option value="" selected disabled>
+                PLEASE SELECT AN OPTION
+              </option>
               <option value="JP">Job Provider</option>
               <option option value="JS">Job Seeker</option>
             </select>
-            <div class="msg_2 msg ps-1 role_msg active">Last name cannot be empty.</div>
+            <div class="msg_2 msg ps-1 role_msg">Please select your role.</div>
           </div>
           <div class="name">
-            <label for="sex" class="form_labels fw-bold w-100">
-              Gender
-            </label>
+            <label for="sex" class="form_labels fw-bold w-100"> Gender </label>
             <select name="sex" id="sex" class="rounded-2 px-2 py-1" id="">
-              <option value="" selected disabled>PLEASE SELECT AN OPTION</option>
+              <option value="" selected disabled>
+                PLEASE SELECT AN OPTION
+              </option>
               <option value="M">Male</option>
               <option option value="F">Female</option>
             </select>
-            <div class="msg ps-1 sex_msg">First name cannot be empty.</div>
+            <div class="msg ps-1 sex_msg">Please choose your sex.</div>
           </div>
           <div class="name">
             <label for="bdate" class="form_labels fw-bold w-100">
               Birthdate
             </label>
-            <input type="date" class="rounded-2 px-2 py-1" name="bdate" onchange="validateBday()" id="bdate">
-            <div class="msg ps-1 bdate_msg">
-              Middle initial cannot be empty.
-            </div>
+            <input
+              type="date"
+              class="rounded-2 px-2 py-1"
+              name="bdate"
+              id="bdate"
+              onchange="validateBday()"
+              id="bdate"
+            />
+            <div class="msg ps-1 bdate_msg">Birthday cannot be empty.</div>
           </div>
         </div>
         <div class="d-flex gap-3 align-items-center mt-2 mb-3 w-100">
@@ -239,15 +244,21 @@
           <input type="checkbox" id="iagree" />
           <label for="iagree">
             Yes, I understand and agree to
-            <img src="{{ '/media/site/header_logo.png' }}" alt="GigHub" />'s terms of
-            Service, including the User Agreement and Privacy Policy.</label
+            <img src="{{ '/media/site/header_logo.png' }}" alt="GigHub" />'s
+            terms of Service, including the User Agreement and Privacy
+            Policy.</label
           >
         </small>
 
-        <a onclick="validate()"
+        <a
+          onclick="validate()"
           class="submit-form text-decoration-none rounded-pill px-4 py-1 fw-bold"
           >Register</a
         >
+        <!-- <a
+          class="submit-form text-decoration-none rounded-pill px-4 py-1 fw-bold"
+          >Register</a
+        > -->
       </form>
     </content>
     <script src="{% static 'js/register-form-validate.js' %}"></script>
