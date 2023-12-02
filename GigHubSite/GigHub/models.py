@@ -29,15 +29,15 @@ class Profile(models.Model):
         ('M','Married'),
         ('D','Divorced')
     ]
-    civilStatus = models.CharField(max_length=20,choices=STATUS_CHOICES)
+    civilStatus = models.CharField(max_length=20,choices=STATUS_CHOICES, null=True)
     GENDER_CHOICES = [
         ('M','Male'),
         ('F','Female')
     ]
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    sex = models.CharField(max_length=1,choices=GENDER_CHOICES)
-    birthDate = models.DateField('date_born')
+    sex = models.CharField(max_length=1,choices=GENDER_CHOICES,  null=True)
+    birthDate = models.DateField('date_born',  null=True)
     houseNo = models.CharField(max_length=255, null=True)
     street = models.CharField(max_length=255, null=True)
     city = models.CharField(max_length=255, null=True)

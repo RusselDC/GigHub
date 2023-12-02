@@ -1,3 +1,6 @@
+{% load static %}
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,6 +18,7 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/register.css' %}" />
@@ -24,7 +28,7 @@
       class="d-flex align-items-center justify-content-between position-fixed top-0"
     >
       <a href="{% url 'GigHub:index' %}" class="d-flex align-items-center">
-        <img src="./assets/header_logo.png" alt="logo" />
+        <img src="{{ '/media/site/header_logo.png' }}" alt="logo" />
       </a>
       <a
         href="{% url 'GigHub:login' %}"
@@ -40,22 +44,28 @@
         Craft Your&nbsp;<span>Professional</span><br />Story Today!
       </div>
       <form
-        action=""
+        id="regForm"
+        action="{% url 'GigHub:register' %}"
         class="rounded-4 shadow py-4 px-5 d-flex flex-column align-items-center"
+        method="POST"
+        enctype="multipart/form-data"
+ 
       >
+      {% csrf_token %}
         <div class="add-profile d-flex flex-column">
           <label for="profile_picture" class="img">
             <img
               src="{{  '/media/site/register_img.png' }}"
               alt="profile_picture"
               class="shadow-lg rounded-circle"
+              id="previewImg"
             />
           </label>
 
           <label for="profile_picture" class="icon">
             <iconify-icon icon="ic:round-plus"></iconify-icon>
           </label>
-          <input type="file" id="profile_picture" />
+          <input type="file" id="profile_picture" name="picture" />
         </div>
 
         <div class="form_labels col-12 fw-bold">Fullname</div>
@@ -66,6 +76,7 @@
               placeholder="Last Name"
               autocomplete="name"
               class="rounded-2 px-2 py-1"
+              name="lName"
               id="lastname"
             />
             <div class="msg ps-1 lname_msg">Last name cannot be empty.</div>
@@ -76,6 +87,7 @@
               placeholder="First Name"
               autocomplete="name"
               class="rounded-2 px-2 py-1"
+              name="fName"
               id="firstname"
             />
             <div class="msg ps-1 fname_msg">First name cannot be empty.</div>
@@ -83,9 +95,10 @@
           <div class="name">
             <input
               type="text"
-              placeholder="Middle Initial"
+              placeholder="Middle Name"
               autocomplete="name"
               class="rounded-2 px-2 py-1"
+              name="mName"
               id="minitial"
             />
             <div class="msg ps-1 minitial_msg">
@@ -100,11 +113,12 @@
               Mobile Number
             </label>
             <input
-              type="tel"
+              type="number"
               name="mobile"
               id="mobile"
               class="px-2 py-1 rounded-2 w-100"
               placeholder="Mobile Number"
+              name="contact"
               autocomplete="tel"
             />
             <div class="msg_2 mnum_msg msg ps-1">
@@ -119,6 +133,7 @@
               type="email"
               name="email"
               id="email"
+              name="Email"
               class="px-2 py-1 rounded-2 w-100"
               placeholder="Email Address"
               autocomplete="email"
@@ -140,6 +155,7 @@
                 type="password"
                 class="rounded-2 w-100"
                 placeholder="Password"
+                name="password"
                 autocomplete="new-password"
                 id="password"
               />
@@ -172,6 +188,40 @@
             </div>
           </div>
         </div>
+        
+        <div class="fullname col-12 d-flex align-items-center flex-wrap">
+          <div class="name">
+            <label for="role" class="form_labels fw-bold w-100">
+              Role
+            </label>
+            <select name="role" id="rolePicker" class="rounded-2 px-2 py-1">
+              <option value="" selected disabled>PLEASE SELECT AN OPTION</option>
+              <option value="JP">Job Provider</option>
+              <option option value="JS">Job Seeker</option>
+            </select>
+            <div class="msg_2 msg ps-1 role_msg active">Last name cannot be empty.</div>
+          </div>
+          <div class="name">
+            <label for="sex" class="form_labels fw-bold w-100">
+              Gender
+            </label>
+            <select name="sex" id="sex" class="rounded-2 px-2 py-1" id="">
+              <option value="" selected disabled>PLEASE SELECT AN OPTION</option>
+              <option value="M">Male</option>
+              <option option value="F">Female</option>
+            </select>
+            <div class="msg ps-1 sex_msg">First name cannot be empty.</div>
+          </div>
+          <div class="name">
+            <label for="bdate" class="form_labels fw-bold w-100">
+              Birthdate
+            </label>
+            <input type="date" class="rounded-2 px-2 py-1" id="bdate">
+            <div class="msg ps-1 bdate_msg">
+              Middle initial cannot be empty.
+            </div>
+          </div>
+        </div>
         <div class="d-flex gap-3 align-items-center mt-2 mb-3 w-100">
           <div class="flex-grow-1"><hr class="hr" /></div>
           <div class="or">or</div>
@@ -186,15 +236,15 @@
         </div>
 
         <small class="w-80 my-4 d-flex align-items-center">
-          <input type="checkbox" name="iagree" id="iagree" />
+          <input type="checkbox" id="iagree" />
           <label for="iagree">
             Yes, I understand and agree to
-            <img src="./assets/header_logo.png" alt="GigHub" />'s terms of
+            <img src="{{ '/media/site/header_logo.png' }}" alt="GigHub" />'s terms of
             Service, including the User Agreement and Privacy Policy.</label
           >
         </small>
 
-        <a
+        <a onclick="validate()"
           class="submit-form text-decoration-none rounded-pill px-4 py-1 fw-bold"
           >Register</a
         >

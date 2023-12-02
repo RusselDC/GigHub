@@ -37,7 +37,7 @@ body {
   color: var(--black) !important;
 
   background-color: var(--isabelline);
-  background-image: url(/assets/bg_body.png);
+  background-image: url(/media/site/bg_body.png);
   background-size: cover;
   background-repeat: repeat-y;
 }
@@ -170,6 +170,11 @@ input:not(.pass-input input) {
 .name input {
   width: 100%;
 }
+.name select {
+  width: 100%;
+  border: solid 4px var(--gainsboro);
+  background-color: var(--white-smoke);
+}
 .msg {
   font-size: 0.8rem;
   color: var(--red);
@@ -190,7 +195,10 @@ input:not(.pass-input input) {
 .mnum_msg.active,
 .email_msg.active,
 .pass_msg.active,
-.cpass_msg.active {
+.cpass_msg.active
+.bdate_msg.active
+.role_msg.active
+.sex_msg.active {
   visibility: visible;
 }
 @keyframes shake {
@@ -259,6 +267,7 @@ form input[type="checkbox"] {
   position: relative;
   cursor: pointer;
 }
+
 form input[type="checkbox"]:before {
   content: "";
   background-color: var(--mango-tango);

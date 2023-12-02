@@ -211,6 +211,20 @@ def Profilechange(request):
         profile.save()
         #return render(request, template="edit.html",context={'success':'Profile has been saved'})
 
+def register(request):
+    if request.method == "GET":
+        return render(request, "register.html")
+    else :
+        img = request.FILES.get('picture')
+        fname = request.POST['fName']
+        lname = request.POST['lName']
+        mname = request.POST['mName']
+        contact = request.POST['mobile']
+        email = request.POST['email']
+        password = request.POST['password']
+        user = User.objects.create_user(username=email, password=password)
+        
+
 
 
 
