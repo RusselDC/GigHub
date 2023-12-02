@@ -129,6 +129,12 @@ function validate() {
       "border-color": "var(--red)",
       animation: "shake 0.5s",
     });
+  } else if (!isValidEmail(email)) {
+    $(".email_msg").text("Invalid email address").addClass("active");
+    $("#email").css({
+      "border-color": "var(--red)",
+      animation: "shake 0.5s",
+    });
   } else {
     $(".email_msg").removeClass("active");
     $("#email").css({
@@ -139,6 +145,28 @@ function validate() {
 
   if (pass === "") {
     $(".pass_msg").addClass("active");
+    $(".pass-input.pass").css({
+      "border-color": "var(--red)",
+      animation: "shake 0.5s",
+    });
+  } else if (pass.length < 8) {
+    $(".pass_msg").text("Password too short.").addClass("active");
+    $(".pass-input.pass").css({
+      "border-color": "var(--red)",
+      animation: "shake 0.5s",
+    });
+  } else if (!hasNumericDigit(pass)) {
+    $(".pass_msg")
+      .text("Password must include at least one numeric digit.")
+      .addClass("active");
+    $(".pass-input.pass").css({
+      "border-color": "var(--red)",
+      animation: "shake 0.5s",
+    });
+  } else if (!hasSpecialCharacter(pass)) {
+    $(".pass_msg")
+      .text("Password must include at least one special character")
+      .addClass("active");
     $(".pass-input.pass").css({
       "border-color": "var(--red)",
       animation: "shake 0.5s",
@@ -154,6 +182,28 @@ function validate() {
   if (cpass === "") {
     $(".cpass_msg")
       .text("Confirm password cannot be empty.")
+      .addClass("active");
+    $(".pass-input.cpass").css({
+      "border-color": "var(--red)",
+      animation: "shake 0.5s",
+    });
+  } else if (cpass.length < 8) {
+    $(".cpass_msg").text("Password too short.").addClass("active");
+    $(".pass-input.cpass").css({
+      "border-color": "var(--red)",
+      animation: "shake 0.5s",
+    });
+  } else if (!hasNumericDigit(cpass)) {
+    $(".cpass_msg")
+      .text("Password must include at least one numeric digit.")
+      .addClass("active");
+    $(".pass-input.cpass").css({
+      "border-color": "var(--red)",
+      animation: "shake 0.5s",
+    });
+  } else if (!hasSpecialCharacter(cpass)) {
+    $(".cpass_msg")
+      .text("Password must include at least one special character")
       .addClass("active");
     $(".pass-input.cpass").css({
       "border-color": "var(--red)",
@@ -215,7 +265,10 @@ $(document).ready(function () {
     validate();
   });
 });
-
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
 function validateBday() {
   var birthdateInput = document.getElementById("bdate");
   var birthdate = new Date(birthdateInput.value);
@@ -234,4 +287,14 @@ function validateBday() {
     });
     $("#bdate").val("");
   }
+}
+function hasNumericDigit(str) {
+  // Check if the string contains at least one numeric digit
+  return /\d/.test(str);
+}
+
+function hasSpecialCharacter(str) {
+  // Check if the string contains at least one special character
+  const specialCharacterRegex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/;
+  return specialCharacterRegex.test(str);
 }
