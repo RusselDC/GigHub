@@ -49,7 +49,12 @@
         method="POST"
         enctype="multipart/form-data"
       >
-        {% csrf_token %}
+      {% if errorMSG %}
+      <div class="alert alert-danger" style="width: 100%;" role="alert">
+        {{ errorMSG }}
+      </div>
+      {% endif %}
+      {% csrf_token %}
         <div class="add-profile d-flex flex-column">
           <label for="profile_picture" class="img">
             <img

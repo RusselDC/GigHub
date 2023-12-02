@@ -8,9 +8,6 @@ import random
 class Skills(models.Model):
     name = models.CharField(max_length=255)
 
-
-
-
 class Profile(models.Model):
     userID = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to='profiles/', default='profiles/placeholder.png')
@@ -43,6 +40,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=255, null=True)
     province = models.CharField(max_length=255, null=True)
     skills = models.ManyToManyField(Skills)
+    is_verified = models.BooleanField(default=False)
 
 
     def __str__(self) -> str:
@@ -70,7 +68,6 @@ class JobPostings(models.Model):
     deadLine = models.DateField("application_deadline")
     jobRequirements = models.ManyToManyField(Skills) #multiple input fields na may same names like requirements[] para mareturn sila as array sa backend
 
-
     #def setJobRequirements(self, values):
     #    self.jobRequirements = ','.join(map(str,values))
 
@@ -88,9 +85,7 @@ class JobPostings(models.Model):
             return self.salaryRange.split(',')
         else:
             return []
-        
-
-        
+               
 class JobApplication(models.Model):
     applicantID = models.ForeignKey(Profile, on_delete=models.CASCADE)
     jobID = models.ForeignKey(JobPostings, on_delete=models.CASCADE)
@@ -116,6 +111,8 @@ class passwordOTP(models.Model):
 
     def __str__(self) -> str:
         return f"{self.userID.username}"
+    
+
     
     
 
