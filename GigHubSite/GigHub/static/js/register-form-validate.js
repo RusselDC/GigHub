@@ -145,7 +145,8 @@ function validate()
   var cpass = $("#cpassword").val();
   var check = document.getElementById('iagree');
   var role = document.getElementById('rolePicker');
-
+  var bdate = document.getElementById('bdate');
+  var sex = document.getElementById('sex');
   
 
   if (lname === "") {
@@ -259,6 +260,26 @@ function validate()
     isValid = false;
     }
   }
+  
+  if(role.value === "")
+  {
+    $(".role_msg").addClass("active");
+    $(".role_msg").text("Please select a role")
+    isValid = false;
+  }
+  if(sex.value === "")
+  {
+    $(".role_msg").addClass("active");
+    $(".role_msg").text("Please select a gender")
+    isValid = false;
+  }
+  if(bdate.value === "")
+  {
+    $(".role_msg").addClass("active");
+    $(".role_msg").text("Please select a date")
+    isValid = false;
+  }
+  
 
   if(!check.checked)
   {
@@ -269,14 +290,6 @@ function validate()
     isValid = false;
   }
 
-  if(role.value === "")
-  {
-    $(".role_msg").addClass("active");
-    $(".role_msg").text("Please select a role")
-    isValid = false;
-  }
-  alert(isValid);
-  
   if(isValid)
   {
     const form = document.getElementById('regForm');
@@ -307,6 +320,8 @@ function validateBday()
           icon: "error",
           title: "Invalid Date",
           text: "We only accepts users 18 years older",
-        });
+        })
+        birthdateInput.value = 'MM/DD/YYY'
+        
     }
 }
