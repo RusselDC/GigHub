@@ -291,3 +291,22 @@ function validate()
     });
   }
 }
+
+function validateBday()
+{
+  var birthdateInput = document.getElementById('bdate');
+    var birthdate = new Date(birthdateInput.value);
+
+    // Calculate the age
+    var currentDate = new Date();
+    var age = currentDate.getFullYear() - birthdate.getFullYear();
+
+    // Check if the user is 18 years or older
+    if (age < 18) {
+        Swal.fire({
+          icon: "error",
+          title: "Invalid Date",
+          text: "We only accepts users 18 years older",
+        });
+    }
+}
