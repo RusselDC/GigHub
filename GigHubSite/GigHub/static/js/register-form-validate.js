@@ -13,6 +13,233 @@ document.getElementById("profile_picture").addEventListener("change", (e) => {
   }
 });
 
+$(document).ready(function () {
+  $("#lastname").on("keyup", function () {
+    if ($(this).val() === "") {
+      $(".lname_msg").text("Last name cannot be empty.").addClass("active");
+      $(this).css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else {
+      $(".lname_msg").removeClass("active");
+      $(this).css({
+        "border-color": "",
+        animation: "",
+      });
+    }
+  });
+
+  $("#firstname").on("keyup", function () {
+    if ($(this).val() === "") {
+      $(".fname_msg").text("First name cannot be empty.").addClass("active");
+      $(this).css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else {
+      $(".fname_msg").removeClass("active");
+      $(this).css({
+        "border-color": "",
+        animation: "",
+      });
+    }
+  });
+
+  $("#minitial").on("keyup", function () {
+    if ($(this).val() === "") {
+      $(".minitial_msg")
+        .text("Middle initial cannot be empty.")
+        .addClass("active");
+      $(this).css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else {
+      $(".minitial_msg").removeClass("active");
+      $(this).css({
+        "border-color": "",
+        animation: "",
+      });
+    }
+  });
+
+  $("#mobile").on("keyup", function () {
+    if ($(this).val() === "") {
+      $(".mnum_msg").text("Mobile number cannot be empty.").addClass("active");
+      $(this).css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else {
+      $(".mnum_msg").removeClass("active");
+      $(this).css({
+        "border-color": "",
+        animation: "",
+      });
+    }
+  });
+
+  $("#email").on("keyup", function () {
+    if ($(this).val() === "") {
+      $(".email_msg").text("Email cannot be empty.").addClass("active");
+      $(this).css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else if (!isValidEmail($(this).val())) {
+      $(".email_msg").text("Invalid email address").addClass("active");
+      $(this).css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else {
+      $(".email_msg").removeClass("active");
+      $(this).css({
+        "border-color": "",
+        animation: "",
+      });
+    }
+  });
+
+  $("#password").on("keyup", function () {
+    var pass = $(this).val();
+    var passMsg = $(".pass_msg");
+
+    if (pass === "") {
+      passMsg.text("Password cannot be empty.").addClass("active");
+      $(".pass-input.pass").css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else if (pass.length < 8) {
+      passMsg.text("Password too short.").addClass("active");
+      $(".pass-input.pass").css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else if (!hasNumericDigit(pass)) {
+      passMsg
+        .text("Password must include at least one numeric digit.")
+        .addClass("active");
+      $(".pass-input.pass").css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else if (!hasSpecialCharacter(pass)) {
+      passMsg
+        .text("Password must include at least one special character")
+        .addClass("active");
+      $(".pass-input.pass").css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else {
+      passMsg.removeClass("active");
+      $(".pass-input.pass").css({
+        "border-color": "",
+        animation: "",
+      });
+    }
+  });
+
+  $("#cpassword").on("keyup", function () {
+    var cpass = $(this).val();
+    var cpassMsg = $(".cpass_msg");
+
+    if (cpass === "") {
+      cpassMsg.text("Confirm password cannot be empty.").addClass("active");
+      $(".pass-input.cpass").css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else if (cpass.length < 8) {
+      cpassMsg.text("Password too short.").addClass("active");
+      $(".pass-input.cpass").css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else if (!hasNumericDigit(cpass)) {
+      cpassMsg
+        .text("Password must include at least one numeric digit.")
+        .addClass("active");
+      $(".pass-input.cpass").css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else if (!hasSpecialCharacter(cpass)) {
+      cpassMsg
+        .text("Password must include at least one special character")
+        .addClass("active");
+      $(".pass-input.cpass").css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else if ($("#password").val() !== cpass) {
+      cpassMsg.text("Passwords do not match.").addClass("active");
+      $(".pass-input.cpass").css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else {
+      cpassMsg.removeClass("active");
+      $(".pass-input.cpass").css({
+        "border-color": "",
+        animation: "",
+      });
+    }
+  });
+
+  $("#bdate").on("keyup", function () {
+    if ($(this).val() === "") {
+      $(".bdate_msg").text("Date of birth cannot be empty.").addClass("active");
+      $(this).css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else {
+      $(".bdate_msg").removeClass("active");
+      $(this).css({
+        "border-color": "",
+        animation: "",
+      });
+    }
+  });
+
+  $("#rolePicker").on("change", function () {
+    if ($(this).find(":selected").is(":disabled")) {
+      $(".role_msg").text("Please select a role.").addClass("active");
+      $(this).css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else {
+      $(".role_msg").removeClass("active");
+      $(this).css({
+        "border-color": "",
+        animation: "",
+      });
+    }
+  });
+
+  $("#sex").on("change", function () {
+    if ($(this).find(":selected").is(":disabled")) {
+      $(".sex_msg").text("Please select a gender.").addClass("active");
+      $(this).css({
+        "border-color": "var(--red)",
+        animation: "shake 0.5s",
+      });
+    } else {
+      $(".sex_msg").removeClass("active");
+      $(this).css({
+        "border-color": "",
+        animation: "",
+      });
+    }
+  });
+});
+
+
 function validate() {
   var lname = $("#lastname").val();
   var fname = $("#firstname").val();
