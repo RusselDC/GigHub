@@ -38,6 +38,7 @@
                 </div>
                 <div class="formContents">
                     <form action="" id="profileForm">
+                    {% csrf_token %}
                         <div class="formContent active">
                             <div class="formGroup">
                                 <label for="profileImg">
@@ -92,10 +93,17 @@
                                     <label for="sex">Sex</label>
                                     <select class="inputBox" id="sex" name="sex">
                                         <option value="{{ user.sex }}" selected>{{ user.get_sex_display }}</option>
+<<<<<<< HEAD
                                         <option value="{% if user.sex == 'M' %}F{% else %}M{% endif %}">
                                             {% if user.sex == 'M' %}Female{% else %}Male{% endif %}
                                         </option>
+=======
+                                            <option value="{% if user.sex == 'M' %}F{% else %}M{% endif %}">
+                                                {% if user.sex == 'M' %}Female{% else %}Male{% endif %}
+                                            </option>
+>>>>>>> 79df2d78d2029b88f9a48fba393bef34e8845d4a
                                     </select>
+
                                     <div class="errorMessage"></div>
                                 </div>
                                 <div class="inputContainer">
@@ -132,7 +140,7 @@
                                     <label for="province">Province</label>
                                     <input type="text" id="provinceInput" name="province" style="display:none;"
                                         value="">
-                                    <select id="province" class="inputBox" onchange="showValue(this,provinceInput )">
+                                    <select id="province" class="inputBox" onchange="showValue(this,provinceInput)">
                                         <option selected>Select Province</option>
                                     </select>
                                     <div class="errorMessage"></div>
