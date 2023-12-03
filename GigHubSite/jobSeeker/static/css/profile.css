@@ -28,7 +28,8 @@
 
 .formContainer, .profileView {
     width: 95%;
-    height: fit-content;
+    height: 100%;
+    overflow-y:scroll;
     border-radius: .3vw;
     background-color: var(--white);
     padding: 1vw;
@@ -38,6 +39,20 @@
     align-items: center;
 }
 
+.formContainer::-webkit-scrollbar{
+    width: 10px;
+}
+.formContainer::-webkit-scrollbar-track {
+    display:none;
+}
+.formContainer::-webkit-scrollbar-thumb {
+    
+    background: var(--orangeMain);
+    border-radius:2px;
+}
+.formContainer::-webkit-scrollbar-thumb:hover {
+    background: var(--orangeSecond);
+}
 .profileView {
     display: none;
 }
