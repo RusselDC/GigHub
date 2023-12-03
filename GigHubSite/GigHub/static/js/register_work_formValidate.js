@@ -10,7 +10,7 @@ $(document).ready(function () {
         text: "At least one skill is required!",
       });
     } else {
-      // duh
+      document.getElementById('regForm').submit();
     }
   });
 });

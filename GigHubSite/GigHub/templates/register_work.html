@@ -45,10 +45,11 @@
       </div>
       <form
         id="regForm"
-        action="{% url 'GigHub:register_education' %}"
+        action="{% url 'GigHub:register_skills' %}"
         class="rounded-4 shadow py-4 px-5 d-flex flex-column align-items-center"
         method="POST"
         enctype="multipart/form-data"
+        onsubmit="return false"
       >
         {% csrf_token %}
         <label for="skills" class="w-100 form_labels fw-bold mt-1"
@@ -58,24 +59,15 @@
         <!-- <div class="msg ps-1 skills_msg w-100">This field cannot be empty.</div> -->
         <small id="suggestedSkills" class="w-100">SUGGESTED SKILLS</small>
         <div class="d-flex flex-wrap gap-2 w-100 tags_list">
+          {% for skill in Skills %}
           <div class="tags rounded-pill py-1 px-3">
-            Good Communication
+            <input type="checkbox" name="skills[]" value="{{skill}}" id="skillsValue" style="display: none;">
+            {{ skill }}
             <span>
               <iconify-icon icon="iconamoon:close-bold"></iconify-icon>
             </span>
           </div>
-          <div class="tags rounded-pill py-1 px-3">
-            Punctual
-            <span>
-              <iconify-icon icon="iconamoon:close-bold"></iconify-icon>
-            </span>
-          </div>
-          <div class="tags rounded-pill py-1 px-3">
-            Team Player
-            <span>
-              <iconify-icon icon="iconamoon:close-bold"></iconify-icon>
-            </span>
-          </div>
+          {% endfor %}
         </div>
         <div
           class="mt-3 d-flex gap-2 flex-wrap justify-content-center align-items-center"

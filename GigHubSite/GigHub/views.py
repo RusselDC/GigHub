@@ -12,17 +12,37 @@ from datetime import datetime
 import random
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
+from django.db.models import Count
 
 # Create your views here.
 def index(request):
     template = "index.html"
     if request.user.is_authenticated:
         if 'user_profile' in request.session:
-            
             session_arr = request.session['user_profile']
             return render(request, template, context={'session_arr': session_arr})
         else:
-            return render(request, template, context={'error_message': 'User profile not found in session'})
+            profile = Profile.objects.get(userID=request.user)
+            image_url = profile.image.url if profile.image else ''
+            birth_date_str = profile.birthDate.strftime('%Y-%m-%d') if profile.birthDate else ''
+            userData = request.session['user_profile'] = {
+                'user_id' : profile.id,
+                'image' : image_url,
+                'role' : profile.role,
+                'fName' : profile.fName,
+                'lName' : profile.lName,
+                'mName' : profile.mName,
+                'contact' : profile.contactNo,
+                'civilStatus' : profile.civilStatus,
+                'sex' : profile.sex,
+                'active' : profile.is_active,
+                'bDay' : birth_date_str,
+                'house' : profile.houseNo,
+                'street':profile.street,
+                'city':profile.city,
+                'province':profile.province
+            }
+            return render(request, template, context={'session_arr': userData})
     else:
         return render(request, template)
 
@@ -241,7 +261,8 @@ def register(request):
             return render(request, "register.html", {'errorMSG': 'Email Already Used'})
         user = User.objects.create_user(username=email, password=password)
         profile = Profile.objects.create(userID=user,image=imgSave,role=role,fName=fname,mName=mname,lName=lname,contactNo=contact,sex=sex,birthDate=bdate)
-        return redirect('GigHub:login')
+        auth_login(request, user)
+        return redirect('GigHub:register_education')
 
 
 def addSkills(request):
@@ -340,7 +361,7 @@ def register_education(request):
             deg.name = course
             deg.save()
         if spec is not "":
-            maj, majC = Majors.objects.get_or_create(name__iexact=spec)
+            maj, majC = Majors.objects.get_or_create(name__iexact=spec, degree=deg)
             if majC or not maj.name:
                 maj.name = spec
                 maj.save()
@@ -351,6 +372,7 @@ def register_education(request):
         if spec is not "":
             college_taken_instance.major.add(maj)
         college_taken_instance.save()
+        return redirect('GigHub:register_skills')
 
 
 
@@ -373,5 +395,50 @@ def getMajors(request,degreeName):
 
 
 
-def register_work(request):
-    return render(request, "register_work.html")
+def register_skills(request):
+    if request.method == "GET":
+        skills = list(Skills.objects.all())
+        
+        if len(skills) <= 20:
+            template_skills = ['Programming','Data Analysis','Project Management', 'Communication','Problem Solving', 
+                               'Creativity','Time Management','Critical Thinking','Teamwork','Adaptability']
+            skills += template_skills
+        else:
+            skills = Skills.objects.annotate(profile_count=Count('profile')).order_by('-profile_count')[:20]
+
+        return render(request, "register_work.html", {'Skills':skills})
+    else:
+        profile = Profile.objects.get(userID=request.user)
+        skillsList = request.POST.getlist('skills[]')
+        for skill in skillsList:
+            skl, cre = Skills.objects.get_or_create(name__iexact=skill)
+            if cre or not skl.name:
+                skl.name = skill
+                skl.save()
+                profile.skills.add(skl)
+
+
+def register_location(request):
+    if request.method == "GET":
+        #lagay mo dito yung return render
+        return HttpResponse('palitan mo nalang ng return render')
+    else:
+        house = "0646"
+        street = "purok 5"
+        baranggay = "san nicolas"
+        city = "Hagonoy"
+        province = "Bulacan"
+
+
+        profile = Profile.objects.get(userID=request.user)
+        
+        profile.civilStatus = 'M'
+        profile.houseNo = house
+        profile.street = street
+        profile.baranggay = baranggay
+        profile.city = city
+        profile.province = province
+        profile.save()
+
+        
+        

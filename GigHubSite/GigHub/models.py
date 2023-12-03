@@ -147,6 +147,11 @@ class collegeTaken(models.Model):
     major = models.ManyToManyField(Majors, blank=True)
     yearGraduated = models.CharField(max_length=4)
 
+    def __str__(self) -> str:
+        institutions = ", ".join([institution.name for institution in self.institution.all()])
+        degrees = ", ".join([degree.name for degree in self.degree.all()])
+        return f"{self.userID.userID.username} : {institutions} : {degrees} : {self.yearGraduated}"
+
     
 
     
