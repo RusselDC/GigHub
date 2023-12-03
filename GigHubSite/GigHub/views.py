@@ -93,7 +93,7 @@ def login(request):
             }
            
             
-            return redirect('GigHub:index')
+            return redirect('jobSeeker:userSettings')
         else:
             return render(request, template, context={'errorMsg' : 'Invalid Credentials'})
 
@@ -499,6 +499,7 @@ def register_moreInfo(request):
         profile.province = province
         profile.verificationLevel = 4
         profile.save()
+        return redirect('jobSeeker:userSettings')
 
         
         

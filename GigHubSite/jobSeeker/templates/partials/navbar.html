@@ -13,11 +13,11 @@
         </div>
         <div class="infoContainer d-flex align-items-center">
             <div class="imgLogin">
-                <img src="{{ '/media/site/Tadashi.png' }}" alt="">
+                <img src="{{ user.image.url }}" alt="">
             </div>
             <div class="greetings">
                 <span class="greet">Good Day!</span>
-                <div class="nameLogin">John Kenneth Arellano</div>
+                <div class="nameLogin">{{user.fName}} {{user.lName}}</div>
             </div>
         </div>
     </div>
