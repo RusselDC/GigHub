@@ -446,3 +446,10 @@ def register_location(request):
 def register_moreInfo(request):
     if request.method == "GET":
         return render(request, "register_moreInfo.html")
+    
+def privacy_policy(request):
+    if request.method == "GET":
+        return render(request, "privacy_policy.html")
+def aboutUs(request):
+    if request.method == "GET":
+        return render(request, "aboutUs.html")

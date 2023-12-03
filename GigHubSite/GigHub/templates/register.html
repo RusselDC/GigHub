@@ -49,12 +49,11 @@
         method="POST"
         enctype="multipart/form-data"
       >
-      {% if errorMSG %}
-      <div class="alert alert-danger" style="width: 100%;" role="alert">
-        {{ errorMSG }}
-      </div>
-      {% endif %}
-      {% csrf_token %}
+        {% if errorMSG %}
+        <div class="alert alert-danger" style="width: 100%" role="alert">
+          {{ errorMSG }}
+        </div>
+        {% endif %} {% csrf_token %}
         <div class="add-profile d-flex flex-column">
           <label for="profile_picture" class="img">
             <img
@@ -250,8 +249,17 @@
           <label for="iagree">
             Yes, I understand and agree to
             <img src="{{ '/media/site/header_logo.png' }}" alt="GigHub" />'s
-            terms of Service, including the User Agreement and Privacy
-            Policy.</label
+
+            <a href="{% url 'GigHub:privacy_policy' %}" target="blank"
+              >Terms of Service</a
+            >, including the
+            <a href="{% url 'GigHub:privacy_policy' %}" target="blank">
+              User Agreement</a
+            >
+            and
+            <a href="{% url 'GigHub:privacy_policy' %}" target="blank">
+              Privacy Policy</a
+            >.</label
           >
         </small>
 

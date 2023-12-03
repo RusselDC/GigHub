@@ -307,3 +307,7 @@ form .submit-form:hover {
   color: var(--mango-tango);
   transition: var(--transition-1);
 }
+
+label a {
+  color: var(--mango-tango);
+}
