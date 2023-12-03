@@ -91,9 +91,10 @@
                                 <div class="inputContainer">
                                     <label for="sex">Sex</label>
                                     <select class="inputBox" id="sex" name="sex">
-                                        <option value="{{user.sex}}" selected>{{user.get_sex_display}}</option>
-                                        <option value="{% if user.sex == 'M' %} F {% else %} M {% endif %}">{% if
-                                            user.sex == 'M' %} Female {% else %} Male {% endif %}</option>
+                                        <option value="{{ user.sex }}" selected>{{ user.get_sex_display }}</option>
+                                        <option value="{% if user.sex == 'M' %}F{% else %}M{% endif %}">
+                                            {% if user.sex == 'M' %}Female{% else %}Male{% endif %}
+                                        </option>
                                     </select>
                                     <div class="errorMessage"></div>
                                 </div>
