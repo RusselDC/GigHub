@@ -49,12 +49,11 @@
         method="POST"
         enctype="multipart/form-data"
       >
-      {% if errorMSG %}
-      <div class="alert alert-danger" style="width: 100%;" role="alert">
-        {{ errorMSG }}
-      </div>
-      {% endif %}
-      {% csrf_token %}
+        {% if errorMSG %}
+        <div class="alert alert-danger" style="width: 100%" role="alert">
+          {{ errorMSG }}
+        </div>
+        {% endif %} {% csrf_token %}
         <div class="add-profile d-flex flex-column">
           <label for="profile_picture" class="img">
             <img
@@ -68,7 +67,12 @@
           <label for="profile_picture" class="icon">
             <iconify-icon icon="ic:round-plus"></iconify-icon>
           </label>
-          <input type="file" id="profile_picture" name="picture" />
+          <input
+            type="file"
+            id="profile_picture"
+            accept=".jpeg,.png,.jpg,.gif"
+            name="picture"
+          />
         </div>
 
         <div class="form_labels col-12 fw-bold">Fullname</div>
@@ -232,26 +236,23 @@
             <div class="msg ps-1 bdate_msg">Birthday cannot be empty.</div>
           </div>
         </div>
-        <div class="d-flex gap-3 align-items-center mt-2 mb-3 w-100">
-          <div class="flex-grow-1"><hr class="hr" /></div>
-          <div class="or">or</div>
-          <div class="flex-grow-1"><hr class="hr" /></div>
-        </div>
-        <div
-          class="google_login px-3 shadow py-2 rounded-pill mt-3 d-flex align-items-center gap-1 fw-bold"
-        >
-          <iconify-icon icon="flat-color-icons:google" class="fs-3">
-          </iconify-icon>
-          Continue with Google
-        </div>
 
         <small class="w-80 my-4 d-flex align-items-center">
           <input type="checkbox" id="iagree" />
           <label for="iagree">
             Yes, I understand and agree to
             <img src="{{ '/media/site/header_logo.png' }}" alt="GigHub" />'s
-            terms of Service, including the User Agreement and Privacy
-            Policy.</label
+
+            <a href="{% url 'GigHub:privacy_policy' %}" target="blank"
+              >Terms of Service</a
+            >, including the
+            <a href="{% url 'GigHub:privacy_policy' %}" target="blank">
+              User Agreement</a
+            >
+            and
+            <a href="{% url 'GigHub:privacy_policy' %}" target="blank">
+              Privacy Policy</a
+            >.</label
           >
         </small>
 
@@ -260,6 +261,18 @@
           class="submit-form text-decoration-none rounded-pill px-4 py-1 fw-bold"
           >Register</a
         >
+        <div class="d-flex gap-3 align-items-center mt-3 mb-3 w-100">
+          <div class="flex-grow-1"><hr class="hr" /></div>
+          <div class="or">or</div>
+          <div class="flex-grow-1"><hr class="hr" /></div>
+        </div>
+        <div
+          class="google_login px-3 shadow py-2 rounded-pill d-flex align-items-center gap-1 fw-bold"
+        >
+          <iconify-icon icon="flat-color-icons:google" class="fs-3">
+          </iconify-icon>
+          Continue with Google
+        </div>
         <!-- <a
           class="submit-form text-decoration-none rounded-pill px-4 py-1 fw-bold"
           >Register</a

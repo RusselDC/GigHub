@@ -19,10 +19,9 @@
     />
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-   
 
     <link rel="stylesheet" href="{% static 'css/index.css' %}" />
-    
+
     <script src="{% static 'js/show-service-slide.js' %}"></script>
     <script src="{% static 'js/toggle-header-hamburger.js' %}"></script>
   </head>
@@ -57,7 +56,9 @@
             </div>
           </div>
           <div class="link">
-            <a href="" class="text-decoration-none">About Us</a>
+            <a href="{% url 'GigHub:aboutUs' %}" target="_blank" class="text-decoration-none"
+              >About Us</a
+            >
           </div>
         </div>
       </div>
@@ -201,7 +202,10 @@
                 </li>
                 <li class="mt-4">
                   <div class="label d-flex align-items-center gap-1 fw-bold">
-                    <img class="services-icon" src="{{ '/media/site/PostaJob.png' }}" />
+                    <img
+                      class="services-icon"
+                      src="{{ '/media/site/PostaJob.png' }}"
+                    />
                     POST A JOB
                   </div>
                   <div class="services-description">
@@ -475,10 +479,30 @@
         class="d-flex flex-column gap-3 justify-content-center align-items-center"
       >
         <div class="links w-100 d-flex justify-content-center gap-5">
-          <a class="text-decoration-none" href="">About Us</a>
-          <a class="text-decoration-none" href="">Contact Us</a>
-          <a class="text-decoration-none" href="">Privacy Policy</a>
-          <a class="text-decoration-none" href="">Terms & Conditions</a>
+          <a
+            class="text-decoration-none"
+            href="{% url 'GigHub:aboutUs' %}"
+            target="_blank"
+            >About Us</a
+          >
+          <a
+            class="text-decoration-none"
+            href="{% url 'GigHub:aboutUs' %}"
+            target="_blank"
+            >Contact Us</a
+          >
+          <a
+            class="text-decoration-none"
+            href="{% url 'GigHub:privacy_policy' %}"
+            target="_blank"
+            >Privacy Policy</a
+          >
+          <a
+            class="text-decoration-none"
+            href="{% url 'GigHub:privacy_policy' %}"
+            target="_blank"
+            >Terms & Conditions</a
+          >
         </div>
         <div class="copyright fs-4">© 2023 - 2024 GigHub® Global Inc.</div>
       </footer>

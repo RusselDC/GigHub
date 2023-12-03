@@ -500,4 +500,16 @@ def register_moreInfo(request):
         profile.verificationLevel = 4
         profile.save()
 
-        return HttpResponse('registration done')
+        
+        
+
+def register_moreInfo(request):
+    if request.method == "GET":
+        return render(request, "register_moreInfo.html")
+    
+def privacy_policy(request):
+    if request.method == "GET":
+        return render(request, "privacy_policy.html")
+def aboutUs(request):
+    if request.method == "GET":
+        return render(request, "aboutUs.html")
