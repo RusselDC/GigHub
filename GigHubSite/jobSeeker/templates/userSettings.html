@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
     <script src="bootstrap.js" defer></script> -->
-   
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
     <script src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations-v1.0.0.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -28,7 +28,7 @@
     <div class="bodyContainer" id="bodyContainer">
         {% include 'partials/navbar.html' with user=user %}
         {% include 'partials/sidebar.html' %}
-        
+
         <div class="mainContainer">
             <div class="formContainer">
                 <div class="formHeader">
@@ -53,8 +53,8 @@
                             <div class="inputGroup">
                                 <div class="inputContainer">
                                     <label for="fName">First Name</label>
-                                    <input type="text" class="inputBox" id="fName" value="{{user.fName}}" name="fName" placeholder="First Name"
-                                        autocomplete="off" spellcheck="false">
+                                    <input type="text" class="inputBox" id="fName" value="{{user.fName}}" name="fName"
+                                        placeholder="First Name" autocomplete="off" spellcheck="false">
                                     <div class="errorMessage"></div>
                                 </div>
                                 <div class="inputContainer">
@@ -65,13 +65,13 @@
                                 </div>
                                 <div class="inputContainer">
                                     <label for="lName">Last Name</label>
-                                    <input type="text" class="inputBox" id="lName" name="lName" value="{{user.lName}}" placeholder="Last Name"
-                                        autocomplete="off" spellcheck="false">
+                                    <input type="text" class="inputBox" id="lName" name="lName" value="{{user.lName}}"
+                                        placeholder="Last Name" autocomplete="off" spellcheck="false">
                                     <div class="errorMessage"></div>
                                 </div>
                                 <div class="inputContainer">
                                     <label for="suffix">Suffix Name</label>
-                                    <input type="text" class="inputBox" id="suffix" name="suffix" placeholder="Suffix" 
+                                    <input type="text" class="inputBox" id="suffix" name="suffix" placeholder="Suffix"
                                         autocomplete="off" spellcheck="false">
                                     <div class="errorMessage"></div>
                                 </div>
@@ -79,47 +79,50 @@
                             <div class="inputGroup">
                                 <div class="inputContainer">
                                     <label for="birthday">Birthdate</label>
-                                    <input type="date" class="inputBox" id="birthday" name="birthday" value="{{user.birthDate|date:'Y-m-d'}}"
-                                        onchange="CalculateAge(this)">
+                                    <input type="date" class="inputBox" id="birthday" name="birthday"
+                                        value="{{user.birthDate|date:'Y-m-d'}}" onchange="CalculateAge(this)">
                                     <div class="errorMessage"></div>
                                 </div>
                                 <div class="inputContainer">
                                     <label for="age">Age</label>
-                                    <input type="number" class="inputBox" id="age"  name="age" value={{age}} readonly>
+                                    <input type="number" class="inputBox" id="age" name="age" value={{age}} readonly>
                                     <div class="errorMessage"></div>
                                 </div>
                                 <div class="inputContainer">
                                     <label for="sex">Sex</label>
                                     <select class="inputBox" id="sex" name="sex">
                                         <option value="{{user.sex}}" selected>{{user.get_sex_display}}</option>
-                                        <option value="{% if user.sex == 'M' %} F {% else %} M {% endif %}">{% if user.sex == 'M' %} Female {% else %} Male {% endif %}</option>
+                                        <option value="{% if user.sex == 'M' %} F {% else %} M {% endif %}">{% if
+                                            user.sex == 'M' %} Female {% else %} Male {% endif %}</option>
                                     </select>
                                     <div class="errorMessage"></div>
                                 </div>
                                 <div class="inputContainer">
                                     <label for="number">Mobile Number</label>
-                                    <input type="number" class="inputBox" id="number" name="number" value="{{user.contactNo}}"
-                                        placeholder="09123456789" autocomplete="off" spellcheck="false">
+                                    <input type="number" class="inputBox" id="number" name="number"
+                                        value="{{user.contactNo}}" placeholder="09123456789" autocomplete="off"
+                                        spellcheck="false">
                                     <div class="errorMessage"></div>
                                 </div>
                             </div>
                             <div class="inputGroup1">
                                 <div class="inputContainer">
                                     <label for="status">Civil Status</label>
-                                    <select  class="inputBox" id="status" name="status"> 
+                                    <select class="inputBox" id="status" name="status">
                                         <option value="{{user.civilStatus}}">{{user.get_civilStatus_display}}</option>
                                         {% for key,value in statuses %}
-                                            {% if key is not user.civilStatus %}
-                                                <option value="{{key}}">{{value}}</option>
-                                            {% endif %}
+                                        {% if key is not user.civilStatus %}
+                                        <option value="{{key}}">{{value}}</option>
+                                        {% endif %}
                                         {% endfor %}
                                     </select>
                                     <div class="errorMessage"></div>
                                 </div>
                                 <div class="inputContainer">
                                     <label for="email">E-mail Address</label>
-                                    <input type="text" class="inputBox" id="email" name="email" value="{{request.user.username}}"
-                                        placeholder="email@email.com" autocomplete="off" spellcheck="false">
+                                    <input type="text" class="inputBox" id="email" name="email"
+                                        value="{{request.user.username}}" placeholder="email@email.com"
+                                        autocomplete="off" spellcheck="false">
                                     <div class="errorMessage"></div>
                                 </div>
                             </div>
@@ -132,7 +135,7 @@
                                         <option selected>Select Province</option>
                                     </select>
                                     <div class="errorMessage"></div>
-                                </div>  
+                                </div>
                                 <div class="inputContainer">
                                     <label for="city">Municipality/City </label>
                                     <input type="text" id="cityInput" name="city" style="display:none;">
