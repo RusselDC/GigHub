@@ -442,3 +442,7 @@ def register_location(request):
 
         
         
+
+def register_moreInfo(request):
+    if request.method == "GET":
+        return render(request, "register_moreInfo.html")

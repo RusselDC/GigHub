@@ -1,0 +1,210 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --topaz: #fec887;
+  --isabelline: #f6f2eb;
+  --lexend: "Lexend", sans-serif;
+  --mango-tango: #e57b1e;
+  --earth-yellow: #ecb067;
+  --transition-1: ease-in-out all 0.3s;
+  --black: #000;
+  --white: #fff;
+  --blue: #1213e5;
+  --gainsboro: #d9d9d9;
+  --white-smoke: #efefef;
+  --dark-gray: #acacac;
+  --gray: #808080;
+  --red: #d73d3d;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+body {
+  height: calc(100vh - 5rem);
+  width: 100%;
+
+  margin-top: 5rem;
+  font-family: var(--lexend);
+  -webkit-user-select: none; /* Disable selection for WebKit browsers */
+  -moz-user-select: none; /* Disable selection for Firefox */
+  -ms-user-select: none; /* Disable selection for Microsoft Edge */
+  user-select: none; /* Disable selection for all other browsers */
+  color: var(--black) !important;
+
+  background-color: var(--isabelline);
+  background-image: url(/assets/bg_body.png);
+  background-size: cover;
+  background-repeat: repeat-y;
+  font-size: 1rem;
+}
+content {
+  height: 90%;
+}
+header {
+  height: 5rem;
+  width: 100%;
+  z-index: 1000;
+
+  border-bottom: solid 3px var(--topaz) !important;
+  padding: 0 3rem;
+  background-color: var(--isabelline);
+}
+header a {
+  height: 100%;
+}
+header a img {
+  height: 80%;
+}
+header .register-link {
+  color: var(--black);
+  transition: var(--transition-1);
+  height: fit-content;
+}
+header .register-link:hover {
+  text-decoration: underline !important;
+  transition: var(--transition-1);
+}
+header .register-link span.sign-up-link {
+  color: var(--mango-tango);
+}
+
+@media screen and (max-width: 750px) {
+  header .register-link span {
+    display: none;
+  }
+  header .register-link span.sign-up-link {
+    display: block;
+  }
+}
+@media screen and (max-width: 650px) {
+  body {
+    font-size: 0.9rem;
+  }
+}
+content form {
+  background-color: var(--white);
+  width: 75%;
+  min-width: 350px;
+}
+.form_labels {
+  color: var(--mango-tango);
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25%,
+  75% {
+    transform: translateX(-3px);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+}
+form .submit-form {
+  color: var(--black);
+  cursor: pointer;
+  background-color: var(--topaz);
+  border: solid 3px var(--topaz);
+  transition: var(--transition-1);
+}
+form .submit-form:hover {
+  background-color: var(--isabelline);
+  border: solid 3px var(--mango-tango);
+  color: var(--mango-tango);
+  transition: var(--transition-1);
+}
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
+  border: solid 3px var(--mango-tango);
+  background-color: var(--mango-tango);
+}
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm:hover {
+  background-image: none !important;
+}
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm:focus {
+  box-shadow: none;
+}
+div:where(.swal2-container) button:where(.swal2-styled).swal2-cancel {
+  background-color: var(--white);
+  color: var(--mango-tango);
+  border: solid 3px var(--mango-tango);
+}
+div:where(.swal2-container) button:where(.swal2-styled).swal2-cancel:hover {
+  background-image: none !important;
+}
+div:where(.swal2-container) button:where(.swal2-styled).swal2-cancel:focus {
+  box-shadow: none;
+}
+/* excluside codes */
+.form_labels {
+  color: var(--mango-tango);
+}
+.msg {
+  font-size: 0.8rem;
+  color: var(--red);
+  visibility: hidden;
+}
+.msg.active {
+  visibility: visible;
+}
+input,
+.custom-select {
+  border: none;
+  outline: none;
+  background: none;
+
+  border: solid 4px var(--gainsboro);
+  background-color: var(--white-smoke);
+}
+.col3,
+.col2 {
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.col3 .colItem {
+  width: calc(calc(100% - 2rem) / 3);
+}
+.col2 .colItem {
+  width: calc(calc(100% - 2rem) / 2);
+}
+.custom-select {
+  position: relative;
+  width: 100%;
+}
+.options-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.options-list li {
+  cursor: pointer;
+}
+.options-list li:hover {
+  background-color: var(--topaz);
+}
+@media screen and (max-width: 1200px) {
+  .col2,
+  .col3 {
+    flex-direction: column;
+    gap: 0;
+    margin-top: 0;
+  }
+  .col2 .colItem,
+  .col3 .colItem {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
