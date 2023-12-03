@@ -222,7 +222,7 @@ body {
     grid-area: mainContainer;
     display: flex;
     justify-content: center;
-    background-color: #F6F2EB;
+    background-color: #ffffff;
     transition: all ease .3s;
 }
 
