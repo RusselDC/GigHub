@@ -211,3 +211,8 @@ $(document).ready(function () {
     }
   });
 });
+function setStatus(val)
+{
+  let statusInput = document.getElementById('statusInput');
+  statusInput.value = val;
+}

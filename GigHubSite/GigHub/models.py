@@ -29,6 +29,9 @@ class Majors(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name}"
+    
+class Industry(models.Model):
+    name = models.CharField(max_length=255)
 
 
 class Profile(models.Model):
@@ -47,7 +50,9 @@ class Profile(models.Model):
     STATUS_CHOICES = [
         ('S','Single'),
         ('M','Married'),
-        ('D','Divorced')
+        ('D','Divorced'),
+        ('W','Widowed'),
+        ('SE','Separated')
     ]
     civilStatus = models.CharField(max_length=20,choices=STATUS_CHOICES, null=True)
     GENDER_CHOICES = [
@@ -64,7 +69,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=255, null=True)
     province = models.CharField(max_length=255, null=True)
     skills = models.ManyToManyField(Skills)
-    is_verified = models.BooleanField(default=False)
+    verificationLevel = models.IntegerField(default=0)
 
 
     def __str__(self) -> str:
@@ -75,9 +80,13 @@ class Profile(models.Model):
 class Company(models.Model):
     employerID = models.ForeignKey(Profile, on_delete=models.CASCADE,limit_choices_to={'role': 'JP'})
     companyName = models.CharField(max_length=255)
-    companyAddress = models.CharField(max_length=255)
-    companyEmail = models.CharField(max_length=255)
-    contactNumber = models.CharField(max_length=20)
+    industry = models.ForeignKey(Industry, on_delete=models.DO_NOTHING, null=True)
+    empRange = models.CharField(max_length=50, null=True)
+    province = models.CharField(max_length=255, null=True)
+    city = models.CharField(max_length=255, null=True)
+    baranggay = models.CharField(max_length=255, null=True)
+    strt = models.CharField(max_length=255, null=True)
+    bldgNo = models.CharField(max_length=255, null=True)
     isActive = models.BooleanField(default=True)
 
     def __str__(self) -> str:

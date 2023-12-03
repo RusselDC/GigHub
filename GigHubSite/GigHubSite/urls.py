@@ -20,7 +20,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('GigHub.urls'))
+    path('',include('GigHub.urls')),
+    path('user/',include('jobSeeker.urls'))
 ]
 
 if settings.DEBUG:

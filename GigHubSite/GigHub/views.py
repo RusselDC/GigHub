@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.shortcuts import get_object_or_404
 from .models import Profile, passwordOTP, Skills,collegeTaken, Institution, Degrees, Majors, Company, JobPostings
 from django.test import Client
-from .utils import send_email
+from .utils import send_email, checkVerification, checkGuest, checkAuth
 from django.contrib.auth.models import User
 from datetime import datetime
 import random
@@ -16,6 +16,10 @@ from django.db.models import Count
 
 # Create your views here.
 def index(request):
+    #verifyMiddleware = checkVerification(Profile.objects.get(userID=request.user))
+    #if verifyMiddleware != True:
+    #    return redirect(f"{verifyMiddleware}")
+    
     template = "index.html"
     if request.user.is_authenticated:
         if 'user_profile' in request.session:
@@ -47,6 +51,10 @@ def index(request):
         return render(request, template)
 
 def login(request):
+    guest = checkGuest(request)
+    if guest != True:
+        return redirect(f"{guest}")
+
     template = "login.html"
     if request.method == "GET":
         if(request.user.is_authenticated):
@@ -94,6 +102,10 @@ def login(request):
         
     
 def forgot(request):
+    guest = checkGuest(request)
+    if guest != True:
+        return redirect(f"{guest}")
+    
     if request.method == "GET":
         template = "forgotPassword.html"
         return render(request, template)
@@ -122,6 +134,10 @@ def forgot(request):
 
     
 def verify(request):
+    guest = checkGuest(request)
+    if guest != True:
+        return redirect(f"{guest}")
+
     if request.method == "GET":
         template = "verify.html"
         return render(request, template, context={'creds':request.session['passwordOTP']})
@@ -145,6 +161,10 @@ def verify(request):
             
         
 def changePass(request):
+    guest = checkGuest(request)
+    if guest != True:
+        return redirect(f"{guest}")
+
     if request.method == "GET":
         template = "newPassword.html"
         return render(request, template, context={'creds':request.session['passwordOTP']})
@@ -233,6 +253,11 @@ def Profilechange(request):
         #return render(request, template="edit.html",context={'success':'Profile has been saved'})
 
 def register(request):
+    guest = checkGuest(request)
+    if guest != True:
+        return redirect(f"{guest}")
+
+
     if request.method == "GET":
         return render(request, "register.html")
     else :
@@ -261,11 +286,17 @@ def register(request):
             return render(request, "register.html", {'errorMSG': 'Email Already Used'})
         user = User.objects.create_user(username=email, password=password)
         profile = Profile.objects.create(userID=user,image=imgSave,role=role,fName=fname,mName=mname,lName=lname,contactNo=contact,sex=sex,birthDate=bdate)
+        profile.verificationLevel = 1
+        profile.save()
         auth_login(request, user)
         return redirect('GigHub:register_education')
 
 
 def addSkills(request):
+    guest = checkAuth(request)
+    if guest != True:
+        return redirect(f"{guest}")
+    
     if not request.user.is_authenticated:
         return redirect('GigHub:index')
     else:
@@ -281,6 +312,10 @@ def addSkills(request):
             profile.skills.add(skill)
 
 def addCollege(request):
+    guest = checkAuth(request)
+    if guest != True:
+        return redirect(f"{guest}")
+    
     profile = Profile.objects.get(userID=request.user)
     institution_name = "Bulacan State University"
     degree_name = "Bachelor of Science in Information Technology"
@@ -307,6 +342,10 @@ def addCollege(request):
     college_taken_instance.save()
 
 def addCompany(request):
+    guest = checkAuth(request)
+    if guest != True:
+        return redirect(f"{guest}")
+    
     profile = Profile.objects.get(userID=request.user)
     coName = "DenCare"
     coAddress = "Hagonoy, Bulacan"
@@ -315,6 +354,10 @@ def addCompany(request):
     Company.objects.create(employerID=profile, companyName=coName, companyAddress=coAddress, companyEmail=coEmail, contactNumber=coNumber)
 
 def addJobPosting(request):
+    guest = checkAuth(request)
+    if guest != True:
+        return redirect(f"{guest}")
+    
     profile = Profile.objects.get(userID=request.user)
     company = Company.objects.get(employerID=profile)
     jTitle = "Backend Developer"
@@ -343,6 +386,10 @@ def addJobPosting(request):
             newJ.save()
 
 def register_education(request):
+    guest = checkAuth(request)
+    if guest != True:
+        return redirect(f"{guest}")
+    
     if request.method == "GET":
         return render(request, "register_education.html",{'Institutions': Institution.objects.all() , 'Courses' : Degrees.objects.all()})
     else:
@@ -372,6 +419,8 @@ def register_education(request):
         if spec is not "":
             college_taken_instance.major.add(maj)
         college_taken_instance.save()
+        profile.verificationLevel = 2
+        profile.save()
         return redirect('GigHub:register_skills')
 
 
@@ -396,6 +445,10 @@ def getMajors(request,degreeName):
 
 
 def register_skills(request):
+    guest = checkAuth(request)
+    if guest != True:
+        return redirect(f"{guest}")
+    
     if request.method == "GET":
         skills = list(Skills.objects.all())
         
@@ -416,33 +469,35 @@ def register_skills(request):
                 skl.name = skill
                 skl.save()
                 profile.skills.add(skl)
-
-
-def register_location(request):
+        profile.verificationLevel = 3
+        profile.save()
+        return redirect('GigHub:register_moreInfo')
+        
+def register_moreInfo(request):
+    guest = checkAuth(request)
+    if guest != True:
+        return redirect(f"{guest}")
+    
     if request.method == "GET":
-        #lagay mo dito yung return render
-        return HttpResponse('palitan mo nalang ng return render')
+        return render(request, "register_moreInfo.html")
     else:
-        house = "0646"
-        street = "purok 5"
-        baranggay = "san nicolas"
-        city = "Hagonoy"
-        province = "Bulacan"
+        house = request.POST['house']
+        street = request.POST['street']
+        baranggay = request.POST['baranggay']
+        city = request.POST['city']
+        province = request.POST['province']
+        status = request.POST['status']
 
 
         profile = Profile.objects.get(userID=request.user)
         
-        profile.civilStatus = 'M'
+        profile.civilStatus = status
         profile.houseNo = house
         profile.street = street
         profile.baranggay = baranggay
         profile.city = city
         profile.province = province
+        profile.verificationLevel = 4
         profile.save()
 
-        
-        
-
-def register_moreInfo(request):
-    if request.method == "GET":
-        return render(request, "register_moreInfo.html")
+        return HttpResponse('registration done')

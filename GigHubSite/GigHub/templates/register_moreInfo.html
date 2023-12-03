@@ -44,12 +44,15 @@
         id="regForm"
         class="rounded-4 shadow py-4 px-5 d-flex flex-column align-items-center"
         method="POST"
+        action="{% url 'GigHub:register_moreInfo' %}"
         enctype="multipart/form-data"
       >
+      {% csrf_token %}
         <div class="form_labels col-12 fw-bold">Home Address</div>
         <div class="d-flex col3 w-100">
           <div class="div colItem">
             <input
+              name="house"
               type="text"
               id="hnum"
               class="rounded-2 px-2 py-1 w-100"
@@ -59,6 +62,7 @@
           </div>
           <div class="div colItem">
             <input
+              name="street"
               type="text"
               id="street"
               class="rounded-2 px-2 py-1 w-100"
@@ -68,6 +72,7 @@
           </div>
           <div class="div colItem">
             <input
+              name="baranggay"
               type="text"
               id="brngy"
               class="rounded-2 px-2 py-1 w-100"
@@ -79,6 +84,7 @@
         <div class="d-flex col2 w-100">
           <div class="div colItem">
             <input
+              name="city"
               type="text"
               id="city"
               class="rounded-2 px-2 py-1 w-100"
@@ -88,6 +94,7 @@
           </div>
           <div class="div colItem">
             <input
+              name="province"
               type="text"
               id="province"
               class="rounded-2 px-2 py-1 w-100"
@@ -104,20 +111,21 @@
             Select Civil Status
             <iconify-icon icon="mingcute:down-fill"></iconify-icon>
           </span>
+          <input type="hidden" id="statusInput" name="status">
           <ul class="options-list rounded-3 shadow">
-            <li class="rounded-2 mx-2 my-1 px-2 py-1" data-value="single">
+            <li class="rounded-2 mx-2 my-1 px-2 py-1" data-value="S" onclick="setStatus(this.getAttribute('data-value'))">
               Single
             </li>
-            <li class="rounded-2 mx-2 my-1 px-2 py-1" data-value="married">
+            <li class="rounded-2 mx-2 my-1 px-2 py-1" data-value="M" onclick="setStatus(this.getAttribute('data-value'))">
               Married
             </li>
-            <li class="rounded-2 mx-2 my-1 px-2 py-1" data-value="divorced">
+            <li class="rounded-2 mx-2 my-1 px-2 py-1" data-value="D" onclick="setStatus(this.getAttribute('data-value'))">
               Divorced
             </li>
-            <li class="rounded-2 mx-2 my-1 px-2 py-1" data-value="widowed">
+            <li class="rounded-2 mx-2 my-1 px-2 py-1" data-value="W" onclick="setStatus(this.getAttribute('data-value'))">
               Widowed
             </li>
-            <li class="rounded-2 mx-2 my-1 px-2 py-1" data-value="separated">
+            <li class="rounded-2 mx-2 my-1 px-2 py-1" data-value="SE" onclick="setStatus(this.getAttribute('data-value'))">
               Separated
             </li>
           </ul>
@@ -135,4 +143,6 @@
     <script src="{% static 'js/custom_select.js' %}"></script>
     <script src="{% static 'js/moreInfo_validate.js' %}"></script>
   </body>
+
+
 </html>
