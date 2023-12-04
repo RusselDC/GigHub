@@ -34,10 +34,11 @@
                     <span class="formTitles active">Profile</span>
                     <span class="formTitles">Education</span>
                     <span class="formTitles">Work Status</span>
+                    <span class="formTitles">Account Security</span>
                 </div>
                 <div class="formContents">
                     <form action="" id="profileForm">
-                    {% csrf_token %}
+                        {% csrf_token %}
                         <div class="formContent active">
                             <div class="formGroup">
                                 <label for="profileImg">
@@ -50,7 +51,7 @@
                                 </div>
                             </div>
                             <div class="formTitle">Personal Details</div>
-                            <div class="inputGroup">
+                            <div class="inputGroup2">
                                 <div class="inputContainer">
                                     <label for="fName">First Name</label>
                                     <input type="text" class="inputBox" id="fName" value="{{user.fName}}" name="fName"
@@ -69,14 +70,33 @@
                                         placeholder="Last Name" autocomplete="off" spellcheck="false">
                                     <div class="errorMessage"></div>
                                 </div>
+                            </div>
+                            <div class="inputGroup2">
                                 <div class="inputContainer">
                                     <label for="suffix">Suffix Name</label>
                                     <input type="text" class="inputBox" id="suffix" name="suffix" placeholder="Suffix"
                                         autocomplete="off" spellcheck="false">
                                     <div class="errorMessage"></div>
                                 </div>
+                                <div class="inputContainer">
+                                    <label for="sex">Sex</label>
+                                    <select class="inputBox" id="sex" name="sex">
+                                        <option value="{{ user.sex }}" selected>{{ user.get_sex_display }}</option>
+                                        <option value="{% if user.sex == 'M' %}F{% else %}M{% endif %}">
+                                            {% if user.sex == 'M' %}Female{% else %}Male{% endif %}
+                                        </option>
+                                    </select>
+                                    <div class="errorMessage"></div>
+                                </div>
+                                <div class="inputContainer">
+                                    <label for="number">Mobile Number</label>
+                                    <input type="number" class="inputBox" id="number" name="number"
+                                        value="{{user.contactNo}}" placeholder="09123456789" autocomplete="off"
+                                        spellcheck="false">
+                                    <div class="errorMessage"></div>
+                                </div>
                             </div>
-                            <div class="inputGroup">
+                            <div class="inputGroup2">
                                 <div class="inputContainer">
                                     <label for="birthday">Birthdate</label>
                                     <input type="date" class="inputBox" id="birthday" name="birthday"
@@ -89,26 +109,6 @@
                                     <div class="errorMessage"></div>
                                 </div>
                                 <div class="inputContainer">
-                                    <label for="sex">Sex</label>
-                                    <select class="inputBox" id="sex" name="sex">
-                                        <option value="{{ user.sex }}" selected>{{ user.get_sex_display }}</option>
-                                        <option value="{% if user.sex == 'M' %}F{% else %}M{% endif %}">
-                                            {% if user.sex == 'M' %}Female{% else %}Male{% endif %}
-                                        </option>
-                                    </select>
-
-                                    <div class="errorMessage"></div>
-                                </div>
-                                <div class="inputContainer">
-                                    <label for="number">Mobile Number</label>
-                                    <input type="number" class="inputBox" id="number" name="number"
-                                        value="{{user.contactNo}}" placeholder="09123456789" autocomplete="off"
-                                        spellcheck="false">
-                                    <div class="errorMessage"></div>
-                                </div>
-                            </div>
-                            <div class="inputGroup1">
-                                <div class="inputContainer">
                                     <label for="status">Civil Status</label>
                                     <select class="inputBox" id="status" name="status">
                                         <option value="{{user.civilStatus}}">{{user.get_civilStatus_display}}</option>
@@ -118,13 +118,6 @@
                                         {% endif %}
                                         {% endfor %}
                                     </select>
-                                    <div class="errorMessage"></div>
-                                </div>
-                                <div class="inputContainer">
-                                    <label for="email">E-mail Address</label>
-                                    <input type="text" class="inputBox" id="email" name="email"
-                                        value="{{request.user.username}}" placeholder="email@email.com"
-                                        autocomplete="off" spellcheck="false">
                                     <div class="errorMessage"></div>
                                 </div>
                             </div>
@@ -152,33 +145,6 @@
                                     <select id="barangay" class="inputBox" onchange="showValue(this,barangayInput )">
                                         <option selected>Select Barangay</option>
                                     </select>
-                                    <div class="errorMessage"></div>
-                                </div>
-                            </div>
-                            <div class="formTitle">Password & Security</div>
-                            <div class="inputGroup2">
-                                <div class="inputContainer">
-                                    <label for="oldPassword">Old Password</label>
-                                    <input type="password" class="inputBox" id="oldPassword" name="oldPassword"
-                                        placeholder="Old Password" autocomplete="off" spellcheck="false">
-                                    <iconify-icon icon="mdi:eye" class="eyeOpen"></iconify-icon>
-                                    <iconify-icon icon="mdi:eye-off" class="eyeClose"></iconify-icon>
-                                    <div class="errorMessage"></div>
-                                </div>
-                                <div class="inputContainer">
-                                    <label for="newPassword">New Password</label>
-                                    <input type="password" class="inputBox" id="newPassword" name="newPassword"
-                                        placeholder="New Password" autocomplete="off" spellcheck="false">
-                                    <iconify-icon icon="mdi:eye" class="eyeOpen"></iconify-icon>
-                                    <iconify-icon icon="mdi:eye-off" class="eyeClose"></iconify-icon>
-                                    <div class="errorMessage"></div>
-                                </div>
-                                <div class="inputContainer">
-                                    <label for="confirmPassword">Confirm Password</label>
-                                    <input type="password" class="inputBox" id="confirmPassword" name="confirmPassword"
-                                        placeholder="Confirm Password" autocomplete="off" spellcheck="false">
-                                    <iconify-icon icon="mdi:eye" class="eyeOpen"></iconify-icon>
-                                    <iconify-icon icon="mdi:eye-off" class="eyeClose"></iconify-icon>
                                     <div class="errorMessage"></div>
                                 </div>
                             </div>
@@ -222,6 +188,65 @@
 
                 </div>
                 <div class="formContent">asdaad</div>
+                <div class="formContent">
+                    <form action="" id="changeEmailForm">
+                        <div class="formTitle">Change Email</div>
+                        <div class="inputGroup1">
+                            <div class="inputContainer">
+                                <label for="email">E-mail Address</label>
+                                <input type="text" class="inputBox" id="email" name="email"
+                                    value="{{request.user.username}}" placeholder="email@email.com" autocomplete="off"
+                                    spellcheck="false">
+                                <div class="errorMessage"></div>
+                            </div>
+                            <div class="inputContainer">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" class="inputBox" id="currentPassword" name="currentPassword"
+                                    placeholder="Current Password" autocomplete="off" spellcheck="false">
+                                <iconify-icon icon="mdi:eye" class="eyeOpen"></iconify-icon>
+                                <iconify-icon icon="mdi:eye-off" class="eyeClose"></iconify-icon>
+                                <div class="errorMessage"></div>
+                            </div>
+                        </div>
+                        <div class="buttonContainer">
+                            <button class="mainButton" type="button" onclick="ChangeEmail(changeEmailForm)">Change
+                                Email</button>
+                        </div>
+                    </form>
+                    <form action="" id="changePasswordForm">
+                        <div class="formTitle">Change Password</div>
+                        <div class="inputGroup2">
+                            <div class="inputContainer">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" class="inputBox" id="newPassword" name="newPassword"
+                                    placeholder="New Password" autocomplete="off" spellcheck="false">
+                                <iconify-icon icon="mdi:eye" class="eyeOpen"></iconify-icon>
+                                <iconify-icon icon="mdi:eye-off" class="eyeClose"></iconify-icon>
+                                <div class="errorMessage"></div>
+                            </div>
+                            <div class="inputContainer">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input type="password" class="inputBox" id="confirmPassword" name="confirmPassword"
+                                    placeholder="Confirm Password" autocomplete="off" spellcheck="false">
+                                <iconify-icon icon="mdi:eye" class="eyeOpen"></iconify-icon>
+                                <iconify-icon icon="mdi:eye-off" class="eyeClose"></iconify-icon>
+                                <div class="errorMessage"></div>
+                            </div>
+                            <div class="inputContainer">
+                                <label for="oldPassword">Old Password</label>
+                                <input type="password" class="inputBox" id="oldPassword" name="oldPassword"
+                                    placeholder="Old Password" autocomplete="off" spellcheck="false">
+                                <iconify-icon icon="mdi:eye" class="eyeOpen"></iconify-icon>
+                                <iconify-icon icon="mdi:eye-off" class="eyeClose"></iconify-icon>
+                                <div class="errorMessage"></div>
+                            </div>
+                        </div>
+                        <div class="buttonContainer">
+                            <button class="mainButton" type="button" onclick="ChangePassword(changePasswordForm)">Change
+                                Password</button>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="profileView"></div>
         </content>
