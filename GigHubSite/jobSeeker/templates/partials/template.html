@@ -1,0 +1,79 @@
+<sidebar
+  class="shadow d-flex flex-column align-items-center justify-content-between py-3 gap-3"
+>
+  <div class="logo">
+    <img src="{{ '/media/site/logo.png' }}" alt="logo" />
+    <img src="{{ '/media/site/logoText.png' }}" />
+  </div>
+
+  <div class="d-flex flex-column flex-grow-1 justify-content-between">
+    <div class="tabs_list d-flex flex-column">
+      <div
+        class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 active"
+      >
+        <iconify-icon icon="ic:round-dashboard"></iconify-icon>
+        <span>Dashboard Employer</span>
+      </div>
+
+      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
+        <iconify-icon icon="iconamoon:profile-circle-fill"></iconify-icon>
+        <span>Profile Employer</span>
+      </div>
+
+      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
+        <iconify-icon icon="solar:case-bold"></iconify-icon>
+        <span>Work</span>
+      </div>
+
+      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
+        <iconify-icon icon="solar:case-bold"></iconify-icon>
+        <span>Company</span>
+      </div>
+
+      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
+        <i class="fa-solid fa-user-tie"></i>
+        <span>Job</span>
+      </div>
+
+      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
+        <i class="fa-solid fa-user-tie"></i>
+        <span>Job</span>
+      </div>
+    </div>
+
+    <div
+      class="logout tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2"
+    >
+      <iconify-icon icon="basil:logout-solid"></iconify-icon>
+      <span>Logout</span>
+    </div>
+  </div>
+</sidebar>
+<header class="px-3 d-flex align-items-center gap-2 justify-content-between">
+  <div class="left d-flex align-items-center gap-2">
+    <iconify-icon icon="ci:hamburger-md" class="burger"></iconify-icon>
+
+    <div class="search_header d-flex align-items-center rounded-2">
+      <input type="text" placeholder="Search" class="px-2 py-1" />
+      <button class="d-flex">
+        <iconify-icon
+          icon="material-symbols:search-rounded"
+          class="px-2 py-1"
+        ></iconify-icon>
+      </button>
+    </div>
+  </div>
+  <div class="right d-flex align-items-center gap-2">
+    <iconify-icon icon="basil:notification-solid" class="notif"></iconify-icon>
+    <img
+      src="{{ user.image.url }}"
+      alt="my_profile"
+      class="rounded-circle shadow-sm"
+    />
+    <div class="greetings fw-bold lh-sm">
+      Good Day!
+      <br />
+      <span>{{user.fName}} {{user.lName}}</span>
+    </div>
+  </div>
+</header>

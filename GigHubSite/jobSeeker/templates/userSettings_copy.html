@@ -1,0 +1,601 @@
+<!-- original ni kenneth -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script src="bootstrap.js" defer></script> -->
+
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"
+    ></script>
+    <script src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations-v1.0.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script
+      src="https://kit.fontawesome.com/275edc9f9d.js"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <script src="{% static 'js/all.js' %}" defer></script>
+    <script src="{% static 'js/locationDropdown.js' %}" defer></script>
+    <script src="{% static 'js/profile.js' %}" defer></script>
+    <link rel="website icon" type="png " href="{{ '/media/site/logo.png' }}" />
+    <link rel="stylesheet" href="{% static 'css/all.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+    <title>Profile</title>
+  </head>
+
+  <body onload="Listeners()">
+    <div class="bodyContainer" id="bodyContainer">
+      {% include 'partials/navbar.html' with user=user %} {% include
+      'partials/sidebar.html' %}
+
+      <div class="mainContainer">
+        <div class="formContainer">
+          <div class="formHeader">
+            <span class="formTitles active">Profile</span>
+            <span class="formTitles">Education</span>
+            <span class="formTitles">Work Status</span>
+          </div>
+          <div class="formContents">
+            <form action="" id="profileForm">
+              {% csrf_token %}
+              <div class="formContent active">
+                <div class="formGroup">
+                  <label for="profileImg">
+                    <iconify-icon icon="mdi:camera"></iconify-icon>
+                  </label>
+                  <div
+                    class="imgContainer"
+                    ondrop="handleDrop(event)"
+                    ondragover="handleDragOver(event)"
+                  >
+                    <img src="{{user.image.url}}" alt="" id="picture" />
+                    <input
+                      type="file"
+                      style="display: none"
+                      id="profileImg"
+                      name="profileImg"
+                      onchange="previewImage(event)"
+                    />
+                  </div>
+                </div>
+                <div class="formTitle">Personal Details</div>
+                <div class="inputGroup">
+                  <div class="inputContainer">
+                    <label for="fName">First Name</label>
+                    <input
+                      type="text"
+                      class="inputBox"
+                      id="fName"
+                      value="{{user.fName}}"
+                      name="fName"
+                      placeholder="First Name"
+                      autocomplete="off"
+                      spellcheck="false"
+                    />
+                    <div class="errorMessage"></div>
+                  </div>
+                  <div class="inputContainer">
+                    <label for="mName">Middle Name</label>
+                    <input
+                      type="text"
+                      class="inputBox"
+                      id="mName"
+                      name="mName"
+                      value="{{user.mName}}"
+                      placeholder="Middle Name"
+                      autocomplete="off"
+                      spellcheck="false"
+                    />
+                    <div class="errorMessage"></div>
+                  </div>
+                  <div class="inputContainer">
+                    <label for="lName">Last Name</label>
+                    <input
+                      type="text"
+                      class="inputBox"
+                      id="lName"
+                      name="lName"
+                      value="{{user.lName}}"
+                      placeholder="Last Name"
+                      autocomplete="off"
+                      spellcheck="false"
+                    />
+                    <div class="errorMessage"></div>
+                  </div>
+                  <div class="inputContainer">
+                    <label for="suffix">Suffix Name</label>
+                    <input
+                      type="text"
+                      class="inputBox"
+                      id="suffix"
+                      name="suffix"
+                      placeholder="Suffix"
+                      autocomplete="off"
+                      spellcheck="false"
+                    />
+                    <div class="errorMessage"></div>
+                  </div>
+                </div>
+                <div class="inputGroup">
+                  <div class="inputContainer">
+                    <label for="birthday">Birthdate</label>
+                    <input
+                      type="date"
+                      class="inputBox"
+                      id="birthday"
+                      name="birthday"
+                      value="{{user.birthDate|date:'Y-m-d'}}"
+                      onchange="CalculateAge(this)"
+                    />
+                    <div class="errorMessage"></div>
+                  </div>
+                  <div class="inputContainer">
+                    <label for="age">Age</label>
+                    <input
+                      type="number"
+                      class="inputBox"
+                      id="age"
+                      name="age"
+                      value="{{age}}"
+                      readonly
+                    />
+                    <div class="errorMessage"></div>
+                  </div>
+                  <div class="inputContainer">
+                    <label for="sex">Sex</label>
+                    <select class="inputBox" id="sex" name="sex">
+                      <option value="{{ user.sex }}" selected>
+                        {{ user.get_sex_display }}
+                      </option>
+                      <option
+                        value="{% if user.sex == 'M' %}F{% else %}M{% endif %}"
+                      >
+                        {% if user.sex == 'M' %}Female{% else %}Male{% endif %}
+                      </option>
+                    </select>
+
+                    <div class="errorMessage"></div>
+                  </div>
+                  <div class="inputContainer">
+                    <label for="number">Mobile Number</label>
+                    <input
+                      type="number"
+                      class="inputBox"
+                      id="number"
+                      name="number"
+                      value="{{user.contactNo}}"
+                      placeholder="09123456789"
+                      autocomplete="off"
+                      spellcheck="false"
+                    />
+                    <div class="errorMessage"></div>
+                  </div>
+                </div>
+                <div class="inputGroup1">
+                  <div class="inputContainer">
+                    <label for="status">Civil Status</label>
+                    <select class="inputBox" id="status" name="status">
+                      <option value="{{user.civilStatus}}">
+                        {{user.get_civilStatus_display}}
+                      </option>
+                      {% for key,value in statuses %} {% if key is not
+                      user.civilStatus %}
+                      <option value="{{key}}">{{value}}</option>
+                      {% endif %} {% endfor %}
+                    </select>
+                    <div class="errorMessage"></div>
+                  </div>
+                  <div class="inputContainer">
+                    <label for="email">E-mail Address</label>
+                    <input
+                      type="text"
+                      class="inputBox"
+                      id="email"
+                      name="email"
+                      value="{{request.user.username}}"
+                      placeholder="email@email.com"
+                      autocomplete="off"
+                      spellcheck="false"
+                    />
+                    <div class="errorMessage"></div>
+                  </div>
+                </div>
+                <div class="inputGroup2">
+                  <div class="inputContainer">
+                    <label for="province">Province</label>
+                    <input
+                      type="text"
+                      id="provinceInput"
+                      name="province"
+                      style="display: none"
+                      value=""
+                    />
+                    <select
+                      id="province"
+                      class="inputBox"
+                      onchange="showValue(this,provinceInput)"
+                    >
+                      <option selected>Select Province</option>
+                    </select>
+                    <div class="errorMessage"></div>
+                  </div>
+                  <div class="inputContainer">
+                    <label for="city">Municipality/City </label>
+                    <input
+                      type="text"
+                      id="cityInput"
+                      name="city"
+                      style="display: none"
+                    />
+                    <select
+                      id="city"
+                      class="inputBox"
+                      onchange="showValue(this,cityInput )"
+                    >
+                      <option selected>Select Municipality/City</option>
+                    </select>
+                    <div class="errorMessage"></div>
+                  </div>
+                  <div class="inputContainer">
+                    <label for="barangay">Barangay </label>
+                    <input
+                      type="text"
+                      id="barangayInput"
+                      name="barangay"
+                      style="display: none"
+                    />
+                    <select
+                      id="barangay"
+                      class="inputBox"
+                      onchange="showValue(this,barangayInput )"
+                    >
+                      <option selected>Select Barangay</option>
+                    </select>
+                    <div class="errorMessage"></div>
+                  </div>
+                </div>
+                <div class="formTitle">Password & Security</div>
+                <div class="inputGroup2">
+                  <div class="inputContainer">
+                    <label for="oldPassword">Old Password</label>
+                    <input
+                      type="password"
+                      class="inputBox"
+                      id="oldPassword"
+                      name="oldPassword"
+                      placeholder="Old Password"
+                      autocomplete="off"
+                      spellcheck="false"
+                    />
+                    <iconify-icon icon="mdi:eye" class="eyeOpen"></iconify-icon>
+                    <iconify-icon
+                      icon="mdi:eye-off"
+                      class="eyeClose"
+                    ></iconify-icon>
+                    <div class="errorMessage"></div>
+                  </div>
+                  <div class="inputContainer">
+                    <label for="newPassword">New Password</label>
+                    <input
+                      type="password"
+                      class="inputBox"
+                      id="newPassword"
+                      name="newPassword"
+                      placeholder="New Password"
+                      autocomplete="off"
+                      spellcheck="false"
+                    />
+                    <iconify-icon icon="mdi:eye" class="eyeOpen"></iconify-icon>
+                    <iconify-icon
+                      icon="mdi:eye-off"
+                      class="eyeClose"
+                    ></iconify-icon>
+                    <div class="errorMessage"></div>
+                  </div>
+                  <div class="inputContainer">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input
+                      type="password"
+                      class="inputBox"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      placeholder="Confirm Password"
+                      autocomplete="off"
+                      spellcheck="false"
+                    />
+                    <iconify-icon icon="mdi:eye" class="eyeOpen"></iconify-icon>
+                    <iconify-icon
+                      icon="mdi:eye-off"
+                      class="eyeClose"
+                    ></iconify-icon>
+                    <div class="errorMessage"></div>
+                  </div>
+                </div>
+                <div class="buttonContainer">
+                  <button class="mainButton" type="button" onclick="Validate()">
+                    Save
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="formContent">
+            <div class="formTitle">
+              <span>Educational Attainment</span>
+              <button
+                class="mainButton"
+                type="button"
+                onclick="ShowForms(educAddForm, formsInput)"
+              >
+                Add
+              </button>
+            </div>
+            <!-- <div class="educationalAttainmentContainer">
+                        <div class="educationContainer">
+                            <div class="educationTitle">
+                                <span id="schoolEd">Bulacan State University</span>
+                                <span id="awardEd">Magna Cum Laude</span>
+                            </div>
+                            <div class="educationTitle">
+                                <div class="courseEd">
+                                    <span id="courseEd">Bachelor of Science in Information and Technology</span>
+                                    <span id="majorEd">Major in Web and Mobile Development</span>
+                                </div>
+                                <span id="dateEd">Class of 2023</span>
+                            </div>
+                            <div class="educOptions">
+                                <button>
+                                    <iconify-icon icon="solar:pen-bold"></iconify-icon>
+                                    Edit
+                                </button>
+                                <button>
+                                    <iconify-icon icon="tabler:trash-filled" onclick="DeleteEducation()"></iconify-icon>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div> -->
+          </div>
+          <div class="formContent">asdaad</div>
+        </div>
+        <div class="profileView"></div>
+      </div>
+      <div class="formsInput1" id="formsInput1">
+        <form action="" id="awardAddForm">
+          <div class="formTitle">
+            <span id="formTitle">Award</span>
+            <iconify-icon
+              icon="ph:x-bold"
+              onclick="Closeform(awardAddForm,formsInput1)"
+            ></iconify-icon>
+          </div>
+          <div class="inputContainer2">
+            <label for="awardName">Name</label>
+            <input
+              type="text"
+              class="inputBox"
+              id="awardName"
+              placeholder=""
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <div class="errorMessage"></div>
+          </div>
+          <!-- <div class="inputContainer2">
+                    <label for="">School</label>
+                    <input type="text" class="inputBox" id="" name="" placeholder="" autocomplete="off"
+                        spellcheck="false">
+                    <div class="errorMessage"></div>
+                </div> -->
+          <div class="inputContainer2">
+            <label for="awardDate">Date Received</label>
+            <input
+              type="date"
+              class="inputBox"
+              id="awardDate"
+              name="awardDate"
+              onchange="ValidateDate(this)"
+            />
+            <div class="errorMessage"></div>
+          </div>
+          <div class="buttonContainer">
+            <button type="button" class="mainButton" id="addDetailsButton">
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="formsInput" id="formsInput">
+        <form action="" id="educAddForm">
+          <div class="formTitle">
+            <span>Educational Attainment</span>
+            <iconify-icon
+              icon="ph:x-bold"
+              onclick="Closeform(educAddForm,formsInput)"
+            ></iconify-icon>
+          </div>
+          <div class="educAddForm">
+            <div class="educData">
+              <div class="inputContainer2">
+                <label for="schoolAttended">Institution Attended</label>
+                <input
+                  list="schoolAttendeds"
+                  class="inputBox"
+                  id="schoolAttended"
+                  name="schoolAttended"
+                  placeholder="Civil Status"
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+                <datalist id="schoolAttendeds">
+                  <option value="Dyan lang"></option>
+                </datalist>
+                <div class="errorMessage"></div>
+              </div>
+              <div class="inputContainer2">
+                <label for="course">Course</label>
+                <input
+                  type="text"
+                  class="inputBox"
+                  id="course"
+                  name="course"
+                  placeholder="Civil Status"
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+                <div class="errorMessage"></div>
+              </div>
+              <div class="inputContainer2">
+                <label for="major">Major</label>
+                <input
+                  type="text"
+                  class="inputBox"
+                  id="major"
+                  name="major"
+                  placeholder="Civil Status"
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+                <div class="errorMessage"></div>
+              </div>
+              <div class="inputContainer2">
+                <label for="award">Award</label>
+                <input
+                  type="text"
+                  class="inputBox"
+                  id="award"
+                  name="award"
+                  placeholder="Civil Status"
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+                <div class="errorMessage"></div>
+              </div>
+              <div class="inputContainer2">
+                <label for="graduated">Year graduated</label>
+                <input
+                  type="date"
+                  class="inputBox"
+                  id="graduated"
+                  name="graduated"
+                  onchange="ValidateDate(this)"
+                />
+                <div class="errorMessage"></div>
+              </div>
+            </div>
+            <div class="educData">
+              <div class="formTitle">Accomplishments</div>
+              <div class="honorsContainer" id="honorsContainer1">
+                <div class="formTitle1">Honors</div>
+                <div class="formTitle2">
+                  <span
+                    >Highlight academic recognition that you have received</span
+                  >
+                  <iconify-icon
+                    icon="zondicons:add-solid"
+                    onclick="ShowForms1(awardAddForm,formsInput1, this)"
+                    form-key="1"
+                  ></iconify-icon>
+                </div>
+              </div>
+              <div class="honorsContainer" id="honorsContainer2">
+                <div class="formTitle1">Awards</div>
+                <div class="formTitle2">
+                  <span>Highlight awards that you have received</span>
+                  <iconify-icon
+                    icon="zondicons:add-solid"
+                    onclick="ShowForms1(awardAddForm,formsInput1, this)"
+                    form-key="2"
+                  ></iconify-icon>
+                </div>
+              </div>
+              <div class="honorsContainer" id="honorsContainer3">
+                <div class="formTitle1">Certificates</div>
+                <div class="formTitle2">
+                  <span>Highlight certificates that you have received</span>
+                  <iconify-icon
+                    icon="zondicons:add-solid"
+                    onclick="ShowForms1(awardAddForm,formsInput1, this)"
+                    form-key="3"
+                  ></iconify-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="buttonContainer">
+            <button
+              type="button"
+              class="mainButton"
+              onclick="ValidateSchool(educAddForm)"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- template -->
+    <!-- Award template -->
+    <template id="awardTemplate">
+      <div class="awardContainer">
+        <div class="awardTitle">
+          <span id="awardTitle">3</span>
+          <!-- <iconify-icon icon="solar:pen-bold"></iconify-icon> -->
+          <iconify-icon
+            icon="tabler:trash-filled"
+            onclick="DeleteAward(this)"
+          ></iconify-icon>
+        </div>
+        <div class="awardDetails">
+          <span id="awardDate">123</span>
+          <span id="awardLocation" class="awardLocation">dasd</span>
+        </div>
+        <input type="hidden" name="awardTitle[]" id="awardTitleHidden" />
+        <input type="hidden" name="awardDate[]" id="awardDateHidden" />
+      </div>
+    </template>
+
+    <!-- Educational attainment -->
+    <template id="educationalAttainmentContainer">
+      <div class="educationalAttainmentContainer">
+        <div class="educationContainer">
+          <div class="educationTitle">
+            <span id="schoolEd">Bulacan State University</span>
+            <span id="awardEd">Magna Cum Laude</span>
+          </div>
+          <div class="educationTitle">
+            <div class="courseEd">
+              <span id="courseEd"
+                >Bachelor of Science in Information and Technology</span
+              >
+              <span id="majorEd">Major in Web and Mobile Development</span>
+            </div>
+            <span id="dateEd">Class of 2023</span>
+          </div>
+          <div class="educOptions">
+            <button>
+              <iconify-icon icon="solar:pen-bold"></iconify-icon>
+              Edit
+            </button>
+            <button>
+              <iconify-icon
+                icon="tabler:trash-filled"
+                onclick="DeleteEducation(this)"
+              ></iconify-icon>
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </template>
+  </body>
+</html>

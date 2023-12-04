@@ -15,21 +15,20 @@
     <script src="https://kit.fontawesome.com/275edc9f9d.js" crossorigin="anonymous" defer></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <script src="{% static 'js/all.js' %}" defer></script>
+    <script src="{% static 'js/template.js' %}" defer></script>
     <script src="{% static 'js/locationDropdown.js' %}" defer></script>
     <script src="{% static 'js/profile.js' %}" defer></script>
     <link rel="website icon" type="png " href="{{ '/media/site/logo.png' }}">
-    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template.css' %}">
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <title>Profile</title>
 </head>
 
 <body onload="Listeners()">
     <div class="bodyContainer" id="bodyContainer">
-        {% include 'partials/navbar.html' with user=user %}
-        {% include 'partials/sidebar.html' %}
+        {% include 'partials/template.html' with user=user %}
 
-        <div class="mainContainer">
+        <content class="mainContainer d-flex justify-content-center">
             <div class="formContainer">
                 <div class="formHeader">
                     <span class="formTitles active">Profile</span>
@@ -93,15 +92,9 @@
                                     <label for="sex">Sex</label>
                                     <select class="inputBox" id="sex" name="sex">
                                         <option value="{{ user.sex }}" selected>{{ user.get_sex_display }}</option>
-<<<<<<< HEAD
                                         <option value="{% if user.sex == 'M' %}F{% else %}M{% endif %}">
                                             {% if user.sex == 'M' %}Female{% else %}Male{% endif %}
                                         </option>
-=======
-                                            <option value="{% if user.sex == 'M' %}F{% else %}M{% endif %}">
-                                                {% if user.sex == 'M' %}Female{% else %}Male{% endif %}
-                                            </option>
->>>>>>> 79df2d78d2029b88f9a48fba393bef34e8845d4a
                                     </select>
 
                                     <div class="errorMessage"></div>
@@ -231,7 +224,7 @@
                 <div class="formContent">asdaad</div>
             </div>
             <div class="profileView"></div>
-        </div>
+        </content>
         <div class="formsInput1" id="formsInput1">
             <form action="" id="awardAddForm">
                 <div class="formTitle"><span id="formTitle">Award</span> <iconify-icon icon="ph:x-bold"
