@@ -46,6 +46,7 @@ class Profile(models.Model):
     fName = models.CharField(max_length=255)
     lName = models.CharField(max_length=255)
     mName = models.CharField(max_length=255,null=True)
+    suffix = models.CharField(max_length=10,null=True, blank=True)
     contactNo = models.CharField(max_length=13)
     STATUS_CHOICES = [
         ('S','Single'),
@@ -154,6 +155,7 @@ class collegeTaken(models.Model):
     institution = models.ManyToManyField(Institution)
     degree = models.ManyToManyField(Degrees)
     major = models.ManyToManyField(Majors, blank=True)
+    award =  models.CharField(max_length=100, blank=True, null=True)
     yearGraduated = models.CharField(max_length=4)
 
     def __str__(self) -> str:

@@ -9,15 +9,15 @@
   <div class="d-flex flex-column flex-grow-1 justify-content-between">
     <div class="tabs_list d-flex flex-column">
       <div
-        class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 active"
+        class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2"
       >
         <iconify-icon icon="ic:round-dashboard"></iconify-icon>
-        <span>Dashboard Employer</span>
+        <span>Dashboard</span>
       </div>
 
-      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
+      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'profileSettings'%}active{% endif %}">
         <iconify-icon icon="iconamoon:profile-circle-fill"></iconify-icon>
-        <span>Profile Employer</span>
+        <span>Profile</span>
       </div>
 
       <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">

@@ -1,3 +1,5 @@
+const { isValidDate } = require("fullcalendar");
+
 function Listeners() {
   const formTitles = document.querySelectorAll(".formTitles"),
     formContent = document.querySelectorAll(".formContent");
@@ -479,14 +481,22 @@ function ValidateSchool(form) {
   isValid = true;
 
   inputs.forEach((input) => {
-    if (input.value == "") {
-      ShowError(input, "Field Required");
-      isValid = false;
-    } else {
-      RemoveError(input);
+    
+    if(input.id == "major" || input.id === "award")
+    {
+      
+    }else{
+      if (input.value == "") {
+        ShowError(input, "Field Required");
+        isValid = false;
+        console.log(input.innerHTML)
+      } else {
+        RemoveError(input);
+      }
     }
+    
   });
-
+  
   if (isValid) {
     Swal.fire({
       title: "Save Information",
@@ -500,7 +510,21 @@ function ValidateSchool(form) {
           icon: "success",
           showConfirmButton: false,
         }).then(() => {
-          form.submit();
+          $.ajax({
+            type:"POST",
+            url:'/user/education/',
+            data:{'csrfmiddlewaretoken':token,'uni':document.getElementById('schoolAttended').value,'deg':document.getElementById('course').value,'maj':document.getElementById('major').value,'award':document.getElementById('award').value,'graduated':document.getElementById('graduated').value,},
+            success:function(data)
+            {
+              
+              populateOnce(data.data)
+              Closeform(educAddForm,formsInput)
+            },
+            error:function(err)
+            {
+              console.log(err.responseText)
+            }
+          })
         });
       }
     });
