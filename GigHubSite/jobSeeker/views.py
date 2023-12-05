@@ -19,3 +19,11 @@ def profileSettings(request):
         
         
         return render(request, template, {'user':profile, 'age':age, 'statuses':profile.STATUS_CHOICES})
+    
+    
+def dashboard(request):
+    template ="dashboard.html"
+    if request.method == "GET":
+        profile=Profile.objects.get(userID=request.user)
+        
+        return render(request, template, {'user':profile})
