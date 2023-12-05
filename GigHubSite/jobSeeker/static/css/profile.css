@@ -87,6 +87,9 @@ form {
   font-size: var(--small);
   transition: all linear 0.1s;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .formTitles.active,
