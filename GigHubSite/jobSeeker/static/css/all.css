@@ -316,10 +316,10 @@ body {
     background-color: #f7cb943f;
 }
 
-.sideBar nav ul li a iconify-icon, .sideBar nav ul li a {
+.sideBar nav ul li a iconify-icon, .sideBar nav ul li a i {
     position: absolute;
     left: 1.8vw;
-    font-size: 4vh;
+    font-size: 4vw;
     color: var(--orangeMain);
 }
 

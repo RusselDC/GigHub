@@ -185,10 +185,27 @@
                             </div>
                         </div>
                     </div> -->
-                    <div class="formTitle">
-                        <span>Accomplishments</span>
-                        <button class="mainButton" type="button"
-                            onclick="ShowForms(educAddForm, formsInput)">Add</button>
+                    <div class="formTitle">Accomplishments</div>
+                    <!-- <div class="honorsContainer" id="honorsContainer1">
+                        <div class="formTitle1">Honors</div>
+                        <div class="formTitle2"><span>Highlight academic recognition that you have received</span>
+                            <iconify-icon icon="zondicons:add-solid"
+                                onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="1"></iconify-icon>
+                        </div>
+                    </div> -->
+                    <div class="honorsContainer" id="honorsContainer2">
+                        <div class="formTitle1">Awards</div>
+                        <div class="formTitle2"><span>Highlight awards that you have received</span>
+                            <iconify-icon icon="zondicons:add-solid"
+                                onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="2"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="honorsContainer" id="honorsContainer3">
+                        <div class="formTitle1">Certificates</div>
+                        <div class="formTitle2"><span>Highlight certificates that you have received</span>
+                            <iconify-icon icon="zondicons:add-solid"
+                                onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="3"></iconify-icon>
+                        </div>
                     </div>
                 </div>
                 <div class="formContent">asdaad</div>
@@ -260,7 +277,13 @@
                         onclick="Closeform(awardAddForm,formsInput1)"></iconify-icon></div>
                 <div class="inputContainer2">
                     <label for="awardName">Name</label>
-                    <input type="text" class="inputBox" id="awardName" placeholder="" autocomplete="off"
+                    <input type="text" class="inputBox" id="awardName" name="awardName" placeholder=""
+                        autocomplete="off" spellcheck="false">
+                    <div class="errorMessage"></div>
+                </div>
+                <div class="inputContainer2">
+                    <label for="School">School </label>
+                    <input type="text" class="inputBox" id="School" name="School" placeholder="" autocomplete="off"
                         spellcheck="false">
                     <div class="errorMessage"></div>
                 </div>
@@ -285,64 +308,39 @@
                 <div class="formTitle"><span>Educational Attainment</span> <iconify-icon icon="ph:x-bold"
                         onclick="Closeform(educAddForm,formsInput)"></iconify-icon></div>
                 <div class="educAddForm">
-                    <div class="educData">
-                        <div class="inputContainer2">
-                            <label for="schoolAttended">Institution Attended</label>
-                            <input list="schoolAttendeds" class="inputBox" id="schoolAttended" name="schoolAttended"
-                                placeholder="Civil Status" autocomplete="off" spellcheck="false">
-                            <datalist id="schoolAttendeds">
-                                <option value="Dyan lang"></option>
-                            </datalist>
-                            <div class="errorMessage"></div>
-                        </div>
-                        <div class="inputContainer2">
-                            <label for="course">Course</label>
-                            <input type="text" class="inputBox" id="course" name="course" placeholder="Civil Status"
-                                autocomplete="off" spellcheck="false">
-                            <div class="errorMessage"></div>
-                        </div>
-                        <div class="inputContainer2">
-                            <label for="major">Major</label>
-                            <input type="text" class="inputBox" id="major" name="major" placeholder="Civil Status"
-                                autocomplete="off" spellcheck="false">
-                            <div class="errorMessage"></div>
-                        </div>
-                        <div class="inputContainer2">
-                            <label for="award">Award</label>
-                            <input type="text" class="inputBox" id="award" name="award" placeholder="Civil Status"
-                                autocomplete="off" spellcheck="false">
-                            <div class="errorMessage"></div>
-                        </div>
-                        <div class="inputContainer2">
-                            <label for="graduated">Year graduated</label>
-                            <input type="date" class="inputBox" id="graduated" name="graduated"
-                                onchange="ValidateDate(this)">
-                            <div class="errorMessage"></div>
-                        </div>
+                    <div class="inputContainer2">
+                        <label for="schoolAttended">Institution Attended</label>
+                        <input list="schoolAttendeds" class="inputBox" id="schoolAttended" name="schoolAttended"
+                            placeholder="Bulacan State University" autocomplete="off" spellcheck="false">
+                        <datalist id="schoolAttendeds">
+                            <option value="Dyan lang"></option>
+                        </datalist>
+                        <div class="errorMessage"></div>
                     </div>
-                    <div class="educData">
-                        <div class="formTitle">Accomplishments</div>
-                        <div class="honorsContainer" id="honorsContainer1">
-                            <div class="formTitle1">Honors</div>
-                            <div class="formTitle2"><span>Highlight academic recognition that you have received</span>
-                                <iconify-icon icon="zondicons:add-solid"
-                                    onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="1"></iconify-icon>
-                            </div>
-                        </div>
-                        <div class="honorsContainer" id="honorsContainer2">
-                            <div class="formTitle1">Awards</div>
-                            <div class="formTitle2"><span>Highlight awards that you have received</span>
-                                <iconify-icon icon="zondicons:add-solid"
-                                    onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="2"></iconify-icon>
-                            </div>
-                        </div>
-                        <div class="honorsContainer" id="honorsContainer3">
-                            <div class="formTitle1">Certificates</div>
-                            <div class="formTitle2"><span>Highlight certificates that you have received</span>
-                                <iconify-icon icon="zondicons:add-solid"
-                                    onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="3"></iconify-icon>
-                            </div>
-                        </div>
+                    <div class="inputContainer2">
+                        <label for="course">Course</label>
+                        <input type="text" class="inputBox" id="course" name="course"
+                            placeholder="Bachelor of Science in Information Technology" autocomplete="off"
+                            spellcheck="false">
+                        <div class="errorMessage"></div>
+                    </div>
+                    <div class="inputContainer2">
+                        <label for="major">Major</label>
+                        <input type="text" class="inputBox" id="major" name="major"
+                            placeholder="Web and Mobile Development" autocomplete="off" spellcheck="false">
+                        <div class="errorMessage"></div>
+                    </div>
+                    <div class="inputContainer2">
+                        <label for="award">Award</label>
+                        <input type="text" class="inputBox" id="award" name="award" placeholder="Magna Cum Laude"
+                            autocomplete="off" spellcheck="false">
+                        <div class="errorMessage"></div>
+                    </div>
+                    <div class="inputContainer2">
+                        <label for="graduated">Year graduated</label>
+                        <input type="number" class="inputBox" id="graduated" name="graduated" placeholder="2024">
+                        <!-- onchange="ValidateDate(this)" -->
+                        <div class="errorMessage"></div>
                     </div>
                 </div>
                 <div class="buttonContainer">
