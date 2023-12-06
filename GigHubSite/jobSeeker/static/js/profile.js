@@ -1,3 +1,4 @@
+
 function Listeners() {
   const formTitles = document.querySelectorAll(".formTitles"),
     formContent = document.querySelectorAll(".formContent");
@@ -185,6 +186,7 @@ function Validate() {
   }
 }
 function ChangeEmail(form) {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z.-]+\.[a-zA-Z]{2,}$/;
   var email = document.querySelector("#email"),
     currentPassword = document.querySelector("#currentPassword"),
     isValid = true;
@@ -221,13 +223,31 @@ function ChangeEmail(form) {
       confirmButtonText: "Confirm",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          text: "Email changed!",
-          icon: "success",
-          showConfirmButton: false,
-        }).then(() => {
-          form.submit();
-        });
+        $.ajax({
+          type:"POST",
+          url:'/user/account/email/',
+          data:{'csrfmiddlewaretoken':token,'email':document.getElementById('email').value,'currentPassword':document.getElementById('currentPassword').value},
+          success:function(data)
+          {
+            if(data.status)
+            {
+              Swal.fire({
+                text: data.message,
+                icon: "success",
+                showConfirmButton: false,
+              })
+            }else{
+              Swal.fire({
+                icon: "error",
+                text: data.message,
+              });
+            }
+          },error:function(err)
+          {
+            console.log(err.responseText)
+          }
+        })
+        
       }
     });
   }
@@ -270,7 +290,7 @@ function ChangePassword(form) {
   if (confirmPasswordValue == "") {
     ShowError(confirmPassword, "Field required");
     isValid = false;
-  } else if (confirmPasswordValue == newPasswordValue) {
+  } else if (confirmPasswordValue !== newPasswordValue) {
     ShowError(newPassword, "Password not matched");
     ShowError(confirmPassword, "Password not matched");
     isValid = false;
@@ -286,13 +306,36 @@ function ChangePassword(form) {
       confirmButtonText: "Confirm",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          text: "Password changed!",
-          icon: "success",
-          showConfirmButton: false,
-        }).then(() => {
-          form.submit();
-        });
+      $.ajax({
+        type:"POST",
+        url:"/user/account/password/",
+        data:{'csrfmiddlewaretoken':token,'currentpassword':document.getElementById('oldPassword').value,'newpassword':document.getElementById('newPassword').value},
+        success:(data)=>{
+          if(data.status)
+          {
+            Swal.fire({
+              text: data.message,
+              icon: "success",
+              showConfirmButton: false,
+            })
+          }else{
+            Swal.fire({
+              icon: "error",
+              text: data.message,
+            });
+          }
+        },error:(err)=>{
+            console.log(err.responseText)
+        }
+      })
+      
+        //Swal.fire({
+        //  text: "Password changed!",
+        //  icon: "success",
+        //  showConfirmButton: false,
+        //}).then(() => {
+        //  form.submit();
+        //});
       }
     });
   }
@@ -500,14 +543,22 @@ function ValidateSchool(form) {
   isValid = true;
 
   inputs.forEach((input) => {
-    if (input.value == "") {
-      ShowError(input, "Field Required");
-      isValid = false;
-    } else {
-      RemoveError(input);
+    
+    if(input.id == "major" || input.id === "award")
+    {
+      
+    }else{
+      if (input.value == "") {
+        ShowError(input, "Field Required");
+        isValid = false;
+        console.log(input.innerHTML)
+      } else {
+        RemoveError(input);
+      }
     }
+    
   });
-
+  
   if (isValid) {
     Swal.fire({
       title: "Save Information",
@@ -521,7 +572,21 @@ function ValidateSchool(form) {
           icon: "success",
           showConfirmButton: false,
         }).then(() => {
-          form.submit();
+          $.ajax({
+            type:"POST",
+            url:'/user/education/',
+            data:{'csrfmiddlewaretoken':token,'uni':document.getElementById('schoolAttended').value,'deg':document.getElementById('course').value,'maj':document.getElementById('major').value,'award':document.getElementById('award').value,'graduated':document.getElementById('graduated').value,},
+            success:function(data)
+            {
+              
+              populateOnce(data.data)
+              Closeform(educAddForm,formsInput)
+            },
+            error:function(err)
+            {
+              console.log(err.responseText)
+            }
+          })
         });
       }
     });

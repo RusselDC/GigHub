@@ -22,24 +22,39 @@
     <link rel="stylesheet" href="{% static 'css/template.css' %}">
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <title>Profile</title>
+    <script type="text/javascript">
+        var collegesData = {{ colleges|safe }};
+        var token = '{{csrf_token}}'
+        
+    </script>
 </head>
 
 <body onload="Listeners()">
     <div class="bodyContainer" id="bodyContainer">
-        {% include 'partials/template.html' with user=user %}
+        {% if prompt %}
+            <script>
+                Swal.fire({
+                itle: "Good job!",
+                text: "{{prompt}}",
+                icon: "success"
+                });
+            </script>
+        {% endif %}
+
+        {% include 'partials/template.html' with user=user pageName=pageName %}
 
         <content class="mainContainer d-flex justify-content-center">
             <div class="formContainer">
                 <div class="formHeader">
-                    <span class="formTitles active">Profile</span>
+                    <span class="formTitles {% if pagePart == 1 %}active{% endif %}">Profile</span>
                     <span class="formTitles">Education</span>
                     <span class="formTitles">Work Status</span>
                     <span class="formTitles">Account Security</span>
                 </div>
                 <div class="formContents">
-                    <form action="" id="profileForm">
+                    <form action="{% url 'jobSeeker:userSettings' %}" id="profileForm" enctype="multipart/form-data" method="POST">
                         {% csrf_token %}
-                        <div class="formContent active">
+                        <div class="formContent {% if pagePart == 1 %}active{% endif %}">
                             <div class="formGroup">
                                 <label for="profileImg">
                                     <iconify-icon icon="mdi:camera"></iconify-icon>
@@ -74,7 +89,7 @@
                             <div class="inputGroup2">
                                 <div class="inputContainer">
                                     <label for="suffix">Suffix Name</label>
-                                    <input type="text" class="inputBox" id="suffix" name="suffix" placeholder="Suffix"
+                                    <input type="text" class="inputBox" id="suffix" name="suffix" value="{{user.suffix}}" placeholder="Suffix"
                                         autocomplete="off" spellcheck="false">
                                     <div class="errorMessage"></div>
                                 </div>
@@ -111,13 +126,13 @@
                                 <div class="inputContainer">
                                     <label for="status">Civil Status</label>
                                     <select class="inputBox" id="status" name="status">
-                                        <option value="{{user.civilStatus}}">{{user.get_civilStatus_display}}</option>
-                                        {% for key,value in statuses %}
-                                        {% if key is not user.civilStatus %}
-                                        <option value="{{key}}">{{value}}</option>
-                                        {% endif %}
-                                        {% endfor %}
-                                    </select>
+                                            <option value="{{ user.civilStatus }}">{{ user.get_civilStatus_display }}</option>
+                                            {% for key, value in statuses %}
+                                                {% if key != user.civilStatus %}
+                                                    <option value="{{ key }}">{{ value }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
                                     <div class="errorMessage"></div>
                                 </div>
                             </div>
@@ -160,57 +175,13 @@
                         <button class="mainButton" type="button"
                             onclick="ShowForms(educAddForm, formsInput)">Add</button>
                     </div>
-                    <!-- <div class="educationalAttainmentContainer">
-                        <div class="educationContainer">
-                            <div class="educationTitle">
-                                <span id="schoolEd">Bulacan State University</span>
-                                <span id="awardEd">Magna Cum Laude</span>
-                            </div>
-                            <div class="educationTitle">
-                                <div class="courseEd">
-                                    <span id="courseEd">Bachelor of Science in Information and Technology</span>
-                                    <span id="majorEd">Major in Web and Mobile Development</span>
-                                </div>
-                                <span id="dateEd">Class of 2023</span>
-                            </div>
-                            <div class="educOptions">
-                                <button>
-                                    <iconify-icon icon="solar:pen-bold"></iconify-icon>
-                                    Edit
-                                </button>
-                                <button>
-                                    <iconify-icon icon="tabler:trash-filled" onclick="DeleteEducation()"></iconify-icon>
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-                    </div> -->
-                    <div class="formTitle">Accomplishments</div>
-                    <!-- <div class="honorsContainer" id="honorsContainer1">
-                        <div class="formTitle1">Honors</div>
-                        <div class="formTitle2"><span>Highlight academic recognition that you have received</span>
-                            <iconify-icon icon="zondicons:add-solid"
-                                onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="1"></iconify-icon>
-                        </div>
-                    </div> -->
-                    <div class="honorsContainer" id="honorsContainer2">
-                        <div class="formTitle1">Awards</div>
-                        <div class="formTitle2"><span>Highlight awards that you have received</span>
-                            <iconify-icon icon="zondicons:add-solid"
-                                onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="2"></iconify-icon>
-                        </div>
-                    </div>
-                    <div class="honorsContainer" id="honorsContainer3">
-                        <div class="formTitle1">Certificates</div>
-                        <div class="formTitle2"><span>Highlight certificates that you have received</span>
-                            <iconify-icon icon="zondicons:add-solid"
-                                onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="3"></iconify-icon>
-                        </div>
-                    </div>
+                     <div id="educationalAttainmentContainer" class="educationalAttainmentContainer">
+                    </div> 
+
                 </div>
                 <div class="formContent">asdaad</div>
                 <div class="formContent">
-                    <form action="" id="changeEmailForm">
+                    <form id="changeEmailForm">
                         <div class="formTitle">Change Email</div>
                         <div class="inputGroup1">
                             <div class="inputContainer">
@@ -272,7 +243,7 @@
             <div class="profileView"></div>
         </content>
         <div class="formsInput1" id="formsInput1">
-            <form action="" id="awardAddForm">
+            <form id="awardAddForm">
                 <div class="formTitle"><span id="formTitle">Award</span> <iconify-icon icon="ph:x-bold"
                         onclick="Closeform(awardAddForm,formsInput1)"></iconify-icon></div>
                 <div class="inputContainer2">
@@ -304,43 +275,69 @@
             </form>
         </div>
         <div class="formsInput" id="formsInput">
-            <form action="" id="educAddForm">
+            <form id="educAddForm">
+                
                 <div class="formTitle"><span>Educational Attainment</span> <iconify-icon icon="ph:x-bold"
                         onclick="Closeform(educAddForm,formsInput)"></iconify-icon></div>
                 <div class="educAddForm">
-                    <div class="inputContainer2">
-                        <label for="schoolAttended">Institution Attended</label>
-                        <input list="schoolAttendeds" class="inputBox" id="schoolAttended" name="schoolAttended"
-                            placeholder="Bulacan State University" autocomplete="off" spellcheck="false">
-                        <datalist id="schoolAttendeds">
-                            <option value="Dyan lang"></option>
-                        </datalist>
-                        <div class="errorMessage"></div>
+                    <div class="educData">
+                        <div class="inputContainer2">
+                            <label for="schoolAttended">Institution Attended</label>
+                            <input list="schoolAttendeds" class="inputBox" id="schoolAttended" name="schoolAttended"
+                                placeholder="Civil Status" autocomplete="off" spellcheck="false">
+                            <datalist id="schoolAttendeds">
+                                <option value="Dyan lang"></option>
+                            </datalist>
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="inputContainer2">
+                            <label for="course">Course</label>
+                            <input type="text" class="inputBox" id="course" name="course" placeholder="Civil Status"
+                                autocomplete="off" spellcheck="false">
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="inputContainer2">
+                            <label for="major">Major</label>
+                            <input type="text" class="inputBox" id="major" name="major" placeholder="Civil Status"
+                                autocomplete="off" spellcheck="false">
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="inputContainer2">
+                            <label for="award">Award</label>
+                            <input type="text" class="inputBox" id="award" name="award" placeholder="Civil Status"
+                                autocomplete="off" spellcheck="false">
+                            <div class="errorMessage"></div>
+                        </div>
+                        <div class="inputContainer2">
+                            <label for="graduated">Year graduated</label>
+                            <input type="date" class="inputBox" id="graduated" name="graduated"
+                                onchange="ValidateDate(this)">
+                            <div class="errorMessage"></div>
+                        </div>
                     </div>
-                    <div class="inputContainer2">
-                        <label for="course">Course</label>
-                        <input type="text" class="inputBox" id="course" name="course"
-                            placeholder="Bachelor of Science in Information Technology" autocomplete="off"
-                            spellcheck="false">
-                        <div class="errorMessage"></div>
-                    </div>
-                    <div class="inputContainer2">
-                        <label for="major">Major</label>
-                        <input type="text" class="inputBox" id="major" name="major"
-                            placeholder="Web and Mobile Development" autocomplete="off" spellcheck="false">
-                        <div class="errorMessage"></div>
-                    </div>
-                    <div class="inputContainer2">
-                        <label for="award">Award</label>
-                        <input type="text" class="inputBox" id="award" name="award" placeholder="Magna Cum Laude"
-                            autocomplete="off" spellcheck="false">
-                        <div class="errorMessage"></div>
-                    </div>
-                    <div class="inputContainer2">
-                        <label for="graduated">Year graduated</label>
-                        <input type="number" class="inputBox" id="graduated" name="graduated" placeholder="2024">
-                        <!-- onchange="ValidateDate(this)" -->
-                        <div class="errorMessage"></div>
+                    <div class="educData">
+                        <div class="formTitle">Accomplishments</div>
+                        <div class="honorsContainer" id="honorsContainer1">
+                            <div class="formTitle1">Honors</div>
+                            <div class="formTitle2"><span>Highlight academic recognition that you have received</span>
+                                <iconify-icon icon="zondicons:add-solid"
+                                    onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="1"></iconify-icon>
+                            </div>
+                        </div>
+                        <div class="honorsContainer" id="honorsContainer2">
+                            <div class="formTitle1">Awards</div>
+                            <div class="formTitle2"><span>Highlight awards that you have received</span>
+                                <iconify-icon icon="zondicons:add-solid"
+                                    onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="2"></iconify-icon>
+                            </div>
+                        </div>
+                        <div class="honorsContainer" id="honorsContainer3">
+                            <div class="formTitle1">Certificates</div>
+                            <div class="formTitle2"><span>Highlight certificates that you have received</span>
+                                <iconify-icon icon="zondicons:add-solid"
+                                    onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="3"></iconify-icon>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="buttonContainer">
@@ -370,8 +367,8 @@
     </template>
 
     <!-- Educational attainment -->
-    <template id="educationalAttainmentContainer">
-        <div class="educationalAttainmentContainer">
+    
+        <template id="educationalAttainmentTemplate">
             <div class="educationContainer">
                 <div class="educationTitle">
                     <span id="schoolEd">Bulacan State University</span>
@@ -395,10 +392,55 @@
                     </button>
                 </div>
             </div>
-        </div>
-    </template>
+        </template>
+        
+    
 
 
 </body>
+<script>
 
+
+
+    function populateOnce(data)
+    {
+        // Clone the template content
+        var template = document.getElementById('educationalAttainmentTemplate');
+        var templateContent = template.content.cloneNode(true);
+
+        // Populate the cloned template with data
+        templateContent.querySelector("#schoolEd").textContent = data[0];
+        templateContent.querySelector("#awardEd").textContent =  data[4];
+        templateContent.querySelector("#courseEd").textContent = data[1];
+        templateContent.querySelector("#majorEd").textContent = data[2];
+        templateContent.querySelector("#dateEd").textContent = "Class of " + data[3];
+
+        // Append the populated template to the container
+        document.getElementById("educationalAttainmentContainer").appendChild(templateContent);
+    }
+
+   
+
+    collegesData.forEach(element => {
+        // Clone the template content
+        var template = document.getElementById('educationalAttainmentTemplate');
+        var templateContent = template.content.cloneNode(true);
+
+        // Populate the cloned template with data
+        templateContent.querySelector("#schoolEd").textContent = element.institutions[0];
+        templateContent.querySelector("#awardEd").textContent =  element.award;
+        templateContent.querySelector("#courseEd").textContent = element.degrees[0];
+        templateContent.querySelector("#majorEd").textContent = element.majors[0];
+        templateContent.querySelector("#dateEd").textContent = "Class of " + element.yearGraduated;
+
+        // Append the populated template to the container
+        document.getElementById("educationalAttainmentContainer").appendChild(templateContent);
+    });
+   
+    
+    
+    
+
+
+</script>
 </html>
