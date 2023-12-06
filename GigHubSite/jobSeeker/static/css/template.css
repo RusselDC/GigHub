@@ -33,7 +33,7 @@ sidebar {
   left: 0;
   top: 0;
   height: 100vh;
-  width: 20rem;
+  width: 15rem;
   z-index: 1;
   background-color: var(--white);
   transition: width smooth 0.3s;
@@ -73,7 +73,7 @@ header {
   position: absolute;
   top: 0;
   right: 0;
-  width: calc(100% - 20rem);
+  width: calc(100% - 15rem);
   height: 5rem;
   background-color: var(--white);
 }
@@ -86,7 +86,7 @@ content {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: calc(100% - 20rem);
+  width: calc(100% - 15rem);
   height: calc(100vh - 5rem);
   overflow-y: auto;
 }
