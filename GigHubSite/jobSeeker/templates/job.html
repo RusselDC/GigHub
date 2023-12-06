@@ -1,0 +1,326 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="website icon" type="png " href="{{ '/media/site/logo.png' }}" />
+    <title>Jobs</title>
+
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"
+    ></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/275edc9f9d.js"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <script src="{% static 'js/template.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'css/template.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/job.css' %}" />
+
+    <script src="{% static 'js/dashboard.js' %}" defer></script>
+    <script src="{% static 'js/save_jobs.js' %}" defer></script>
+  </head>
+  <body>
+    {% include 'partials/template.html' with user=user %}
+
+    <content class="p-4 pb-5">
+      <h3 class="fw-bold">Recommended For You</h3>
+      <div
+        class="jobs_list mt-4 d-flex flex-column justify-content-center align-items-center gap-3"
+      >
+        <div
+          class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3"
+        >
+          <div class="job_main">
+            <h4 class="job_title fw-bold mb-1">Software Developer</h4>
+            <div class="job_company">Hooli Software Incorporation</div>
+          </div>
+          <div class="job_details align-self-center">
+            <div class="job_description fw-bold">
+              Description:
+              <span class="fw-normal"
+                >We are seeking a highly skilled and motivated Software
+                Developer to join our dynamic team. The successful candidate
+                will be responsible for designing, coding, and modifying
+                software applications according to clients' needs. The Software
+                Developer will collaborate with cross-functional teams to
+                analyze user needs and implement solutions. This role requires a
+                strong understanding of software development life cycle and the
+                ability to work on multiple projects simultaneously.</span
+              >
+            </div>
+            <div class="job_category mt-3 fw-bold">
+              Job Category:
+              <span class="fw-normal">Information Technology</span>
+            </div>
+            <div class="job_skills fw-bold">
+              Skills Needed:
+              <span class="fw-normal"
+                >Java, Python, C++, or JavaScript, Web Development
+                Frameworks</span
+              >
+            </div>
+            <div class="job_scope fw-bold">
+              Scope & Timeline:
+              <span class="fw-normal">≥ 6 Months, Intermediate</span>
+            </div>
+          </div>
+          <div class="job_actions d-flex justify-content-end">
+            <iconify-icon
+              icon="iconoir:bookmark"
+              class="job_unsaved"
+            ></iconify-icon>
+            <iconify-icon
+              icon="iconoir:bookmark-solid"
+              class="job_saved"
+            ></iconify-icon>
+          </div>
+        </div>
+
+        <div
+          class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3"
+        >
+          <div class="job_main">
+            <h4 class="job_title fw-bold mb-1">Frontend Developer</h4>
+            <div class="job_company">Tech Innovators Co.</div>
+          </div>
+          <div class="job_details align-self-center">
+            <div class="job_description fw-bold">
+              Description:
+              <span class="fw-normal"
+                >Join our creative team as a Frontend Developer! We're looking
+                for someone passionate about crafting engaging user experiences
+                and proficient in modern web technologies.</span
+              >
+            </div>
+            <div class="job_category mt-3 fw-bold">
+              Job Category:
+              <span class="fw-normal">Web Development</span>
+            </div>
+            <div class="job_skills fw-bold">
+              Skills Needed:
+              <span class="fw-normal">HTML, CSS, JavaScript, React.js</span>
+            </div>
+            <div class="job_scope fw-bold">
+              Scope & Timeline:
+              <span class="fw-normal">≥ 6 Months, Intermediate</span>
+            </div>
+          </div>
+          <div class="job_actions d-flex justify-content-end">
+            <iconify-icon
+              icon="iconoir:bookmark"
+              class="job_unsaved"
+            ></iconify-icon>
+            <iconify-icon
+              icon="iconoir:bookmark-solid"
+              class="job_saved"
+            ></iconify-icon>
+          </div>
+        </div>
+
+        <div
+          class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3"
+        >
+          <div class="job_main">
+            <h4 class="job_title fw-bold mb-1">Software Engineer</h4>
+            <div class="job_company">Tech Innovators Inc.</div>
+          </div>
+          <div class="job_details align-self-center">
+            <div class="job_description fw-bold">
+              Description:
+              <span class="fw-normal"
+                >We're looking for a talented Software Engineer to join our
+                innovative team. The role involves designing, coding, and
+                enhancing software applications to meet client requirements. As
+                a Software Engineer, you'll collaborate with diverse teams,
+                analyze user needs, and deliver effective solutions. Strong
+                knowledge of the software development life cycle and the ability
+                to manage multiple projects are essential for success.</span
+              >
+            </div>
+            <div class="job_category mt-3 fw-bold">
+              Job Category:
+              <span class="fw-normal">Technology & Engineering</span>
+            </div>
+            <div class="job_skills fw-bold">
+              Skills Needed:
+              <span class="fw-normal"
+                >Java, Python, C++, JavaScript, Web Development Frameworks</span
+              >
+            </div>
+            <div class="job_scope fw-bold">
+              Scope & Timeline:
+              <span class="fw-normal">≥ 6 Months, Intermediate</span>
+            </div>
+          </div>
+          <div class="job_actions d-flex justify-content-end">
+            <iconify-icon
+              icon="iconoir:bookmark"
+              class="job_unsaved"
+            ></iconify-icon>
+            <iconify-icon
+              icon="iconoir:bookmark-solid"
+              class="job_saved"
+            ></iconify-icon>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="fw-bold mt-5">
+        Discover Your Next Chapter: Browse Jobs Now!"
+      </h3>
+      <div
+        class="jobs_list mt-4 d-flex flex-column justify-content-center align-items-center gap-3"
+      >
+        <div
+          class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3"
+        >
+          <div class="job_main">
+            <h4 class="job_title fw-bold mb-1">Software Developer</h4>
+            <div class="job_company">Hooli Software Incorporation</div>
+          </div>
+          <div class="job_details align-self-center">
+            <div class="job_description fw-bold">
+              Description:
+              <span class="fw-normal"
+                >We are seeking a highly skilled and motivated Software
+                Developer to join our dynamic team. The successful candidate
+                will be responsible for designing, coding, and modifying
+                software applications according to clients' needs. The Software
+                Developer will collaborate with cross-functional teams to
+                analyze user needs and implement solutions. This role requires a
+                strong understanding of software development life cycle and the
+                ability to work on multiple projects simultaneously.</span
+              >
+            </div>
+            <div class="job_category mt-3 fw-bold">
+              Job Category:
+              <span class="fw-normal">Information Technology</span>
+            </div>
+            <div class="job_skills fw-bold">
+              Skills Needed:
+              <span class="fw-normal"
+                >Java, Python, C++, or JavaScript, Web Development
+                Frameworks</span
+              >
+            </div>
+            <div class="job_scope fw-bold">
+              Scope & Timeline:
+              <span class="fw-normal">≥ 6 Months, Intermediate</span>
+            </div>
+          </div>
+          <div class="job_actions d-flex justify-content-end">
+            <iconify-icon
+              icon="iconoir:bookmark"
+              class="job_unsaved"
+            ></iconify-icon>
+            <iconify-icon
+              icon="iconoir:bookmark-solid"
+              class="job_saved"
+            ></iconify-icon>
+          </div>
+        </div>
+
+        <div
+          class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3"
+        >
+          <div class="job_main">
+            <h4 class="job_title fw-bold mb-1">Frontend Developer</h4>
+            <div class="job_company">Tech Innovators Co.</div>
+          </div>
+          <div class="job_details align-self-center">
+            <div class="job_description fw-bold">
+              Description:
+              <span class="fw-normal"
+                >Join our creative team as a Frontend Developer! We're looking
+                for someone passionate about crafting engaging user experiences
+                and proficient in modern web technologies.</span
+              >
+            </div>
+            <div class="job_category mt-3 fw-bold">
+              Job Category:
+              <span class="fw-normal">Web Development</span>
+            </div>
+            <div class="job_skills fw-bold">
+              Skills Needed:
+              <span class="fw-normal">HTML, CSS, JavaScript, React.js</span>
+            </div>
+            <div class="job_scope fw-bold">
+              Scope & Timeline:
+              <span class="fw-normal">≥ 6 Months, Intermediate</span>
+            </div>
+          </div>
+          <div class="job_actions d-flex justify-content-end">
+            <iconify-icon
+              icon="iconoir:bookmark"
+              class="job_unsaved"
+            ></iconify-icon>
+            <iconify-icon
+              icon="iconoir:bookmark-solid"
+              class="job_saved"
+            ></iconify-icon>
+          </div>
+        </div>
+
+        <div
+          class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3"
+        >
+          <div class="job_main">
+            <h4 class="job_title fw-bold mb-1">Software Engineer</h4>
+            <div class="job_company">Tech Innovators Inc.</div>
+          </div>
+          <div class="job_details align-self-center">
+            <div class="job_description fw-bold">
+              Description:
+              <span class="fw-normal"
+                >We're looking for a talented Software Engineer to join our
+                innovative team. The role involves designing, coding, and
+                enhancing software applications to meet client requirements. As
+                a Software Engineer, you'll collaborate with diverse teams,
+                analyze user needs, and deliver effective solutions. Strong
+                knowledge of the software development life cycle and the ability
+                to manage multiple projects are essential for success.</span
+              >
+            </div>
+            <div class="job_category mt-3 fw-bold">
+              Job Category:
+              <span class="fw-normal">Technology & Engineering</span>
+            </div>
+            <div class="job_skills fw-bold">
+              Skills Needed:
+              <span class="fw-normal"
+                >Java, Python, C++, JavaScript, Web Development Frameworks</span
+              >
+            </div>
+            <div class="job_scope fw-bold">
+              Scope & Timeline:
+              <span class="fw-normal">≥ 6 Months, Intermediate</span>
+            </div>
+          </div>
+          <div class="job_actions d-flex justify-content-end">
+            <iconify-icon
+              icon="iconoir:bookmark"
+              class="job_unsaved"
+            ></iconify-icon>
+            <iconify-icon
+              icon="iconoir:bookmark-solid"
+              class="job_saved"
+            ></iconify-icon>
+          </div>
+        </div>
+      </div>
+    </content>
+  </body>
+</html>

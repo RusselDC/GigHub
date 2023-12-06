@@ -168,3 +168,12 @@ def dashboard(request):
         profile=Profile.objects.get(userID=request.user)
         
         return render(request, template, {'user':profile,'pageName':'dashBoard'})
+    
+    
+    
+def job(request):
+    template ="job.html"
+    if request.method == "GET":
+        profile=Profile.objects.get(userID=request.user)
+        
+        return render(request, template, {'user':profile,'pageName':'job'})
