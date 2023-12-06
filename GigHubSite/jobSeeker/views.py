@@ -167,4 +167,4 @@ def dashboard(request):
     if request.method == "GET":
         profile=Profile.objects.get(userID=request.user)
         
-        return render(request, template, {'user':profile})
+        return render(request, template, {'user':profile,'pageName':'dashBoard'})
