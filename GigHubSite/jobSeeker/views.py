@@ -160,10 +160,11 @@ def accountPassword(request):
         return JsonResponse({'status':True,'message':'Password has been changed'})
     
     return JsonResponse({'status':False,'message':'Your inserted password is wrong'})
-
-
-
-
-
-
-
+    
+    
+def dashboard(request):
+    template ="dashboard.html"
+    if request.method == "GET":
+        profile=Profile.objects.get(userID=request.user)
+        
+        return render(request, template, {'user':profile})
