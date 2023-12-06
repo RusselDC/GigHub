@@ -136,7 +136,7 @@ def accountEmail(request):
     email = request.POST['email']
     password = request.POST['currentPassword']
     user = User.objects.get(id=request.user.id)
-
+   
     passwordCheck = check_password(password, request.user.password)
 
     if passwordCheck:

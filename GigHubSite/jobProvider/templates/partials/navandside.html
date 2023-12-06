@@ -1,0 +1,112 @@
+<div class="navbar w-auto d-flex align-items-center justify-content-between">
+  <div class="leftNavBar w-auto d-flex align-items-center">
+      <i class="fa-solid fa-bars" onclick="toggleSidebar(this)"></i>
+      <div class="input-group">
+          <input autcomplete="off" type="text" class="form-control custom-focus-style" placeholder="Search"
+              aria-label="Username" aria-describedby="basic-addon1">
+          <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+      </div>
+  </div>
+  <div class="rightNavbar w-auto h-100 d-flex align-items-center">
+      <div class="notificationsContainer">
+          <div class="notifContainer">
+              <div class="notification">
+                  <div class="notif unread">
+                      <span class="dot"></span>
+                      <div class="notifImg">
+                          <img src="" alt="">
+                      </div>
+                      <div class="notifContent">
+                          <span class="notifTitle">My bago</span>
+                          <span class="notifBody">dasada</span>
+                      </div>
+                  </div>
+                  <div class="notif">
+                      <span class="dot"></span>
+                      <div class="notifImg">
+                          <img src="" alt="">
+                      </div>
+                      <div class="notifContent">
+                          <span class="notifTitle">My bago</span>
+                          <span class="notifBody">dasada</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <i class="fa-regular fa-bell" onclick="showNotifications()"></i>
+      </div>
+      <div class="infoContainer d-flex align-items-center">
+          <div class="imgLogin">
+              <img src="/media/{{ user.image }}" alt="">
+          </div>
+          <div class="greetings">
+              <span class="greet">Good Day!</span>
+              <div class="nameLogin">{{user.fName}} {{user.lName}}</div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="sideBar">
+  <div class="imgGroupSidebar">
+      <img src="{{ '/media/site/logo.png' }}" alt="">
+      <img src="{{ '/media/site/logoText.png' }}" alt="" id="hiddenIMG">
+  </div>
+  <nav>
+      <ul>
+          <li class="">
+              <a href="/Admin/Dashboard.html">
+                  <iconify-icon icon="ic:round-dashboard"></iconify-icon>
+                  <span class="links">Dashboard</span>
+              </a>
+          </li>
+          <li class="">
+              <a href="/Admin/Dashboard1.html">
+                  <iconify-icon icon="ic:round-dashboard"></iconify-icon>
+                  <span class="links">Dashboard Employer</span>
+              </a>
+          </li>
+          <li class="">
+              <a href="/Admin/Profile.html">
+                  <iconify-icon icon="iconamoon:profile-circle-fill"></iconify-icon>
+                  <span class="links">Profile</span>
+              </a>
+          </li>
+          <li class="">
+              <a href="/Admin/Profile1.html">
+                  <iconify-icon icon="iconamoon:profile-circle-fill"></iconify-icon>
+                  <span class="links">Profile Employer</span>
+              </a>
+          </li>
+          <li class="">
+              <a href="/Admin/Work.html">
+                  <iconify-icon icon="solar:case-bold"></iconify-icon>
+                  <span class="links">Work</span>
+              </a>
+          </li>
+          <li class="">
+              <a href="/Admin/Company.html">
+                  <iconify-icon icon="mdi:company"></iconify-icon>
+                  <span class="links">Company</span>
+              </a>
+          </li>
+          <li class="">
+              <a href="/Admin/Job.html">
+                  <i class="fa-solid fa-user-tie"></i>
+                  <span class="links">Job</span>
+              </a>
+          </li>
+          <li class="">
+              <a href="/Admin/Job1.html">
+                  <i class="fa-solid fa-user-tie"></i>
+                  <span class="links">Job</span>
+              </a>
+          </li>
+          <li class="">
+              <a href="#">
+                  <iconify-icon icon="basil:logout-solid"></iconify-icon>
+                  <span class="links">Logout</span>
+              </a>
+          </li>
+      </ul>
+  </nav>
+</div>

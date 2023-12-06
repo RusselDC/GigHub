@@ -79,7 +79,7 @@ class Profile(models.Model):
 
 
 class Company(models.Model):
-    employerID = models.ForeignKey(Profile, on_delete=models.CASCADE,limit_choices_to={'role': 'JP'})
+    employerID = models.ManyToManyField(Profile)
     companyName = models.CharField(max_length=255)
     industry = models.ForeignKey(Industry, on_delete=models.DO_NOTHING, null=True)
     empRange = models.CharField(max_length=50, null=True)
@@ -89,6 +89,7 @@ class Company(models.Model):
     strt = models.CharField(max_length=255, null=True)
     bldgNo = models.CharField(max_length=255, null=True)
     isActive = models.BooleanField(default=True)
+
 
     def __str__(self) -> str:
         return self.companyName
@@ -162,6 +163,16 @@ class collegeTaken(models.Model):
         institutions = ", ".join([institution.name for institution in self.institution.all()])
         degrees = ", ".join([degree.name for degree in self.degree.all()])
         return f"{self.userID.userID.username} : {institutions} : {degrees} : {self.yearGraduated}"
+    
+
+class companyStaff(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    staff = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    designation = models.CharField(max_length=255)
+
+
+    def __str__(self) -> str:
+        return f"{self.company.companyName} : {self.designation}"
 
     
 
