@@ -1,4 +1,3 @@
-const { isValidDate } = require("fullcalendar");
 
 function Listeners() {
   const formTitles = document.querySelectorAll(".formTitles"),
@@ -187,6 +186,7 @@ function Validate() {
   }
 }
 function ChangeEmail(form) {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z.-]+\.[a-zA-Z]{2,}$/;
   var email = document.querySelector("#email"),
     currentPassword = document.querySelector("#currentPassword"),
     isValid = true;
@@ -223,13 +223,31 @@ function ChangeEmail(form) {
       confirmButtonText: "Confirm",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          text: "Email changed!",
-          icon: "success",
-          showConfirmButton: false,
-        }).then(() => {
-          form.submit();
-        });
+        $.ajax({
+          type:"POST",
+          url:'/user/account/email/',
+          data:{'csrfmiddlewaretoken':token,'email':document.getElementById('email').value,'currentPassword':document.getElementById('currentPassword').value},
+          success:function(data)
+          {
+            if(data.status)
+            {
+              Swal.fire({
+                text: data.message,
+                icon: "success",
+                showConfirmButton: false,
+              })
+            }else{
+              Swal.fire({
+                icon: "error",
+                text: data.message,
+              });
+            }
+          },error:function(err)
+          {
+            console.log(err.responseText)
+          }
+        })
+        
       }
     });
   }
@@ -272,7 +290,7 @@ function ChangePassword(form) {
   if (confirmPasswordValue == "") {
     ShowError(confirmPassword, "Field required");
     isValid = false;
-  } else if (confirmPasswordValue == newPasswordValue) {
+  } else if (confirmPasswordValue !== newPasswordValue) {
     ShowError(newPassword, "Password not matched");
     ShowError(confirmPassword, "Password not matched");
     isValid = false;
@@ -288,13 +306,36 @@ function ChangePassword(form) {
       confirmButtonText: "Confirm",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          text: "Password changed!",
-          icon: "success",
-          showConfirmButton: false,
-        }).then(() => {
-          form.submit();
-        });
+      $.ajax({
+        type:"POST",
+        url:"/user/account/password/",
+        data:{'csrfmiddlewaretoken':token,'currentpassword':document.getElementById('oldPassword').value,'newpassword':document.getElementById('newPassword').value},
+        success:(data)=>{
+          if(data.status)
+          {
+            Swal.fire({
+              text: data.message,
+              icon: "success",
+              showConfirmButton: false,
+            })
+          }else{
+            Swal.fire({
+              icon: "error",
+              text: data.message,
+            });
+          }
+        },error:(err)=>{
+            console.log(err.responseText)
+        }
+      })
+      
+        //Swal.fire({
+        //  text: "Password changed!",
+        //  icon: "success",
+        //  showConfirmButton: false,
+        //}).then(() => {
+        //  form.submit();
+        //});
       }
     });
   }

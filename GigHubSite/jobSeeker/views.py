@@ -4,6 +4,7 @@ from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees
 from GigHub import utils
 from django.contrib.auth.models import User
 from datetime import date, datetime
+from django.contrib.auth.hashers import check_password
 
 import json
 # Create your views here.
@@ -129,6 +130,40 @@ def profileEducation(request):
     college_taken_instance.save()
 
     return JsonResponse({'message':'Data has been saved','data':[institution_name,degree_name,major_name,year,award]})
+
+
+def accountEmail(request):
+    email = request.POST['email']
+    password = request.POST['currentPassword']
+    user = User.objects.get(id=request.user.id)
+
+    passwordCheck = check_password(password, request.user.password)
+
+    if passwordCheck:
+        #user.set_password(password)
+        user.username = email
+        user.save()
+        return JsonResponse({'status':True,'message':'Email has been changed'})
+
+    return JsonResponse({'status':False,'message':'Inserted password is wrong'})
+
+def accountPassword(request):
+    oldPass = request.POST['currentpassword']
+    newPass = request.POST['newpassword']
+    user = User.objects.get(id=request.user.id)
+
+    passwordCheck = check_password(oldPass, user.password)
+
+    if passwordCheck:
+        user.set_password(newPass)
+        user.save()
+        return JsonResponse({'status':True,'message':'Password has been changed'})
+    
+    return JsonResponse({'status':False,'message':'Your inserted password is wrong'})
+
+
+
+
 
 
 
