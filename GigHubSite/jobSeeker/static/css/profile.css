@@ -84,7 +84,7 @@ form {
   align-items: center;
   justify-content: center;
   color: var(--lightgray);
-  font-size: var(--small);
+  font-size: var(--medium);
   transition: all linear 0.1s;
   cursor: pointer;
   white-space: nowrap;
@@ -95,7 +95,6 @@ form {
 .formTitles.active,
 .formTitles:hover {
   color: var(--black);
-  font-size: var(--medium);
 }
 
 .formTitles::before {
@@ -471,13 +470,12 @@ form {
 }
 
 .formsInput form {
-  position: absolute;
-  width: 70vw;
+  width: 40vw;
   border-radius: 0.4vw;
   padding: 0.9rem;
   background-color: var(--white);
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.32);
-  display: none;
+  display: flex;
   flex-direction: column;
 }
 
@@ -590,6 +588,7 @@ form {
   height: 70vh;
   gap: 1vh;
   display: flex;
+  flex-direction: column;
   overflow: hidden;
   padding-top: 0.9rem;
 }
@@ -614,4 +613,49 @@ form {
   .inputGroup2 .inputContainer {
     width: 100%;
   }
+}
+
+
+.swal2-confirm {
+  background-color: var(--orangeMain) !important;
+  border: solid 1px var(--orangeMain) !important;
+  color: var(--white) !important;
+  box-shadow: none;
+  cursor: pointer;
+  font-size: var(--medium) !important;
+  transition: all ease .3s;
+}
+
+.swal2-confirm:focus, .swal2-cancel:focus {
+  box-shadow: none !important;
+}
+
+.swal2-confirm:hover {
+  color: var(--orangeMain) !important;
+  background-color: var(--white) !important;
+}
+
+.swal2-cancel {
+  color: var(--orangeMain) !important;
+  background-color: var(--white) !important;
+  border: solid 1px var(--orangeMain) !important;
+  box-shadow: none;
+  cursor: pointer;
+  font-size: var(--medium) !important;
+  transition: all ease .3s;
+}
+
+.swal2-cancel:hover {
+  color: var(--orangeMain);
+  background-color: var(--lightgray);
+}
+
+.swal2-popup {
+  font-size: var(--medium);
+  color: var(--black);
+}
+
+.swal2-title {
+  color: var(--orangeMain);
+  font-size: 24px;
 }

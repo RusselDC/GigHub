@@ -489,22 +489,23 @@ function ShowForms1(form, formInput, element) {
     awardTitleHidden.value = awardNameValue;
     awardDateHidden.value = awardDateValue;
 
-    if (key == 1) {
-      honorsContainer1.appendChild(newElement);
-      formInput.style.display = "none";
-      form.style.display = "none";
-      awardName.value = "";
-      awardDate.value = "";
-    }
+    // if (key == 1) {
+    //   formInput.style.display = "none";
+    //   form.style.display = "none";
+    //   awardName.value = "";
+    //   awardDate.value = "";
+    // }
     if (key == 2) {
-      honorsContainer2.appendChild(newElement);
+      form.action = "/dyanlang/";
+      SubmitForm(form);
       formInput.style.display = "none";
       form.style.display = "none";
       awardName.value = "";
       awardDate.value = "";
     }
     if (key == 3) {
-      honorsContainer3.appendChild(newElement);
+      form.action = "/ditolang/";
+      SubmitForm(form);
       formInput.style.display = "none";
       form.style.display = "none";
       awardName.value = "";
@@ -512,6 +513,26 @@ function ShowForms1(form, formInput, element) {
     }
   };
 }
+
+function SubmitForm(form) {
+  Swal.fire({
+    title: "Save Information",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Confirm",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        text: "Information saved!",
+        icon: "success",
+        showConfirmButton: false,
+      }).then(() => {
+        form.submit();
+      });
+    }
+  });
+}
+
 function Closeform(form, formInput) {
   formInput.style.display = "none";
   form.style.display = "none";

@@ -248,7 +248,13 @@
                         onclick="Closeform(awardAddForm,formsInput1)"></iconify-icon></div>
                 <div class="inputContainer2">
                     <label for="awardName">Name</label>
-                    <input type="text" class="inputBox" id="awardName" placeholder="" autocomplete="off"
+                    <input type="text" class="inputBox" id="awardName" name="awardName" placeholder=""
+                        autocomplete="off" spellcheck="false">
+                    <div class="errorMessage"></div>
+                </div>
+                <div class="inputContainer2">
+                    <label for="School">School </label>
+                    <input type="text" class="inputBox" id="School" name="School" placeholder="" autocomplete="off"
                         spellcheck="false">
                     <div class="errorMessage"></div>
                 </div>
@@ -278,46 +284,38 @@
                         <div class="inputContainer2">
                             <label for="schoolAttended">Institution Attended</label>
                             <input list="schoolAttendeds" class="inputBox" id="schoolAttended" name="schoolAttended"
-                                placeholder="Insert University" autocomplete="off" spellcheck="false">
-                                
+                                placeholder="Civil Status" autocomplete="off" spellcheck="false">
                             <datalist id="schoolAttendeds">
-                                {% for i in insitutions %}
-                                <option value="{{i.name}}"></option>
-                                {% endfor %}
+                                <option value="Dyan lang"></option>
                             </datalist>
                             <div class="errorMessage"></div>
                         </div>
                         <div class="inputContainer2">
                             <label for="course">Course</label>
-                            <input list="courseAttended" class="inputBox" id="course" name="course" placeholder="Insert Degree"
+                            <input type="text" class="inputBox" id="course" name="course" placeholder="Civil Status"
                                 autocomplete="off" spellcheck="false">
-                                <datalist id="courseAttended">
-                                    {% for i in degrees %}
-                                    <option value="{{i.name}}"></option>
-                                    {% endfor %}
-                                </datalist>
                             <div class="errorMessage"></div>
                         </div>
                         <div class="inputContainer2">
                             <label for="major">Major</label>
-                            <input type="text" class="inputBox" id="major" name="major" placeholder="Insert Major"
+                            <input type="text" class="inputBox" id="major" name="major" placeholder="Civil Status"
                                 autocomplete="off" spellcheck="false">
                             <div class="errorMessage"></div>
                         </div>
                         <div class="inputContainer2">
                             <label for="award">Award</label>
-                            <input type="text" class="inputBox" id="award" name="award" placeholder="Insert Award"
+                            <input type="text" class="inputBox" id="award" name="award" placeholder="Civil Status"
                                 autocomplete="off" spellcheck="false">
                             <div class="errorMessage"></div>
                         </div>
                         <div class="inputContainer2">
                             <label for="graduated">Year graduated</label>
-                            <!-- onchange="ValidateDate(this)" -->
-                            <input type="date" class="inputBox" id="graduated" name="graduated">
+                            <input type="date" class="inputBox" id="graduated" name="graduated"
+                                onchange="ValidateDate(this)">
                             <div class="errorMessage"></div>
                         </div>
                     </div>
-                    <div class="educData" style="display: none;">
+                    <div class="educData">
                         <div class="formTitle">Accomplishments</div>
                         <div class="honorsContainer" id="honorsContainer1">
                             <div class="formTitle1">Honors</div>
