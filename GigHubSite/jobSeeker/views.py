@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees
+from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings
 from GigHub import utils
 from django.contrib.auth.models import User
 from datetime import date, datetime
 from django.contrib.auth.hashers import check_password
+from django.db.models import Count
 
 import json
 # Create your views here.
@@ -32,7 +33,7 @@ def profileSettings(request):
                 'institutions': institutions,
                 'degrees': degrees,
                 'majors': majors,
-                'award':college.award,
+                'award':college.award if college.award is not None else '',
                 'yearGraduated': college.yearGraduated,
             }
 
@@ -75,11 +76,13 @@ def profileSettings(request):
             degrees = [degree.name for degree in college.degree.all()]
             majors = [major.name for major in college.major.all()]
 
+            
+
             college_data = {
                 'institutions': institutions,
                 'degrees': degrees,
                 'majors': majors,
-                'award':college.award,
+                'award':college.award if college.award is not None else '',
                 'yearGraduated': college.yearGraduated,
             }
 
@@ -175,5 +178,43 @@ def job(request):
     template ="job.html"
     if request.method == "GET":
         profile=Profile.objects.get(userID=request.user)
-        
-        return render(request, template, {'user':profile,'pageName':'job'})
+        user_skills = Profile.objects.get(userID=request.user).skills.all()
+        recommended = JobPostings.objects.filter(jobRequirements__in=user_skills).distinct()
+        topRecommended = JobPostings.objects.filter(jobRequirements__in=user_skills).annotate(common_skills_count=Count('jobRequirements'))\
+        .filter(common_skills_count__gte=3)\
+        .distinct()[:3]
+        recommended_data_all = []
+        topRecommended_data_all = []
+
+        for reco in recommended:
+            
+            skills = [skills.name for skills in reco.jobRequirements.all()]
+            
+
+            recommended_data = {
+                'company' : reco.companyID.companyName,
+                'title' : reco.jobTitle,
+                'desc' : reco.jobDescription,
+                'jobLoc' : reco.jobLocation,
+                'salary' : reco.salaryRange,
+                'deadline' : reco.deadLine.strftime('%Y-%m-%d'),
+                'requirements' : skills
+            }
+            recommended_data_all.append(recommended_data)
+
+        for topReco in topRecommended:
+            skills = [skills.name for skills in reco.jobRequirements.all()]
+
+            topReco_data = {
+                'company' : topReco.companyID.companyName,
+                'title' : topReco.jobTitle,
+                'desc' : topReco.jobDescription,
+                'jobLoc' : topReco.jobLocation,
+                'salary' : topReco.salaryRange,
+                'deadline' : topReco.deadLine.strftime('%Y-%m-%d'),
+                'requirements' : skills
+            }
+
+            topRecommended_data_all.append(topReco_data)
+
+        return render(request, template, {'user':profile,'pageName':'job','recommended':recommended_data_all,'topRecommended':topRecommended_data_all})

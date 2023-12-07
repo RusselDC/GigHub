@@ -407,7 +407,7 @@ def register_education(request):
         if degC or not deg.name:
             deg.name = course
             deg.save()
-        if spec is not "":
+        if spec != "":
             maj, majC = Majors.objects.get_or_create(name__iexact=spec, degree=deg)
             if majC or not maj.name:
                 maj.name = spec
@@ -416,7 +416,7 @@ def register_education(request):
         college_taken_instance = collegeTaken.objects.create(userID=profile, yearGraduated=year)
         college_taken_instance.institution.add(ins)
         college_taken_instance.degree.add(deg)
-        if spec is not "":
+        if spec != "":
             college_taken_instance.major.add(maj)
         college_taken_instance.save()
         profile.verificationLevel = 2
@@ -499,15 +499,10 @@ def register_moreInfo(request):
         profile.province = province
         profile.verificationLevel = 4
         profile.save()
+        
         return redirect('jobSeeker:userSettings')
 
-        
-        
 
-def register_moreInfo(request):
-    if request.method == "GET":
-        return render(request, "register_moreInfo.html")
-    
 def privacy_policy(request):
     if request.method == "GET":
         return render(request, "privacy_policy.html")

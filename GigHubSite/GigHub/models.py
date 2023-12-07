@@ -34,6 +34,7 @@ class Industry(models.Model):
     name = models.CharField(max_length=255)
 
 
+
 class Profile(models.Model):
     userID = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to='profiles/', default='profiles/placeholder.png')
@@ -102,6 +103,9 @@ class JobPostings(models.Model):
     salaryRange = models.CharField(max_length=255, blank=True, null=True) # dalawang input fields na may name na salary1 and salary2
     deadLine = models.DateField("application_deadline")
     jobRequirements = models.ManyToManyField(Skills) #multiple input fields na may same names like requirements[] para mareturn sila as array sa backend
+    category = models.CharField(max_length=100, null=True)
+    scope = models.CharField(max_length=100, null=True)
+    timeline = models.CharField(max_length=100, null=True)
 
     #def setJobRequirements(self, values):
     #    self.jobRequirements = ','.join(map(str,values))
