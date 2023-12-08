@@ -1,7 +1,8 @@
 .stat {
   gap: 0.5rem;
   background-color: var(--white);
-  min-width: 300px;
+  /* min-width: 300px; */
+  width: calc(calc(100vw - 12rem) / 4);
 }
 .stat.app iconify-icon {
   font-size: 1.5rem;
@@ -109,5 +110,22 @@
   }
   #application_overview {
     height: 15rem !important;
+  }
+}
+@media screen and (max-width: 1300px) {
+  .statistics {
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+  }
+  .stat {
+    width: calc(calc(100vw - 25rem) / 2);
+  }
+}
+@media screen and (max-width: 1300px) {
+  .statistics {
+    flex-direction: column;
+  }
+  .stat {
+    width: 100%;
   }
 }
