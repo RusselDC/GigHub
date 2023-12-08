@@ -1,0 +1,63 @@
+.job {
+  background-color: var(--white);
+  width: 90%;
+}
+.job_company,
+.job_description,
+.job_category,
+.job_skills,
+.job_scope {
+  font-size: 0.9rem;
+}
+.job_description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+}
+.job_title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+}
+.job iconify-icon {
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--mango-tango);
+}
+.job_saved {
+  display: none;
+  transition: var(--transition-1);
+}
+.job.saved .job_saved {
+  display: block;
+  transition: var(--transition-1);
+}
+.job.saved .job_unsaved {
+  display: none;
+  transition: var(--transition-1);
+}
+.job_main {
+  width: 30%;
+}
+.job_details {
+  width: 65%;
+}
+.job_actions {
+  width: 5%;
+}
+@media screen and (max-width: 1250px) {
+  .job {
+    flex-direction: column;
+  }
+  .job div {
+    width: 100%;
+  }
+  .job_actions {
+    order: -1;
+    justify-content: start !important;
+  }
+}
