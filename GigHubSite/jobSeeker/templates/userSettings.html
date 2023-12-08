@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <title>Profile</title>
     <script type="text/javascript">
-        var collegesData = {{ colleges|safe }};
+        var collegesData = {{ colleges| safe }};
         var token = '{{csrf_token}}'
 
     </script>
@@ -284,7 +284,7 @@
                 </div>
                 <div class="inputContainer2">
                     <label for="awardDate">Date Received</label>
-                    <input type="date" class="inputBox" id="awardDate" name="awardDate" onchange="ValidateDate(this)">
+                    <input type="number" class="inputBox" id="awardDate" name="awardDate" onchange="ValidateDate(this)">
                     <div class="errorMessage"></div>
                 </div>
                 <div class="buttonContainer">
@@ -297,39 +297,39 @@
                 <div class="formTitle"><span>Educational Attainment</span> <iconify-icon icon="ph:x-bold"
                         onclick="Closeform(educAddForm,formsInput)"></iconify-icon></div>
                 <div class="educAddForm">
-                        <div class="inputContainer2">
-                            <label for="schoolAttended">Institution Attended</label>
-                            <input list="schoolAttendeds" class="inputBox" id="schoolAttended" name="schoolAttended"
-                                placeholder="Civil Status" autocomplete="off" spellcheck="false">
-                            <datalist id="schoolAttendeds">
-                                <option value="Dyan lang"></option>
-                            </datalist>
-                            <div class="errorMessage"></div>
-                        </div>
-                        <div class="inputContainer2">
-                            <label for="course">Course</label>
-                            <input type="text" class="inputBox" id="course" name="course" placeholder="Civil Status"
-                                autocomplete="off" spellcheck="false">
-                            <div class="errorMessage"></div>
-                        </div>
-                        <div class="inputContainer2">
-                            <label for="major">Major</label>
-                            <input type="text" class="inputBox" id="major" name="major" placeholder="Civil Status"
-                                autocomplete="off" spellcheck="false">
-                            <div class="errorMessage"></div>
-                        </div>
-                        <div class="inputContainer2">
-                            <label for="award">Award</label>
-                            <input type="text" class="inputBox" id="award" name="award" placeholder="Civil Status"
-                                autocomplete="off" spellcheck="false">
-                            <div class="errorMessage"></div>
-                        </div>
-                        <div class="inputContainer2">
-                            <label for="graduated">Year graduated</label>
-                            <input type="date" class="inputBox" id="graduated" name="graduated"
-                                onchange="ValidateDate(this)">
-                            <div class="errorMessage"></div>
-                        </div>
+                    <div class="inputContainer2">
+                        <label for="schoolAttended">Institution Attended</label>
+                        <input list="schoolAttendeds" class="inputBox" id="schoolAttended" name="schoolAttended"
+                            placeholder="Civil Status" autocomplete="off" spellcheck="false">
+                        <datalist id="schoolAttendeds">
+                            <option value="Dyan lang"></option>
+                        </datalist>
+                        <div class="errorMessage"></div>
+                    </div>
+                    <div class="inputContainer2">
+                        <label for="course">Course</label>
+                        <input type="text" class="inputBox" id="course" name="course" placeholder="Civil Status"
+                            autocomplete="off" spellcheck="false">
+                        <div class="errorMessage"></div>
+                    </div>
+                    <div class="inputContainer2">
+                        <label for="major">Major</label>
+                        <input type="text" class="inputBox" id="major" name="major" placeholder="Civil Status"
+                            autocomplete="off" spellcheck="false">
+                        <div class="errorMessage"></div>
+                    </div>
+                    <div class="inputContainer2">
+                        <label for="award">Award</label>
+                        <input type="text" class="inputBox" id="award" name="award" placeholder="Civil Status"
+                            autocomplete="off" spellcheck="false">
+                        <div class="errorMessage"></div>
+                    </div>
+                    <div class="inputContainer2">
+                        <label for="graduated">Year graduated</label>
+                        <input type="number" class="inputBox" id="graduated" name="graduated">
+                        <!-- onchange="ValidateDate(this)" -->
+                        <div class="errorMessage"></div>
+                    </div>
 
                 </div>
                 <div class="buttonContainer">
