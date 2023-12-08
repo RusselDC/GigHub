@@ -22,19 +22,15 @@
       crossorigin="anonymous"
       defer
     ></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
     <script src="{% static 'js/template.js' %}" defer></script>
     <link rel="stylesheet" href="{% static 'css/template.css' %}" />
     <link rel="stylesheet" href="{% static 'css/job.css' %}" />
-
-    <script src="{% static 'js/dashboard.js' %}" defer></script>
-    <script src="{% static 'js/save_jobs.js' %}" defer></script>
+    <script src="{% static 'js/jobs.js' %}" defer></script>
     <script>
-        var recommended = {{recommended|safe}};
-        var topReco = {{topRecommended|safe}};
-        
+      var recommended = {{recommended|safe}};
+      var topReco = {{topRecommended|safe}};
     </script>
   </head>
   <body>
@@ -45,12 +41,7 @@
       <div
         class="jobs_list mt-4 d-flex flex-column justify-content-center align-items-center gap-3"
         id="topReco_list"
-      >
-      
-        
-      
-
-      </div>
+      ></div>
 
       <h3 class="fw-bold mt-5">
         Discover Your Next Chapter: Browse Jobs Now!"
@@ -58,111 +49,119 @@
       <div
         class="jobs_list mt-4 d-flex flex-column justify-content-center align-items-center gap-3"
         id="jobList"
-      >
-        
-      </div>
+      ></div>
     </content>
     <template id="jobTemplate">
-      <div class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3" >
-      <div class="job_main">
-        <h4 class="job_title fw-bold mb-1" id="title">Software Developer</h4>
-        <div class="job_company" id="company">Hooli Software Incorporation</div>
-      </div>
-      <div class="job_details align-self-center">
-        <div class="job_description fw-bold">
-          Description:
-          <span class="fw-normal" id="description"
-            >We are seeking a highly skilled and motivated Software
-            Developer to join our dynamic team. The successful candidate
-            will be responsible for designing, coding, and modifying
-            software applications according to clients' needs. The Software
-            Developer will collaborate with cross-functional teams to
-            analyze user needs and implement solutions. This role requires a
-            strong understanding of software development life cycle and the
-            ability to work on multiple projects simultaneously.</span
+      <div
+        class="job_container d-flex justify-content-center align-items-center"
+      >
+        <div
+          class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between mb-3"
+        >
+          <div class="job_main">
+            <h4 class="job_title fw-bold mb-1">Software Developer</h4>
+            <div class="job_company">ByteCraft Solutions</div>
+          </div>
+          <div class="job_details align-self-center">
+            <div class="job_description fw-bold">
+              Description:
+              <span class="fw-normal"
+                >We are seeking a highly skilled and motivated Software
+                Developer to join our dynamic team. The successful candidate
+                will be responsible for designing, coding, and modifying
+                software applications according to clients' needs. The Software
+                Developer will collaborate with cross-functional teams to
+                analyze user needs and implement solutions. This role requires a
+                strong understanding of software development life cycle and the
+                ability to work on multiple projects simultaneously.</span
+              >
+            </div>
+            <div class="job_category mt-3 fw-bold">
+              Job Category:
+              <span class="fw-normal">Information Technology</span>
+            </div>
+            <div class="job_skills fw-bold">
+              Skills Needed:
+              <span class="fw-normal"
+                >Java, Python, C++, or JavaScript, Web Development
+                Frameworks</span
+              >
+            </div>
+            <div class="job_scope fw-bold">
+              Scope & Timeline:
+              <span class="fw-normal">≥ 6 Months, Intermediate</span>
+            </div>
+          </div>
+          <div
+            class="job_actions d-flex flex-column align-items-end justify-content-between"
           >
-        </div>
-        <div class="job_category mt-3 fw-bold">
-          Job Category:
-          <span class="fw-normal" id="category">Information Technology</span>
-        </div>
-        <div class="job_skills fw-bold">
-          Skills Needed:
-          <span class="fw-normal"
-            id="requirements" >Java, Python, C++, or JavaScript, Web Development
-            Frameworks</span
-          >
-        </div>
-        <div class="job_scope fw-bold">
-          Scope & Timeline:
-          <span class="fw-normal" id="projectTimeline">≥ 6 Months, Intermediate</span>
+            <iconify-icon
+              icon="iconoir:bookmark"
+              class="job_unsaved"
+            ></iconify-icon>
+            <iconify-icon
+              icon="iconoir:bookmark-solid"
+              class="job_saved"
+            ></iconify-icon>
+            <div class="view_job fw-bold w-100 text-center py-1 rounded-2">
+              MORE
+            </div>
+          </div>
         </div>
       </div>
-      <div class="job_actions d-flex justify-content-end">
-        <iconify-icon
-          icon="iconoir:bookmark"
-          class="job_unsaved"
-        ></iconify-icon>
-        <iconify-icon
-          icon="iconoir:bookmark-solid"
-          class="job_saved"
-        ></iconify-icon>
-      </div>
-    </div>
     </template>
 
     <template id="notopReco">
-      <div class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3" >
+      <div
+        class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3"
+      >
         <center><span>No jobs found matching your given skills</span></center>
       </div>
     </template>
 
     <template id="noReco">
-      <div class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3" >
+      <div
+        class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3"
+      >
         <center><span>No Jobs Available</span></center>
       </div>
     </template>
-
   </body>
   <script>
+    if (recommended.length > 0) {
+      recommended.forEach((reco) => {
+        var template = document.getElementById("jobTemplate");
+        var templateContent = template.content.cloneNode(true);
 
-    if(recommended.length > 0)
-    {
-      recommended.forEach(reco => {
-      var template = document.getElementById('jobTemplate')
+        templateContent.getElementById("title").textContent = reco.title;
+        templateContent.getElementById("company").textContent = reco.company;
+        templateContent.getElementById("description").textContent = reco.desc;
+        templateContent.getElementById("requirements").textContent =
+          reco.requirements.join(",");
+        document.getElementById("jobList").appendChild(templateContent);
+      });
+    } else {
+      var template = document.getElementById("noReco");
       var templateContent = template.content.cloneNode(true);
-
-      templateContent.getElementById('title').textContent = reco.title;
-      templateContent.getElementById('company').textContent = reco.company
-      templateContent.getElementById('description').textContent = reco.desc
-      templateContent.getElementById('requirements').textContent = reco.requirements.join(',')
-      document.getElementById('jobList').appendChild(templateContent)
-      
-      })
-    }else{
-      var template = document.getElementById('noReco')
-      var templateContent = template.content.cloneNode(true);
-      document.getElementById('jobList').appendChild(templateContent)
+      document.getElementById("jobList").appendChild(templateContent);
     }
-    
-    if(topReco.length > 0)
-    {
-      topReco.forEach(reco => {
-      var template = document.getElementById('jobTemplate')
-      var templateContent = template.content.cloneNode(true);
 
-      templateContent.getElementById('title').textContent = reco.title;
-      templateContent.getElementById('company').textContent = reco.company
-      templateContent.getElementById('description').textContent = reco.desc
-      templateContent.getElementById('requirements').textContent = reco.requirements.join(',')
-      document.getElementById('topReco_list').appendChild(templateContent)
-      
-      })
-    }else{
-      var template = document.getElementById('notopReco')
+    if (topReco.length > 0) {
+      topReco.forEach((reco) => {
+        var template = document.getElementById("jobTemplate");
+        var templateContent = template.content.cloneNode(true);
+
+        templateContent.getElementById("title").textContent = reco.title;
+        templateContent.getElementById("company").textContent = reco.company;
+        templateContent.getElementById("description").textContent = reco.desc;
+        templateContent.getElementById("requirements").textContent =
+          reco.requirements.join(",");
+        document.getElementById("topReco_list").appendChild(templateContent);
+      });
+    } else {
+      var template = document.getElementById("notopReco");
       var templateContent = template.content.cloneNode(true);
-      document.getElementById('topReco_list').appendChild(templateContent)
+      document.getElementById("topReco_list").appendChild(templateContent);
     }
-    
   </script>
 </html>
