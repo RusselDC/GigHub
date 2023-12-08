@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <title>Profile</title>
     <script type="text/javascript">
-        var collegesData = {{ colleges|safe }};
+        var collegesData = "{{ colleges|safe }}";
         var token = '{{csrf_token}}'
         
     </script>
