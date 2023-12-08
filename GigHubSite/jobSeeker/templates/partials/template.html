@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <div
+    <div onclick="logout()"
       class="logout tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2"
     >
       <iconify-icon icon="basil:logout-solid"></iconify-icon>
@@ -74,3 +74,19 @@
     </div>
   </div>
 </header>
+<script>
+  function logout()
+  {
+   Swal.fire({
+   text: "Are you sure?",
+   icon: "question",
+   showCancelButton: true,
+   confirmButtonText: "Yes",
+   }).then((result)=>{
+       if(result.isConfirmed)
+       {
+           window.location.href = "/logout/"
+       }
+   });
+  }
+</script>

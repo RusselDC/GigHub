@@ -25,6 +25,9 @@
     <script type="text/javascript">
         var collegesData = {{ colleges| safe }};
         var token = '{{csrf_token}}'
+        var awardsData = {{awards|safe}};
+        var certis = {{certis|safe}};
+        console.log(certis)
 
     </script>
 </head>
@@ -40,14 +43,17 @@
             });
         </script>
         {% endif %}
-
+        
         {% include 'partials/template.html' with user=user pageName=pageName %}
+       
+        
+        
 
         <content class="mainContainer d-flex justify-content-center">
             <div class="formContainer">
                 <div class="formHeader">
                     <span class="formTitles {% if pagePart == 1 %}active{% endif %}">Profile</span>
-                    <span class="formTitles">Education</span>
+                    <span class="formTitles">Education and Accomplishments</span>
                     <span class="formTitles">Work Status</span>
                     <span class="formTitles">Account Security</span>
                 </div>
@@ -143,7 +149,7 @@
                                 <div class="inputContainer">
                                     <label for="province">Province</label>
                                     <input type="text" id="provinceInput" name="province" style="display:none;"
-                                        value="">
+                                        value="{{user.province}}">
                                     <select id="province" class="inputBox" onchange="showValue(this,provinceInput)">
                                         <option selected>Select Province</option>
                                     </select>
@@ -151,7 +157,7 @@
                                 </div>
                                 <div class="inputContainer">
                                     <label for="city">Municipality/City </label>
-                                    <input type="text" id="cityInput" name="city" style="display:none;">
+                                    <input type="text" id="cityInput" name="city" value="{{user.city}}" style="display:none;">
                                     <select id="city" class="inputBox" onchange="showValue(this,cityInput )">
                                         <option selected>Select Municipality/City</option>
                                     </select>
@@ -159,7 +165,7 @@
                                 </div>
                                 <div class="inputContainer">
                                     <label for="barangay">Barangay </label>
-                                    <input type="text" id="barangayInput" name="barangay" style="display:none;">
+                                    <input type="text" id="barangayInput" name="barangay" value="{{user.baranggay}}" style="display:none;">
                                     <select id="barangay" class="inputBox" onchange="showValue(this,barangayInput )">
                                         <option selected>Select Barangay</option>
                                     </select>
@@ -187,6 +193,9 @@
                             <iconify-icon icon="zondicons:add-solid"
                                 onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="2"></iconify-icon>
                         </div>
+                        <div id="awardContainer" style="height: fit-content; width: 100%;">
+
+                        </div>
                     </div>
                     <div class="honorsContainer" id="honorsContainer3">
                         <div class="formTitle1">Certificates</div>
@@ -194,6 +203,10 @@
                             <iconify-icon icon="zondicons:add-solid"
                                 onclick="ShowForms1(awardAddForm,formsInput1, this)" form-key="3"></iconify-icon>
                         </div>
+                        <div id="certisContainer" style="height: fit-content; width: 100%;">
+
+                        </div>
+                        
                     </div>
 
                 </div>
@@ -255,7 +268,7 @@
                             <button class="mainButton" type="button" onclick="ChangePassword(changePasswordForm)">Change
                                 Password</button>
                         </div>
-                    </form>
+                    </form>Received
                 </div>
             </div>
             <div class="profileView"></div>
@@ -277,8 +290,8 @@
                     <div class="errorMessage"></div>
                 </div>
                 <div class="inputContainer2">
-                    <label for="awardDate">Date Received</label>
-                    <input type="number" class="inputBox" id="awardDate" name="awardDate" onchange="ValidateDate(this)">
+                    <label for="awardDate">Year Received</label>
+                    <input type="number" class="inputBox" id="awardDate" name="awardDate">
                     <div class="errorMessage"></div>
                 </div>
                 <div class="buttonContainer">
@@ -296,14 +309,21 @@
                         <input list="schoolAttendeds" class="inputBox" id="schoolAttended" name="schoolAttended"
                             placeholder="Civil Status" autocomplete="off" spellcheck="false">
                         <datalist id="schoolAttendeds">
-                            <option value="Dyan lang"></option>
+                            {% for ins in insitutions %}
+                                <option value="{{ins.name}}">
+                            {% endfor %}
                         </datalist>
                         <div class="errorMessage"></div>
                     </div>
                     <div class="inputContainer2">
                         <label for="course">Course</label>
-                        <input type="text" class="inputBox" id="course" name="course" placeholder="Civil Status"
+                        <input list="courseAttendeds" class="inputBox" id="course" name="course" placeholder="Civil Status"
                             autocomplete="off" spellcheck="false">
+                        <datalist id="courseAttendeds">
+                            {% for ins in degrees %}
+                                <option value="{{ins.name}}">
+                            {% endfor %}
+                        </datalist>
                         <div class="errorMessage"></div>
                     </div>
                     <div class="inputContainer2">
@@ -344,7 +364,7 @@
                 <iconify-icon icon="tabler:trash-filled" onclick="DeleteAward(this)"></iconify-icon>
             </div>
             <div class="awardDetails">
-                <span id="awardDate">123</span>
+                <span id="awardDates">123</span>
                 <span id="awardLocation" class="awardLocation">dasd</span>
             </div>
             <input type="hidden" name="awardTitle[]" id="awardTitleHidden">
@@ -372,8 +392,8 @@
                     <iconify-icon icon="solar:pen-bold"></iconify-icon>
                     Edit
                 </button>
-                <button>
-                    <iconify-icon icon="tabler:trash-filled" onclick="DeleteEducation(this)"></iconify-icon>
+                <button onclick="DeleteEducation(this)">
+                    <iconify-icon icon="tabler:trash-filled"></iconify-icon>
                     Delete
                 </button>
             </div>
@@ -384,49 +404,6 @@
 
 
 </body>
-<script>
 
-
-
-    function populateOnce(data) {
-        // Clone the template content
-        var template = document.getElementById('educationalAttainmentTemplate');
-        var templateContent = template.content.cloneNode(true);
-
-        // Populate the cloned template with data
-        templateContent.querySelector("#schoolEd").textContent = data[0];
-        templateContent.querySelector("#awardEd").textContent = data[4];
-        templateContent.querySelector("#courseEd").textContent = data[1];
-        templateContent.querySelector("#majorEd").textContent = data[2];
-        templateContent.querySelector("#dateEd").textContent = "Class of " + data[3];
-
-        // Append the populated template to the container
-        document.getElementById("educationalAttainmentContainer").appendChild(templateContent);
-    }
-
-
-
-    collegesData.forEach(element => {
-        // Clone the template content
-        var template = document.getElementById('educationalAttainmentTemplate');
-        var templateContent = template.content.cloneNode(true);
-
-        // Populate the cloned template with data
-        templateContent.querySelector("#schoolEd").textContent = element.institutions[0];
-        templateContent.querySelector("#awardEd").textContent = element.award;
-        templateContent.querySelector("#courseEd").textContent = element.degrees[0];
-        templateContent.querySelector("#majorEd").textContent = element.majors[0];
-        templateContent.querySelector("#dateEd").textContent = "Class of " + element.yearGraduated;
-
-        // Append the populated template to the container
-        document.getElementById("educationalAttainmentContainer").appendChild(templateContent);
-    });
-
-
-
-
-
-
-</script>
 
 </html>
