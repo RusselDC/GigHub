@@ -31,6 +31,7 @@
     <script>
       var recommended = {{recommended|safe}};
       var topReco = {{topRecommended|safe}};
+      console.log(recommended)
     </script>
   </head>
   <body>
@@ -59,13 +60,13 @@
           class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between mb-3"
         >
           <div class="job_main">
-            <h4 class="job_title fw-bold mb-1">Software Developer</h4>
-            <div class="job_company">ByteCraft Solutions</div>
+            <h4 class="job_title fw-bold mb-1" id="title">Software Developer</h4>
+            <div class="job_company" id="company">ByteCraft Solutions</div>
           </div>
           <div class="job_details align-self-center">
             <div class="job_description fw-bold">
               Description:
-              <span class="fw-normal"
+              <span class="fw-normal" id="description"
                 >We are seeking a highly skilled and motivated Software
                 Developer to join our dynamic team. The successful candidate
                 will be responsible for designing, coding, and modifying
@@ -82,7 +83,7 @@
             </div>
             <div class="job_skills fw-bold">
               Skills Needed:
-              <span class="fw-normal"
+              <span class="fw-normal" id="requirements"
                 >Java, Python, C++, or JavaScript, Web Development
                 Frameworks</span
               >
