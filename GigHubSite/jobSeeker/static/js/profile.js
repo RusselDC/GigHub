@@ -1,4 +1,3 @@
-
 function Listeners() {
   const formTitles = document.querySelectorAll(".formTitles"),
     formContent = document.querySelectorAll(".formContent");
@@ -224,30 +223,31 @@ function ChangeEmail(form) {
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
-          type:"POST",
-          url:'/user/account/email/',
-          data:{'csrfmiddlewaretoken':token,'email':document.getElementById('email').value,'currentPassword':document.getElementById('currentPassword').value},
-          success:function(data)
-          {
-            if(data.status)
-            {
+          type: "POST",
+          url: "/user/account/email/",
+          data: {
+            csrfmiddlewaretoken: token,
+            email: document.getElementById("email").value,
+            currentPassword: document.getElementById("currentPassword").value,
+          },
+          success: function (data) {
+            if (data.status) {
               Swal.fire({
                 text: data.message,
                 icon: "success",
                 showConfirmButton: false,
-              })
-            }else{
+              });
+            } else {
               Swal.fire({
                 icon: "error",
                 text: data.message,
               });
             }
-          },error:function(err)
-          {
-            console.log(err.responseText)
-          }
-        })
-        
+          },
+          error: function (err) {
+            console.log(err.responseText);
+          },
+        });
       }
     });
   }
@@ -306,29 +306,33 @@ function ChangePassword(form) {
       confirmButtonText: "Confirm",
     }).then((result) => {
       if (result.isConfirmed) {
-      $.ajax({
-        type:"POST",
-        url:"/user/account/password/",
-        data:{'csrfmiddlewaretoken':token,'currentpassword':document.getElementById('oldPassword').value,'newpassword':document.getElementById('newPassword').value},
-        success:(data)=>{
-          if(data.status)
-          {
-            Swal.fire({
-              text: data.message,
-              icon: "success",
-              showConfirmButton: false,
-            })
-          }else{
-            Swal.fire({
-              icon: "error",
-              text: data.message,
-            });
-          }
-        },error:(err)=>{
-            console.log(err.responseText)
-        }
-      })
-      
+        $.ajax({
+          type: "POST",
+          url: "/user/account/password/",
+          data: {
+            csrfmiddlewaretoken: token,
+            currentpassword: document.getElementById("oldPassword").value,
+            newpassword: document.getElementById("newPassword").value,
+          },
+          success: (data) => {
+            if (data.status) {
+              Swal.fire({
+                text: data.message,
+                icon: "success",
+                showConfirmButton: false,
+              });
+            } else {
+              Swal.fire({
+                icon: "error",
+                text: data.message,
+              });
+            }
+          },
+          error: (err) => {
+            console.log(err.responseText);
+          },
+        });
+
         //Swal.fire({
         //  text: "Password changed!",
         //  icon: "success",
@@ -498,16 +502,12 @@ function ShowForms1(form, formInput, element) {
     if (key == 2) {
       form.action = "/dyanlang/";
       SubmitForm(form);
-      formInput.style.display = "none";
-      form.style.display = "none";
       awardName.value = "";
       awardDate.value = "";
     }
     if (key == 3) {
       form.action = "/ditolang/";
       SubmitForm(form);
-      formInput.style.display = "none";
-      form.style.display = "none";
       awardName.value = "";
       awardDate.value = "";
     }
@@ -515,22 +515,32 @@ function ShowForms1(form, formInput, element) {
 }
 
 function SubmitForm(form) {
-  Swal.fire({
-    title: "Save Information",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Confirm",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        text: "Information saved!",
-        icon: "success",
-        showConfirmButton: false,
-      }).then(() => {
-        form.submit();
-      });
+  const inputs = form.querySelectorAll("input");
+  isValid = true;
+  inputs.forEach((input) => {
+    if (input.value == "") {
+      isValid = false;
+      ShowError(input, "Field Required");
     }
   });
+  if (isValid) {
+    Swal.fire({
+      title: "Save Information",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Confirm",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          text: "Information saved!",
+          icon: "success",
+          showConfirmButton: false,
+        }).then(() => {
+          form.submit();
+        });
+      }
+    });
+  }
 }
 
 function Closeform(form, formInput) {
@@ -543,22 +553,18 @@ function ValidateSchool(form) {
   isValid = true;
 
   inputs.forEach((input) => {
-    
-    if(input.id == "major" || input.id === "award")
-    {
-      
-    }else{
+    if (input.id == "major" || input.id === "award") {
+    } else {
       if (input.value == "") {
         ShowError(input, "Field Required");
         isValid = false;
-        console.log(input.innerHTML)
+        console.log(input.innerHTML);
       } else {
         RemoveError(input);
       }
     }
-    
   });
-  
+
   if (isValid) {
     Swal.fire({
       title: "Save Information",
@@ -573,20 +579,24 @@ function ValidateSchool(form) {
           showConfirmButton: false,
         }).then(() => {
           $.ajax({
-            type:"POST",
-            url:'/user/education/',
-            data:{'csrfmiddlewaretoken':token,'uni':document.getElementById('schoolAttended').value,'deg':document.getElementById('course').value,'maj':document.getElementById('major').value,'award':document.getElementById('award').value,'graduated':document.getElementById('graduated').value,},
-            success:function(data)
-            {
-              
-              populateOnce(data.data)
-              Closeform(educAddForm,formsInput)
+            type: "POST",
+            url: "/user/education/",
+            data: {
+              csrfmiddlewaretoken: token,
+              uni: document.getElementById("schoolAttended").value,
+              deg: document.getElementById("course").value,
+              maj: document.getElementById("major").value,
+              award: document.getElementById("award").value,
+              graduated: document.getElementById("graduated").value,
             },
-            error:function(err)
-            {
-              console.log(err.responseText)
-            }
-          })
+            success: function (data) {
+              populateOnce(data.data);
+              Closeform(educAddForm, formsInput);
+            },
+            error: function (err) {
+              console.log(err.responseText);
+            },
+          });
         });
       }
     });
