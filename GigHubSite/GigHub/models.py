@@ -178,7 +178,23 @@ class companyStaff(models.Model):
     def __str__(self) -> str:
         return f"{self.company.companyName} : {self.designation}"
 
-    
+
+class Awards(models.Model):
+    user = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    awardForm = models.CharField(max_length=255)
+    date = models.CharField(max_length=5)
+
+
+class Certificates(models.Model):
+    user = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    certificateForm = models.CharField(max_length=255)
+    date = models.CharField(max_length=5)
+
+
+
+
 
     
     
