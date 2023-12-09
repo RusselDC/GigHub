@@ -611,7 +611,7 @@ form {
   align-items: flex-end;
 }
 
-.educOptions {
+.educOptions,.employment {
   margin-top: 0.45rem;
   width: 100%;
   height: fit-content;
@@ -624,7 +624,7 @@ form {
   justify-content: center;
 }
 
-.educOptions button {
+.educOptions button,.employment button {
   color: var(--black);
   padding: 0.45rem 0.9rem;
   font-size: var(--medium);
@@ -717,4 +717,19 @@ form {
 .swal2-title {
   color: var(--orangeMain);
   font-size: 24px;
+}
+.employed {
+  padding: 0.9rem 0.9rem;
+  background-color: #fec88760;
+  border-radius: 0.27rem;
+  margin: 0.9rem;
+  font-size: var(--medium);
+}
+.company_name {
+  font-size: var(--larger);
+  font-weight: 600;
+}
+.duties ul{list-style: square;}
+.duties li {
+  min-width: 15vw;
 }
