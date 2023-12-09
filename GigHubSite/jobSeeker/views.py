@@ -5,7 +5,7 @@ from GigHub import utils
 from django.contrib.auth.models import User
 from datetime import date, datetime
 from django.contrib.auth.hashers import check_password
-from django.db.models import Count
+from django.db.models import Count, Q
 
 import json
 # Create your views here.
@@ -229,8 +229,9 @@ def job(request):
     if request.method == "GET":
         profile=Profile.objects.get(userID=request.user)
         user_skills = Profile.objects.get(userID=request.user).skills.all()
-        recommended = JobPostings.objects.filter(jobRequirements__in=user_skills).distinct()
-        topRecommended = JobPostings.objects.filter(jobRequirements__in=user_skills).annotate(common_skills_count=Count('jobRequirements'))\
+        user_application = JobApplication.objects.filter(applicantID=profile)
+        recommended = JobPostings.objects.filter(jobRequirements__in=user_skills).exclude(Q(id__in=user_application.values('jobID'))).distinct()
+        topRecommended = JobPostings.objects.filter(jobRequirements__in=user_skills).exclude(Q(id__in=user_application.values('jobID'))).annotate(common_skills_count=Count('jobRequirements'))\
         .filter(common_skills_count__gte=3)\
         .distinct()[:3]
         recommended_data_all = []
