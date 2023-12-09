@@ -120,7 +120,7 @@ table.dataTable.order-column.stripe > tbody > tr.odd > .sorting_1 {
   box-shadow: none !important;
 }
 sidebar:not(sidebar.collapsed) ~ content .dataTables_info {
-  left: 21rem;
+  left: 16rem;
 }
 .dataTables_info {
   position: fixed;
