@@ -1,0 +1,93 @@
+<sidebar
+  class="shadow d-flex flex-column align-items-center justify-content-between py-3 gap-3"
+>
+  <div class="logo">
+    <img src="{{ '/media/site/logo.png' }}" alt="logo" />
+    <img src="{{ '/media/site/logoText.png' }}" />
+  </div>
+
+  <div class="d-flex flex-column flex-grow-1 justify-content-between">
+    <div class="tabs_list d-flex flex-column">
+      <div
+        class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'dashBoard'%}active{% endif %}"
+        onclick="window.location.href = `{% url 'jobSeeker:dashboard' %}`"
+      >
+        <iconify-icon icon="ic:round-dashboard"></iconify-icon>
+        <span>Dashboard</span>
+      </div>
+
+      <div
+        class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'profileSettings'%}active{% endif %}"
+        onclick="window.location.href = `{% url 'jobProvider:settings'%}`"
+      >
+        <iconify-icon icon="iconamoon:profile-circle-fill"></iconify-icon>
+        <span>Profile</span>
+      </div>
+
+      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
+        <iconify-icon icon="solar:case-bold"></iconify-icon>
+        <span>Work</span>
+      </div>
+
+      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2"
+        onclick="window.location.href = `{% url 'jobProvider:companies' %}`">
+        <iconify-icon icon="solar:case-bold"></iconify-icon>
+        <span>Company</span>
+      </div>
+
+      <div
+        class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'job'%}active{% endif %}"
+        onclick="window.location.href = `{% url 'jobSeeker:job'%}`"
+      >
+        <i class="fa-solid fa-user-tie"></i>
+        <span>Job</span>
+      </div>
+
+      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
+        <i class="fa-solid fa-user-tie"></i>
+        <span>Job</span>
+      </div>
+    </div>
+
+    <div onclick="logout()"
+      class="logout tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2"
+    >
+      <iconify-icon icon="basil:logout-solid"></iconify-icon>
+      <span>Logout</span>
+    </div>
+  </div>
+</sidebar>
+<header class="px-3 d-flex align-items-center gap-2 justify-content-between">
+  <div class="left d-flex align-items-center gap-2">
+    <iconify-icon icon="ci:hamburger-md" class="burger"></iconify-icon>
+  </div>
+  <div class="right d-flex align-items-center gap-2">
+    <iconify-icon icon="basil:notification-solid" class="notif"></iconify-icon>
+    <img
+      src="{{ user.image.url }}"
+      alt="my_profile"
+      class="rounded-circle shadow-sm"
+    />
+    <div class="greetings fw-bold lh-sm">
+      Good Day!
+      <br />
+      <span>{{user.fName}} {{user.lName}}</span>
+    </div>
+  </div>
+</header>
+<script>
+  function logout()
+  {
+   Swal.fire({
+   text: "Are you sure?",
+   icon: "question",
+   showCancelButton: true,
+   confirmButtonText: "Yes",
+   }).then((result)=>{
+       if(result.isConfirmed)
+       {
+           window.location.href = "/logout/"
+       }
+   });
+  }
+</script>

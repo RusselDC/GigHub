@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates
+from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, JobApplication
 from GigHub import utils
 from django.contrib.auth.models import User
 from datetime import date, datetime
@@ -242,6 +242,7 @@ def job(request):
             
 
             recommended_data = {
+                'id': reco.id,
                 'company' : reco.companyID.companyName,
                 'title' : reco.jobTitle,
                 'desc' : reco.jobDescription,
@@ -256,6 +257,7 @@ def job(request):
             skills = [skills.name for skills in reco.jobRequirements.all()]
 
             topReco_data = {
+                'id': reco.id,
                 'company' : topReco.companyID.companyName,
                 'title' : topReco.jobTitle,
                 'desc' : topReco.jobDescription,
@@ -268,6 +270,14 @@ def job(request):
             topRecommended_data_all.append(topReco_data)
 
         return render(request, template, {'user':profile,'pageName':'job','recommended':recommended_data_all,'topRecommended':topRecommended_data_all})
+    else:
+        #return JsonResponse({'message':"HI",'data':request.POST})
+        profile = Profile.objects.get(userID=request.user)
+        jobPost = JobPostings.objects.get(id=request.POST['id'])
+
+        JobApplication.objects.create(applicantID=profile, jobID=jobPost)
+
+        return JsonResponse({'status':True,'message':'Application has been sent'})
 
 
 def addAward(request):

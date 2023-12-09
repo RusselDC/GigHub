@@ -16,7 +16,7 @@
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <script src="{% static 'js/template.js' %}" defer></script>
-    <script src="{% static 'js/locationDropdown.js' %}" defer>!</script>
+    <script src="{% static 'js/addressdropdown.js' %}" defer>!</script>
     <script src="{% static 'js/profile.js' %}" defer></script>
     <link rel="website icon" type="png " href="{{ '/media/site/logo.png' }}">
     <link rel="stylesheet" href="{% static 'css/template.css' %}">
@@ -44,7 +44,7 @@
         </script>
         {% endif %}
         
-        {% include 'partials/template.html' with user=user pageName=pageName %}
+        {% include 'partials/navandside2.html' with user=user pageName=pageName %}
        
         
         
@@ -58,7 +58,7 @@
                     <span class="formTitles">Account Security</span>
                 </div>
                 <div class="formContents">
-                    <form action="{% url 'jobSeeker:userSettings' %}" id="profileForm" enctype="multipart/form-data"
+                    <form action="{% url 'jobProvider:settings' %}" id="profileForm" enctype="multipart/form-data"
                         method="POST">
                         {% csrf_token %}
                         <div class="formContent {% if pagePart == 1 %}active{% endif %}">
@@ -448,6 +448,36 @@
 
 
 </body>
+<script>
+      function populateOnce1(title, from, year, container) {
+    var template = document.getElementById("awardTemplate");
+    var templateContent = template.content.cloneNode(true);
 
+    templateContent.querySelector("#awardTitle").textContent = title;
+    templateContent.querySelector("#awardDates").textContent = year;
+    templateContent.querySelector("#awardLocation").textContent = from;
+
+    document.getElementById(container).appendChild(templateContent);
+  }
+
+  function populateOnce(data) {
+    // Clone the template content
+    var template = document.getElementById("educationalAttainmentTemplate");
+    var templateContent = template.content.cloneNode(true);
+
+    // Populate the cloned template with data
+    templateContent.querySelector("#schoolEd").textContent = data[0];
+    templateContent.querySelector("#awardEd").textContent = data[4];
+    templateContent.querySelector("#courseEd").textContent = data[1];
+    templateContent.querySelector("#majorEd").textContent = data[2];
+    templateContent.querySelector("#dateEd").textContent =
+      "Class of " + data[3];
+
+    // Append the populated template to the container
+    document
+      .getElementById("educationalAttainmentContainer")
+      .appendChild(templateContent);
+  }
+</script>
 
 </html>
