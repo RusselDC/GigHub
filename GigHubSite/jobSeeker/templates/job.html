@@ -11,8 +11,7 @@
 
     <script
       type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"
-    ></script>
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -20,8 +19,7 @@
     <script
       src="https://kit.fontawesome.com/275edc9f9d.js"
       crossorigin="anonymous"
-      defer
-    ></script>
+      defer></script>
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
     <script src="{% static 'js/template.js' %}" defer></script>
@@ -39,29 +37,37 @@
     {% include 'partials/template.html' with user=user %}
 
     <content class="p-4 pb-5">
+      <label
+        class="search_jobs d-flex align-items-center py-1 px-2 rounded-2 mb-3">
+        <input
+          type="text"
+          class="pe-2"
+          placeholder="Search by Name, Location, Skills, etc.," />
+        <button class="d-flex align-items-center gap-1 rounded-2 px-2 py-1">
+          <iconify-icon icon="mingcute:search-line"></iconify-icon>Search
+        </button>
+      </label>
       <h3 class="fw-bold">Recommended For You</h3>
       <div
         class="jobs_list mt-4 d-flex flex-column justify-content-center align-items-center gap-3"
-        id="topReco_list"
-      ></div>
+        id="topReco_list"></div>
 
       <h3 class="fw-bold mt-5">
         Discover Your Next Chapter: Browse Jobs Now!"
       </h3>
       <div
         class="jobs_list mt-4 d-flex flex-column justify-content-center align-items-center gap-3"
-        id="jobList"
-      ></div>
+        id="jobList"></div>
     </content>
     <template id="jobTemplate">
       <div
-        class="job_container d-flex justify-content-center align-items-center"
-      >
+        class="job_container d-flex justify-content-center align-items-center">
         <div
-          class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between mb-3"
-        >
+          class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between mb-3">
           <div class="job_main">
-            <h4 class="job_title fw-bold mb-1" id="title">Software Developer</h4>
+            <h4 class="job_title fw-bold mb-1" id="title">
+              Software Developer
+            </h4>
             <div class="job_company" id="company">ByteCraft Solutions</div>
           </div>
           <div class="job_details align-self-center">
@@ -95,19 +101,21 @@
             </div>
           </div>
           <div
-            class="job_actions d-flex flex-column align-items-end justify-content-between"
-          >
+            class="job_actions d-flex flex-column align-items-end justify-content-between">
             <iconify-icon
               icon="iconoir:bookmark"
-              class="job_unsaved"
-            ></iconify-icon>
+              class="job_unsaved"></iconify-icon>
             <iconify-icon
               icon="iconoir:bookmark-solid"
-              class="job_saved"
-            ></iconify-icon>
-            <div class="view_job fw-bold w-100 text-center py-1 rounded-2" id="view_job">
+              class="job_saved"></iconify-icon>
+            <div
+              class="view_job fw-bold w-100 text-center py-1 rounded-2"
+              id="view_job">
               MORE
             </div>
+          </div>
+          <div class="apply_btn fw-bold px-3 py-2 rounded-2 shadow">
+            Apply Now
           </div>
         </div>
       </div>
@@ -115,16 +123,14 @@
 
     <template id="notopReco">
       <div
-        class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3"
-      >
+        class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3">
         <center><span>No jobs found matching your given skills</span></center>
       </div>
     </template>
 
     <template id="noReco">
       <div
-        class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3"
-      >
+        class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between gap-3">
         <center><span>No Jobs Available</span></center>
       </div>
     </template>
@@ -139,11 +145,11 @@
         templateContent.getElementById("company").textContent = reco.company;
         templateContent.getElementById("description").textContent = reco.desc;
         templateContent.getElementById("requirements").textContent =
-          reco.requirements.join(",")
-          //only for debug purposes
-          //templateContent.getElementById('view_job').addEventListener('click', () => {
-          //applyJob(reco.id);
-          //});
+          reco.requirements.join(",");
+        //only for debug purposes
+        //templateContent.getElementById('view_job').addEventListener('click', () => {
+        //applyJob(reco.id);
+        //});
         document.getElementById("jobList").appendChild(templateContent);
       });
     } else {
@@ -170,21 +176,18 @@
       document.getElementById("topReco_list").appendChild(templateContent);
     }
 
-
-
-    function applyJob(id)
-    {
+    function applyJob(id) {
       $.ajax({
-        url:"{% url 'jobSeeker:job' %}",
-        type:"POST",
-        data:{'csrfmiddlewaretoken':token,'id':id},
-        success:(data)=>{
-          console.log(data)
+        url: "{% url 'jobSeeker:job' %}",
+        type: "POST",
+        data: { csrfmiddlewaretoken: token, id: id },
+        success: (data) => {
+          console.log(data);
         },
-        error:(err)=>{
-          console.log(err.responseText)
-        }
-      })
+        error: (err) => {
+          console.log(err.responseText);
+        },
+      });
     }
   </script>
 </html>
