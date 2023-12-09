@@ -93,7 +93,7 @@
   backdrop-filter: blur(10px);
 }
 sidebar.collapsed ~ content .job_container.modal_show {
-  width: calc(100vw - 5rem);
+  width: calc(100vw - 6rem);
 }
 .job_container.modal_show .job {
   flex-direction: column;
@@ -133,4 +133,24 @@ sidebar.collapsed ~ content .job_container.modal_show {
   sidebar.collapsed ~ content .job_container.modal_show {
     width: 100vw;
   }
+}
+
+.apply_btn {
+  display: none;
+}
+.job_container.modal_show .apply_btn {
+  display: block;
+  width: fit-content !important;
+  align-self: end;
+  text-transform: uppercase;
+  background-color: var(--mango-tango);
+  color: var(--white);
+  cursor: pointer;
+  border: solid 3px var(--mango-tango);
+  transition: var(--transition-1);
+}
+.job_container.modal_show .apply_btn:hover {
+  background-color: var(--white);
+  color: var(--mango-tango);
+  transition: var(--transition-1);
 }
