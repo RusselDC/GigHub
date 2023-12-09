@@ -28,6 +28,7 @@ def companies(request):
             companies_data_list.append(company_data)
         return render(request, template, {'pageName':'companies','user':profile, 'companies':companies_data_list})
     else:
+        
         profile = Profile.objects.get(userID=request.user)
 
         coName = request.POST['name']
@@ -56,7 +57,48 @@ def companies(request):
 
         return JsonResponse({'status':True,'message':'Company Added'})
 
+def editCompany(request):
+    
         
+    coName = request.POST['name']
+    coInd = request.POST['industry']
+    empRange = request.POST['employees']
+    province = request.POST['province']
+    city = request.POST['city']
+    brgy = request.POST['barangay']
+    street = request.POST['street']
+    bldg = request.POST['bldg']
+
+    industry, created = Industry.objects.get_or_create(name__iexact=coInd)
+    if created or not industry.name:
+        industry.name = coInd
+        industry.save()
+
+    company = Company.objects.get(id=request.POST['companyID'])
+
+    company.companyName = coName
+    company.empRange = empRange
+    company.industry = industry
+    company.province = province
+    company.city = city
+    company.baranggay = brgy
+    company.strt = street
+    company.bldgNo = bldg
+    company.save()
+
+
+    staff = companyStaff.objects.get(company=company,staff=Profile.objects.get(userID=request.user))
+    desi = request.POST.get('designation',None)
+    if desi is not None:
+        staff.designation = request.POST['designation']
+        staff.save()
+
+    return redirect('jobProvider:companies')
+
+
+    
+
+    
 
 def settings(request):
     template = 'providerSettings.html'
@@ -192,3 +234,27 @@ def settings(request):
         today = date.today()
         age = today.year - bdate.year - ((today.month, today.day) < (bdate.month, bdate.day))
         return render(request, template, {'certis':certificate_data_list,'awards':awards_data_list,'user':profile, 'age':age, 'statuses':profile.STATUS_CHOICES, 'pageName':'profileSettings', 'prompt':'Profile has been saved', 'pagePart': 1, 'colleges':college_data_list, 'degrees':deg,'insitutions':ins})
+    
+
+def getCompany(request, coID):
+    company = Company.objects.get(id=coID)
+    designation = companyStaff.objects.get(company=company,staff=Profile.objects.get(userID=request.user))
+
+    
+
+    companyData = {
+        'designation':designation.designation,
+        'name': company.companyName,
+        'industry': company.industry.name,
+        'empRange': company.empRange,
+        'province': company.province,
+        'city': company.city,
+        'baranggay': company.baranggay,
+        'strt': company.strt,
+        'bldgNo': company.bldgNo
+    }
+
+
+
+    return JsonResponse({'status':True,'data':companyData})
+

@@ -105,6 +105,7 @@ class JobPostings(models.Model):
     scope = models.CharField(max_length=100, null=True)
     timeline = models.CharField(max_length=100, null=True)
     isApproved = models.BooleanField(default=False)
+    deadLine = models.DateField(null=True)
 
     #def setJobRequirements(self, values):
     #    self.jobRequirements = ','.join(map(str,values))

@@ -146,6 +146,8 @@
         templateContent.getElementById("description").textContent = reco.desc;
         templateContent.getElementById("requirements").textContent =
           reco.requirements.join(",");
+
+        templateContent.getElementById('view_job').setAttribute('data-id',reco.id);
         //only for debug purposes
         //templateContent.getElementById('view_job').addEventListener('click', () => {
         //applyJob(reco.id);
@@ -182,7 +184,7 @@
         type: "POST",
         data: { csrfmiddlewaretoken: token, id: id },
         success: (data) => {
-          console.log(data);
+          alert(data.message)
         },
         error: (err) => {
           console.log(err.responseText);

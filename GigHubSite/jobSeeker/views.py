@@ -247,9 +247,6 @@ def job(request):
                 'company' : reco.companyID.companyName,
                 'title' : reco.jobTitle,
                 'desc' : reco.jobDescription,
-                'jobLoc' : reco.jobLocation,
-                'salary' : reco.salaryRange,
-                'deadline' : reco.deadLine.strftime('%Y-%m-%d'),
                 'requirements' : skills
             }
             recommended_data_all.append(recommended_data)
@@ -262,9 +259,6 @@ def job(request):
                 'company' : topReco.companyID.companyName,
                 'title' : topReco.jobTitle,
                 'desc' : topReco.jobDescription,
-                'jobLoc' : topReco.jobLocation,
-                'salary' : topReco.salaryRange,
-                'deadline' : topReco.deadLine.strftime('%Y-%m-%d'),
                 'requirements' : skills
             }
 

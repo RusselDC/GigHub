@@ -112,6 +112,7 @@ function showValue(selectElement, input) {
             'province':document.getElementById('provinceInput').value,'city':document.getElementById('cityInput').value,
             'baranggay':document.getElementById('barangayInput').value,'street':document.getElementById('street').value,'bldg':document.getElementById('bldg').value},
             success:(data)=>{
+              console.log(data)
               if(data.status)
               {
                 CloseForm(document.getElementById('forms'))
@@ -177,7 +178,68 @@ function showValue(selectElement, input) {
   
   function ViewDetails(id) {
     const companyContainer = document.querySelector("#companyContainer"),
-      companyDetails = document.querySelector("#companyDetails");
+    companyDetails = document.querySelector("#companyDetails");
+    $.ajax({
+      type:"GET",
+      url:`/provider/getCompany/${id}/`,
+      success:(data)=>{
+        console.log(data)
+        document.getElementById('nameEdit').value = data.data.name
+
+        var selectElement = document.getElementById('industryEdit')
+        selectElement.options[0].value = data.data.industry
+        selectElement.options[0].text = data.data.industry
+        selectElement.options[0].selected = true
+        selectElement.options[0].disabled = false
+
+        var selectElement2 = document.getElementById('employeesEdit')
+        selectElement2.options[0].value = data.data.empRange
+        selectElement2.options[0].text = data.data.empRange
+        selectElement2.options[0].selected = true
+        selectElement2.options[0].disabled = false
+
+        var selectElement3 = document.getElementById('provinceEdit')
+        var newoption = document.createElement('option')
+        document.getElementById('provinceInputEdit').value = data.data.province
+        newoption.value = data.data.province
+        newoption.text = data.data.province
+        selectElement3.insertBefore(newoption,selectElement3.options[0])
+        newoption.selected = true;
+
+        var selectElement4 = document.getElementById('cityEdit')
+        var newoption2 = document.createElement('option')
+        document.getElementById('cityInputEdit').value = data.data.city
+        newoption2.value = data.data.city
+        newoption2.text = data.data.city
+        selectElement4.insertBefore(newoption2,selectElement4.options[0])
+        newoption2.selected = true;
+
+        var selectElement5 = document.getElementById('barangayEdit')
+        var newoption3 = document.createElement('option')
+        document.getElementById('barangayInputEdit').value = data.data.baranggay
+        newoption3.value = data.data.baranggay
+        newoption3.text = data.data.baranggay
+        selectElement5.insertBefore(newoption3,selectElement5.options[0])
+        newoption3.selected = true;
+        document.getElementById('streetEdit').value = data.data.strt
+        document.getElementById('bldgEdit').value = data.data.bldgNo
+
+        var selectElement6 = document.getElementById('designationEdit')
+        selectElement6.options[0].value = data.data.designation
+        selectElement6.options[0].text = data.data.designation
+        selectElement6.options[0].selected = true
+
+        document.getElementById('editbutton').addEventListener('click',()=>{
+          Validate2(formEdit,id)
+        })
+        
+        
+        
+        
+      },error:(err)=>{
+        console.log(err.responseText)
+      }
+    })
     companyContainer.classList.remove("show");
     companyDetails.classList.add("show");
   }
@@ -211,3 +273,63 @@ function showValue(selectElement, input) {
     formContent[index].classList.add("active");
   });
   });
+
+
+  function Validate2(form, id) {
+   
+    document.getElementById('companyID').value = id
+    const inputs = form.querySelectorAll("input[type='text']");
+    const selects = form.querySelectorAll("select");
+    const provinceInput = form.querySelector("#provinceInputEdit"),
+      cityInput = form.querySelector("#cityInputEdit"),
+      barangayInput = form.querySelector("#barangayInputEdit"),
+      province = form.querySelector("#provinceEdit"),
+      city = form.querySelector("#cityEdit"),
+      barangay = form.querySelector("#barangayEdit");
+    isValid = true;
+  
+    var locationInput = [provinceInput, cityInput, barangayInput];
+    var location = [province, city, barangay];
+    locationInput.forEach((input, selectedIndex) => {
+      if (input.value === "") {
+        isValid = false;
+        ShowError(location[selectedIndex], "Field required");
+      } else {
+        RemoveError(location[selectedIndex]);
+      }
+    });
+    inputs.forEach((input) => {
+      if (input.value == "") {
+        isValid = false;
+        ShowError(input, "Field required");
+      } else {
+        RemoveError(input);
+      }
+    });
+    selects.forEach((select) => {
+      if (select.value == "") {
+        isValid = false;
+        ShowError(select, "Field required");
+      } else {
+        RemoveError(select);
+      }
+    });
+    if (isValid) {
+      Swal.fire({
+        title: "Add Company?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Confirm",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            text: "Company Added",
+            icon: "success",
+            showConfirmButton: false,
+          }).then(() => {
+            form.submit();
+          });
+        }
+      });
+    }
+  }
