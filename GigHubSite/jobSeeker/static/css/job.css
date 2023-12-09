@@ -154,3 +154,32 @@ sidebar.collapsed ~ content .job_container.modal_show {
   color: var(--mango-tango);
   transition: var(--transition-1);
 }
+
+.search_jobs {
+  background-color: var(--white);
+  /* width: fit-content; */
+  min-width: 400px;
+  max-width: calc(50vw - 18rem);
+  border: solid 3px var(--gainsboro);
+}
+.search_jobs button {
+  border: none;
+  background-color: var(--topaz);
+  color: var(--mango-tango);
+  transition: var(--transition-1);
+  border: solid 3px var(--topaz);
+}
+.search_jobs button:hover {
+  border: solid 3px var(--mango-tango);
+  background-color: var(--white);
+  transition: var(--transition-1);
+}
+.search_jobs input {
+  border: none;
+  outline: none;
+  background: none;
+  flex-grow: 1;
+}
+.search_jobs iconify-icon {
+  font-size: 1.5rem;
+}
