@@ -306,7 +306,7 @@ body {
 .companyDetails.show {
     margin-top: 1vw;
     width: 96%;
-    height: 82vh;
+    height: 80vh;
     overflow-y: scroll;
     padding: 1vw;
     display: flex;
@@ -314,6 +314,7 @@ body {
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.43);
     border-radius: .3vw;
     transition: all ease .3s;
+    background-color: var(--white);
 }
 
 .companyDetails.show::-webkit-scrollbar {
@@ -371,35 +372,4 @@ body {
     position: absolute;
     right: 1vw;
     cursor: pointer;
-}
-
-.companyDetailsBody {
-    position: relative;
-    margin-top: 1vh;
-    width: 100%;
-    height: 80vh;
-    padding: 1vw;
-    overflow-y: scroll;
-}
-
-.companyDetailsBody::-webkit-scrollbar {
-    display: none;
-}
-
-.companyDetailsSection {
-    display: none;
-}
-
-.companyDetailsSection.active {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.companyDetailsSection.active form {
-    width: 100%;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
 }
