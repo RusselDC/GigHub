@@ -23,11 +23,11 @@
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <title>Profile</title>
     <script type="text/javascript">
-        var collegesData = {{ colleges| safe }};
-        var token = '{{csrf_token}}'
-        var awardsData = {{awards|safe}};
-        var certis = {{certis|safe}};
-        console.log(certis)
+                                                              // var collegesData = {{ colleges| safe }};
+                                                              // var token = '{{csrf_token}}'
+                                                              // var awardsData = {{awards|safe}};
+                                                              // var certis = {{certis|safe}};
+                                                              // console.log(certis)
 
     </script>
 </head>
@@ -36,18 +36,18 @@
     <div class="bodyContainer" id="bodyContainer">
         {% if prompt %}
         <script>
-            Swal.fire({
-                itle: "Good job!",
-                text: "{{prompt}}",
-                icon: "success"
-            });
+                Swal.fire({
+                    itle: "Good job!",
+                    text: "{{prompt}}",
+                    icon: "success"
+                });
         </script>
         {% endif %}
-        
+
         {% include 'partials/template.html' with user=user pageName=pageName %}
-       
-        
-        
+
+
+
 
         <content class="mainContainer d-flex justify-content-center">
             <div class="formContainer">
@@ -157,7 +157,8 @@
                                 </div>
                                 <div class="inputContainer">
                                     <label for="city">Municipality/City </label>
-                                    <input type="text" id="cityInput" name="city" value="{{user.city}}" style="display:none;">
+                                    <input type="text" id="cityInput" name="city" value="{{user.city}}"
+                                        style="display:none;">
                                     <select id="city" class="inputBox" onchange="showValue(this,cityInput )">
                                         <option selected>Select Municipality/City</option>
                                     </select>
@@ -165,7 +166,8 @@
                                 </div>
                                 <div class="inputContainer">
                                     <label for="barangay">Barangay </label>
-                                    <input type="text" id="barangayInput" name="barangay" value="{{user.baranggay}}" style="display:none;">
+                                    <input type="text" id="barangayInput" name="barangay" value="{{user.baranggay}}"
+                                        style="display:none;">
                                     <select id="barangay" class="inputBox" onchange="showValue(this,barangayInput )">
                                         <option selected>Select Barangay</option>
                                     </select>
@@ -206,11 +208,14 @@
                         <div id="certisContainer" style="height: fit-content; width: 100%;">
 
                         </div>
-                        
+
                     </div>
 
                 </div>
-                <div class="formContent"> <div class="formTitle"><span>Employment History</span><button class="mainButton" type="button" onclick="ShowForms(employmentAddForm, formsInput2)">Add</button></div></div>
+                <div class="formContent">
+                    <div class="formTitle"><span>Employment History</span><button class="mainButton" type="button"
+                            onclick="ShowForms(employmentAddForm, formsInput2)">Add</button></div>
+                </div>
                 <div class="formContent">
                     <form id="changeEmailForm">
                         <div class="formTitle">Change Email</div>
@@ -298,51 +303,65 @@
                     <button type="button" class="mainButton" id="addDetailsButton">Save</button>
                 </div>
             </form>
-        </div><div class="formsInput2" id="formsInput2"><form id="employmentAddForm">
-            
+        </div>
+        <div class="formsInput2" id="formsInput2">
+            <form id="employmentAddForm">
+
                 <div class="formTitle"><span>Employment History</span> <iconify-icon icon="ph:x-bold"
                         onclick="Closeform2(employmentAddForm,formsInput2)"></iconify-icon></div>
 
-                        <div class="employmentAddForm"><div class="employmentHistoryContainer d-flex justify-content-between gap-3 mx-3 mt-3">
-        <div class="w-100"><!-- Company Name -->
-        <div class="inputContainer">
-            <label for="companyName">Company Name</label>
-            <input type="text" class="inputBox" id="companyName" name="companyName" placeholder="Company Name">
-            <div class="errorMessage"></div>
-        </div>
-        <!-- Position -->
-        <div class="inputContainer">
-            <label for="position">Position</label>
-            <input type="text" class="inputBox" id="position" name="position" placeholder="Position">
-            <div class="errorMessage"></div>
-        </div>
-        <!-- Date Started -->
-        <div class="inputContainer">
-            <label for="dateStarted">Date Started</label>
-            <input type="date" class="inputBox" id="dateStarted" name="dateStarted">
-            <div class="errorMessage"></div>
-        </div>
-        <!-- Date Ended -->
-        <div class="inputContainer">
-            <label for="dateEnded">Date Ended</label>
-            <input type="date" class="inputBox" id="dateEnded" name="dateEnded">
-            <div class="errorMessage"></div>
-        </div></div>
-        <!-- Duties -->
-        <div class="w-100  d-flex flex-column"><div class="dutiesList pe-2 flex-grow-1 w-100"><div class="inputContainer">
-            <label for="duties">Duties</label>
-            <input type="text" class="inputBox" id="duties" name="duties[]" placeholder="Duty 1">
-            <div class="errorMessage"></div>
-        </div>
-    </div>
-        <div class="addDutyButton" onclick="addDutyField()"><iconify-icon icon="ic:round-plus"></iconify-icon></div>
-                <div class="buttonContainer">
-                    <button type="button" class="mainButton" onclick="ValidateEmployment(employmentAddForm)">Submit</button>
-                </div></div>
-    </div></div>
+                <div class="employmentAddForm">
+                    <div class="employmentHistoryContainer d-flex justify-content-between gap-3 mx-3 mt-3">
+                        <div class="w-100"><!-- Company Name -->
+                            <div class="inputContainer">
+                                <label for="companyName">Company Name</label>
+                                <input type="text" class="inputBox" id="companyName" name="companyName"
+                                    placeholder="Company Name">
+                                <div class="errorMessage"></div>
+                            </div>
+                            <!-- Position -->
+                            <div class="inputContainer">
+                                <label for="position">Position</label>
+                                <input type="text" class="inputBox" id="position" name="position"
+                                    placeholder="Position">
+                                <div class="errorMessage"></div>
+                            </div>
+                            <!-- Date Started -->
+                            <div class="inputContainer">
+                                <label for="dateStarted">Date Started</label>
+                                <input type="date" class="inputBox" id="dateStarted" name="dateStarted">
+                                <div class="errorMessage"></div>
+                            </div>
+                            <!-- Date Ended -->
+                            <div class="inputContainer">
+                                <label for="dateEnded">Date Ended</label>
+                                <input type="date" class="inputBox" id="dateEnded" name="dateEnded">
+                                <div class="errorMessage"></div>
+                            </div>
+                        </div>
+                        <!-- Duties -->
+                        <div class="w-100  d-flex flex-column">
+                            <div class="dutiesList pe-2 flex-grow-1 w-100">
+                                <div class="inputContainer">
+                                    <label for="duties">Duties</label>
+                                    <input type="text" class="inputBox" id="duties" name="duties[]"
+                                        placeholder="Duty 1">
+                                    <div class="errorMessage"></div>
+                                </div>
+                            </div>
+                            <div class="addDutyButton" onclick="addDutyField()"><iconify-icon
+                                    icon="ic:round-plus"></iconify-icon></div>
+                            <div class="buttonContainer">
+                                <button type="button" class="mainButton"
+                                    onclick="ValidateEmployment(employmentAddForm)">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
-        </form></div>
+            </form>
+        </div>
         <div class="formsInput" id="formsInput">
             <form id="educAddForm">
                 <div class="formTitle"><span>Educational Attainment</span> <iconify-icon icon="ph:x-bold"
@@ -354,19 +373,19 @@
                             placeholder="Civil Status" autocomplete="off" spellcheck="false">
                         <datalist id="schoolAttendeds">
                             {% for ins in insitutions %}
-                                <option value="{{ins.name}}">
-                            {% endfor %}
+                            <option value="{{ins.name}}">
+                                {% endfor %}
                         </datalist>
                         <div class="errorMessage"></div>
                     </div>
                     <div class="inputContainer2">
                         <label for="course">Course</label>
-                        <input list="courseAttendeds" class="inputBox" id="course" name="course" placeholder="Civil Status"
-                            autocomplete="off" spellcheck="false">
+                        <input list="courseAttendeds" class="inputBox" id="course" name="course"
+                            placeholder="Civil Status" autocomplete="off" spellcheck="false">
                         <datalist id="courseAttendeds">
                             {% for ins in degrees %}
-                                <option value="{{ins.name}}">
-                            {% endfor %}
+                            <option value="{{ins.name}}">
+                                {% endfor %}
                         </datalist>
                         <div class="errorMessage"></div>
                     </div>
