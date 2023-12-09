@@ -371,8 +371,340 @@
                     <span class="backButton" onclick="BackButton()">x</span>
                 </div>
                 <div class="companyDetailsBody">
-                    <section class="companyDetailsSection"></section>
-                    <section class="companyDetailsSection"></section>
+                    <section class="companyDetailsSection active">
+                        <form action="" id="formEdit">
+                            <div class="formGroup">
+                                <div class="formInput">
+                                    <label for="nameEdit" class="formLabel">Company Name</label>
+                                    <input autcomplete="off" type="text" class="inputBox" placeholder="Company Name"
+                                        id="nameEdit" name="name">
+                                    <div class="errorMessage"></div>
+                                </div>
+                                <div class="formInput">
+                                    <label for="industryEdit" class="formLabel">Industry</label>
+                                    <select name="industry" id="industryEdit" class="inputBox">
+                                        <option disabled selected value=""> Select Industry</option>
+                                        <optgroup label="Agriculture and Forestry">
+                                            <option value="Farming">Farming</option>
+                                            <option value="Logging">Logging</option>
+                                            <option value="Fishing">Fishing</option>
+                                        </optgroup>
+                                        <optgroup label="Mining and Quarrying">
+                                            <option value="Coal mining">Coal mining</option>
+                                            <option value="Oil and gas extraction">Oil and gas extraction</option>
+                                            <option value="Metal ore mining">Metal ore mining</option>
+                                        </optgroup>
+                                        <optgroup label="Construction">
+                                            <option value="Residential construction">Residential construction</option>
+                                            <option value="Commercial construction">Commercial construction</option>
+                                            <option value="Civil engineering">Civil engineering</option>
+                                        </optgroup>
+                                        <optgroup label="Manufacturing">
+                                            <option value="Automotive">Automotive</option>
+                                            <option value="Electronics">Electronics</option>
+                                            <option value="Textiles">Textiles</option>
+                                            <option value="Chemicals">Chemicals</option>
+                                        </optgroup>
+                                        <optgroup label="Energy">
+                                            <option value="Renewable energy">Renewable energy</option>
+                                            <option value="Oil and gas">Oil and gas</option>
+                                            <option value="Utilities">Utilities</option>
+                                        </optgroup>
+                                        <optgroup label="Water and Waste Management">
+                                            <option value="Water treatment">Water treatment</option>
+                                            <option value="Waste collection and disposal">Waste collection and disposal
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Information Technology">
+                                            <option value="Software development">Software development</option>
+                                            <option value="Hardware manufacturing">Hardware manufacturing</option>
+                                            <option value="IT services">IT services</option>
+                                        </optgroup>
+                                        <optgroup label="Finance">
+                                            <option value="Banking">Banking</option>
+                                            <option value="Insurance">Insurance</option>
+                                            <option value="Investment">Investment</option>
+                                        </optgroup>
+                                        <optgroup label="Real Estate">
+                                            <option value="Residential real estate">Residential real estate</option>
+                                            <option value="Commercial real estate">Commercial real estate</option>
+                                        </optgroup>
+                                        <optgroup label="Healthcare">
+                                            <option value="Hospitals">Hospitals</option>
+                                            <option value="Pharmaceuticals">Pharmaceuticals</option>
+                                            <option value="Biotechnology">Biotechnology</option>
+                                        </optgroup>
+                                        <optgroup label="Education">
+                                            <option value="Primary and secondary education">Primary and secondary
+                                                education
+                                            </option>
+                                            <option value="Higher education">Higher education</option>
+                                        </optgroup>
+                                        <optgroup label="Professional and Business Services">
+                                            <option value="Consulting">Consulting</option>
+                                            <option value="Legal services">Legal services</option>
+                                            <option value="Accounting">Accounting</option>
+                                        </optgroup>
+                                        <optgroup label="Hospitality and Tourism">
+                                            <option value="Hotels">Hotels</option>
+                                            <option value="Restaurants">Restaurants</option>
+                                            <option value="Travel agencies">Travel agencies</option>
+                                        </optgroup>
+                                        <optgroup label="Transportation and Logistics">
+                                            <option value="Airlines">Airlines</option>
+                                            <option value="Shipping">Shipping</option>
+                                            <option value="Warehousing">Warehousing</option>
+                                        </optgroup>
+                                        <optgroup label="Telecommunications">
+                                            <option value="Internet service providers">Internet service providers
+                                            </option>
+                                            <option value="Telecommunication equipment">Telecommunication equipment
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Media and Entertainment">
+                                            <option value="Broadcasting">Broadcasting</option>
+                                            <option value="Film and television">Film and television</option>
+                                            <option value="Publishing">Publishing</option>
+                                        </optgroup>
+                                        <optgroup label="Retail">
+                                            <option value="General retail">General retail</option>
+                                            <option value="E-commerce">E-commerce</option>
+                                        </optgroup>
+                                        <optgroup label="Consumer Goods">
+                                            <option value="Food and beverages">Food and beverages</option>
+                                            <option value="Apparel">Apparel</option>
+                                            <option value="Electronics">Electronics</option>
+                                        </optgroup>
+                                        <optgroup label="Automotive">
+                                            <option value="Vehicle manufacturing">Vehicle manufacturing</option>
+                                            <option value="Automotive services">Automotive services</option>
+                                        </optgroup>
+                                        <optgroup label="Aerospace and Defense">
+                                            <option value="Aircraft manufacturing">Aircraft manufacturing</option>
+                                            <option value="Military equipment">Military equipment</option>
+                                        </optgroup>
+                                        <optgroup label="Pharmaceuticals and Biotechnology">
+                                            <option value="Drug manufacturing">Drug manufacturing</option>
+                                            <option value="Biotech research">Biotech research</option>
+                                        </optgroup>
+                                        <optgroup label="Environmental Services">
+                                            <option value="Environmental consulting">Environmental consulting</option>
+                                            <option value="Renewable energy development">Renewable energy development
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Nonprofit and Social Services">
+                                            <option value="Charities">Charities</option>
+                                            <option value="NGOs">NGOs</option>
+                                        </optgroup>
+                                        <optgroup label="Government">
+                                            <option value="Federal government">Federal government</option>
+                                            <option value="State and local government">State and local government
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Legal">
+                                            <option value="Law firms">Law firms</option>
+                                            <option value="Legal services">Legal services</option>
+                                        </optgroup>
+                                        <optgroup label="Marketing and Advertising">
+                                            <option value="Advertising agencies">Advertising agencies</option>
+                                            <option value="Marketing services">Marketing services</option>
+                                        </optgroup>
+                                        <optgroup label="Human Resources">
+                                            <option value="Recruitment">Recruitment</option>
+                                            <option value="HR consulting">HR consulting</option>
+                                        </optgroup>
+                                    </select>
+                                    <div class="errorMessage"></div>
+                                </div>
+                            </div>
+                            <div class="formGroup">
+                                <div class="formInput">
+                                    <label for="employeesEdit" class="formLabel">Number of Employees</label>
+                                    <select name="employees" id="employeesEdit" class="inputBox">
+                                        <option value="" disabled selected> Select Range</option>
+                                        <option value="1-14">1-14</option>
+                                        <option value="15-49">15-49</option>
+                                        <option value="50-100">50-100</option>
+                                        <option value="Over 100">Over 100</option>
+                                    </select>
+                                    <div class="errorMessage"></div>
+                                </div>
+                                <div class="formInput">
+                                    <label for="designationEdit" class="formLabel">Your Designation</label>
+                                    <select name="designation" id="designationEdit" class="inputBox">
+                                        <option disabled selected disabled value="">Designation</option>
+                                        <optgroup label="Executive Level">
+                                            <option value="Chief Executive Officer (CEO)">Chief Executive Officer (CEO)
+                                            </option>
+                                            <option value="Chief Operating Officer (COO)">Chief Operating Officer (COO)
+                                            </option>
+                                            <option value="Chief Financial Officer (CFO)">Chief Financial Officer (CFO)
+                                            </option>
+                                            <option value="Chief Information Officer (CIO)">Chief Information Officer
+                                                (CIO)
+                                            </option>
+                                            <option value="Chief Technology Officer (CTO)">Chief Technology Officer
+                                                (CTO)
+                                            </option>
+                                            <option value="Chief Marketing Officer (CMO)">Chief Marketing Officer (CMO)
+                                            </option>
+                                            <option value="Chief Human Resources Officer (CHRO)">Chief Human Resources
+                                                Officer (CHRO)</option>
+                                        </optgroup>
+                                        <optgroup label="Senior Management">
+                                            <option value="VP">Vice President (VP)</option>
+                                            <option value="Director">Director</option>
+                                            <option value="Manager">Manager</option>
+                                        </optgroup>
+                                        <optgroup label="Middle Management">
+                                            <option value="Assistant Manager">Assistant Manager</option>
+                                            <option value="Team Leader">Team Leader</option>
+                                            <option value="Supervisor">Supervisor</option>
+                                        </optgroup>
+                                        <optgroup label="Professional/Technical Roles">
+                                            <option value="Engineer">Engineer</option>
+                                            <option value="Analyst">Analyst</option>
+                                            <option value="Specialist">Specialist</option>
+                                            <option value="Architect">Architect</option>
+                                        </optgroup>
+                                        <optgroup label="Sales and Marketing">
+                                            <option value="Sales Representative">Sales Representative</option>
+                                            <option value="Account Manager">Account Manager</option>
+                                            <option value="Marketing Coordinator">Marketing Coordinator</option>
+                                            <option value="Business Development Manager">Business Development Manager
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Human Resources">
+                                            <option value="HR Generalist">HR Generalist</option>
+                                            <option value="HR Specialist">HR Specialist</option>
+                                            <option value="Recruiter">Recruiter</option>
+                                            <option value="Training and Development Manager">Training and Development
+                                                Manager</option>
+                                        </optgroup>
+                                        <optgroup label="Finance">
+                                            <option value="Accountant">Accountant</option>
+                                            <option value="Financial Analyst">Financial Analyst</option>
+                                            <option value="Controller">Controller</option>
+                                        </optgroup>
+                                        <optgroup label="Information Technology">
+                                            <option value="IT Specialist">IT Specialist</option>
+                                            <option value="Systems Administrator">Systems Administrator</option>
+                                            <option value="Network Engineer">Network Engineer</option>
+                                        </optgroup>
+                                        <optgroup label="Customer Service">
+                                            <option value="Customer Service Representative">Customer Service
+                                                Representative
+                                            </option>
+                                            <option value="Customer Support Specialist">Customer Support Specialist
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Operations">
+                                            <option value="Operations Manager">Operations Manager</option>
+                                            <option value="Operations Analyst">Operations Analyst</option>
+                                            <option value="Logistics Coordinator">Logistics Coordinator</option>
+                                        </optgroup>
+                                        <optgroup label="Legal">
+                                            <option value="Legal Counsel">Legal Counsel</option>
+                                            <option value="Paralegal">Paralegal</option>
+                                        </optgroup>
+                                        <optgroup label="Research and Development">
+                                            <option value="Research Scientist">Research Scientist</option>
+                                            <option value="R&D Engineer">R&D Engineer</option>
+                                        </optgroup>
+                                        <optgroup label="Administrative/Support Roles">
+                                            <option value="Administrative Assistant">Administrative Assistant</option>
+                                            <option value="Receptionist">Receptionist</option>
+                                            <option value="Office Manager">Office Manager</option>
+                                        </optgroup>
+                                        <optgroup label="Creative and Design">
+                                            <option value="Graphic Designer">Graphic Designer</option>
+                                            <option value="UX/UI Designer">UX/UI Designer</option>
+                                            <option value="Creative Director">Creative Director</option>
+                                        </optgroup>
+                                        <optgroup label="Health and Safety">
+                                            <option value="Health and Safety Officer">Health and Safety Officer</option>
+                                            <option value="Environmental Health and Safety Specialist">Environmental
+                                                Health
+                                                and Safety Specialist</option>
+                                        </optgroup>
+                                        <optgroup label="Quality Assurance">
+                                            <option value="Quality Assurance Analyst">Quality Assurance Analyst</option>
+                                            <option value="QA Engineer">QA Engineer</option>
+                                        </optgroup>
+                                        <optgroup label="Production/Manufacturing">
+                                            <option value="Production Supervisor">Production Supervisor</option>
+                                            <option value="Manufacturing Engineer">Manufacturing Engineer</option>
+                                        </optgroup>
+                                        <optgroup label="Facilities Management">
+                                            <option value="Facilities Manager">Facilities Manager</option>
+                                            <option value="Facilities Coordinator">Facilities Coordinator</option>
+                                        </optgroup>
+                                        <optgroup label="Sales and Customer Relations">
+                                            <option value="Sales Manager">Sales Manager</option>
+                                            <option value="Customer Relations Specialist">Customer Relations Specialist
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Consulting">
+                                            <option value="Consultant">Consultant</option>
+                                            <option value="Senior Consultant">Senior Consultant</option>
+                                        </optgroup>
+                                    </select>
+                                    <div class="errorMessage"></div>
+                                </div>
+                            </div>
+                            <div class="formGroup1">
+                                <div class="formInput">
+                                    <label for="provinceEdit" class="formLabel">Province</label>
+                                    <input autcomplete="off" type="text" id="provinceInputEdit" name="province"
+                                        style="display:none;" value="">
+                                    <select id="provinceEdit" class="inputBox"
+                                        onchange="showValue(this,provinceInputEdit )">
+                                        <option selected value="" disabled selected>Select Province</option>
+                                    </select>
+                                    <div class="errorMessage"></div>
+                                </div>
+                                <div class="formInput">
+                                    <label for="cityEdit" class="formLabel">Municipality/City </label>
+                                    <input autcomplete="off" type="text" id="cityInputEdit" name="city"
+                                        style="display:none;">
+                                    <select id="cityEdit" class="inputBox" onchange="showValue(this,cityInputEdit)">
+                                        <option value="" disabled selected>Select Municipality/City</option>
+                                    </select>
+                                    <div class="errorMessage"></div>
+                                </div>
+                                <div class="formInput">
+                                    <label for="barangayEdit" class="formLabel">Barangay </label>
+                                    <input autcomplete="off" type="text" id="barangayInputEdit" name="barangay"
+                                        style="display:none;">
+                                    <select id="barangayEdit" class="inputBox"
+                                        onchange="showValue(this,barangayInputEdit )">
+                                        <option value="" disabled selected>Select Barangay</option>
+                                    </select>
+                                    <div class="errorMessage"></div>
+                                </div>
+                            </div>
+                            <div class="formGroup">
+                                <div class="formInput">
+                                    <label for="streetEdit" class="formLabel">Street</label>
+                                    <input autcomplete="off" type="text" class="inputBox" id="streetEdit" name="street">
+                                    <div class="errorMessage"></div>
+                                </div>
+                                <div class="formInput">
+                                    <label for="bldgEdit" class="formLabel">Bldg no.</label>
+                                    <input autcomplete="off" type="text" class="inputBox" id="bldgEdit" name="bldg">
+                                    <div class="errorMessage"></div>
+                                </div>
+                            </div>
+                            <div class="buttonContainer">
+                                <button type="button" class="mainButton" onclick="Validate2(formEdit)"
+                                    id="editbutton">Save</button>
+                            </div>
+                        </form>
+
+                    </section>
+                    <section class="companyDetailsSection">
+                        
+                    </section>
                 </div>
             </div>
         </div>

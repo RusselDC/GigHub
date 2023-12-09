@@ -23,11 +23,11 @@
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <title>Profile</title>
     <script type="text/javascript">
-                                                              // var collegesData = {{ colleges| safe }};
-                                                              // var token = '{{csrf_token}}'
-                                                              // var awardsData = {{awards|safe}};
-                                                              // var certis = {{certis|safe}};
-                                                              // console.log(certis)
+                                                              var collegesData = {{ colleges| safe }};
+        var token = '{{csrf_token}}'
+        var awardsData = {{ awards| safe}};
+        var certis = {{ certis| safe}};
+        console.log(certis)
 
     </script>
 </head>
@@ -36,11 +36,11 @@
     <div class="bodyContainer" id="bodyContainer">
         {% if prompt %}
         <script>
-                Swal.fire({
-                    itle: "Good job!",
-                    text: "{{prompt}}",
-                    icon: "success"
-                });
+            Swal.fire({
+                itle: "Good job!",
+                text: "{{prompt}}",
+                icon: "success"
+            });
         </script>
         {% endif %}
 
