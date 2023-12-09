@@ -92,8 +92,10 @@ def login(request):
                 'province':profile.province
             }
            
-            
-            return redirect('jobSeeker:userSettings')
+            if profile.role == "JP":
+                return redirect('jobProvider:settings')
+            elif profile.role == "JS":
+                return redirect('jobSeeker:userSettings')
         else:
             return render(request, template, context={'errorMsg' : 'Invalid Credentials'})
 

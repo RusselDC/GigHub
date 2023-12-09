@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings
+from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, JobApplication
 from GigHub import utils
 from django.contrib.auth.models import User
 from datetime import date, datetime
 from django.contrib.auth.hashers import check_password
-from django.db.models import Count
+from django.db.models import Count, Q
 
 import json
 # Create your views here.
@@ -13,17 +13,21 @@ import json
 
 def profileSettings(request):
     template = 'userSettings.html'
-    
-    
     if request.method == "GET":
         
         profile=Profile.objects.get(userID=request.user)
        
         colleges_queryset = collegeTaken.objects.filter(userID=profile)
+        awards_queryset = Awards.objects.filter(user=profile)
+        college_data_list = []
+        certificate_data_list = []
+        certificates_queryset = Certificates.objects.filter(user=profile)
         ins = Institution.objects.all()
         deg = Degrees.objects.all()
-    
-        college_data_list = []
+
+
+        awards_data_list = []
+        
         for college in colleges_queryset:
             institutions = [institution.name for institution in college.institution.all()]
             degrees = [degree.name for degree in college.degree.all()]
@@ -38,13 +42,35 @@ def profileSettings(request):
             }
 
             college_data_list.append(college_data)
+
+        for award in awards_queryset:
+
+            award_data = {
+                'title':award.title,
+                'from':award.awardForm,
+                'date':award.date
+            }
+
+            awards_data_list.append(award_data)
+
+        for certiifcate in certificates_queryset:
+
+            certiifcate_data = {
+                'title':certiifcate.title,
+                'from':certiifcate.certificateForm,
+                'date':certiifcate.date
+            }
+
+            certificate_data_list.append(certiifcate_data)
+
+
         
         
 
         bdate = profile.birthDate
         today = date.today()
         age = today.year - bdate.year - ((today.month, today.day) < (bdate.month, bdate.day))
-        return render(request, template, {'user':profile, 'age':age, 'statuses':profile.STATUS_CHOICES, 'pageName':'profileSettings', 'pagePart': 1, 'colleges':college_data_list, 'degrees':deg,'insitutions':ins})
+        return render(request, template, {'certis':certificate_data_list,'awards':awards_data_list,'user':profile, 'age':age, 'statuses':profile.STATUS_CHOICES, 'pageName':'profileSettings', 'pagePart': 1, 'colleges':college_data_list, 'degrees':deg,'insitutions':ins})
     elif request.method == "POST":
         
         profile = Profile.objects.get(userID=request.user)
@@ -65,11 +91,16 @@ def profileSettings(request):
         profile.save()
         
         profile=Profile.objects.get(userID=request.user)
-       
+        certificates_queryset = Certificates.objects.filter(user=profile)
         colleges_queryset = collegeTaken.objects.filter(userID=profile)
+        
+        awards_queryset = Awards.objects.filter(user=profile)
+
+        certificate_data_list = []
+        awards_data_list = []
         ins = Institution.objects.all()
         deg = Degrees.objects.all()
-    
+
         college_data_list = []
         for college in colleges_queryset:
             institutions = [institution.name for institution in college.institution.all()]
@@ -87,13 +118,33 @@ def profileSettings(request):
             }
 
             college_data_list.append(college_data)
+
+        for award in awards_queryset:
+
+            award_data = {
+                'title':award.title,
+                'from':award.awardForm,
+                'date':award.date
+            }
+
+            awards_data_list.append(award_data)
+
+        for certiifcate in certificates_queryset:
+
+            certiifcate_data = {
+                'title':certiifcate.title,
+                'from':certiifcate.certificateForm,
+                'date':certiifcate.date
+            }
+
+            certificate_data_list.append(certiifcate_data)
         
         
 
         bdate = profile.birthDate
         today = date.today()
         age = today.year - bdate.year - ((today.month, today.day) < (bdate.month, bdate.day))
-        return render(request, template, {'user':profile, 'age':age, 'statuses':profile.STATUS_CHOICES, 'pageName':'profileSettings', 'prompt':'Profile has been saved', 'pagePart': 1, 'colleges':college_data_list, 'degrees':deg,'insitutions':ins})
+        return render(request, template, {'certis':certificate_data_list,'awards':awards_data_list,'user':profile, 'age':age, 'statuses':profile.STATUS_CHOICES, 'pageName':'profileSettings', 'prompt':'Profile has been saved', 'pagePart': 1, 'colleges':college_data_list, 'degrees':deg,'insitutions':ins})
     
 
 def profileEducation(request):
@@ -106,9 +157,8 @@ def profileEducation(request):
     degree_name = request.POST['deg']
     major_name = request.POST['maj']
     date_string = request.POST['graduated']
-    parsed_date = datetime.strptime(date_string, "%Y-%m-%d")
     award = request.POST['award']
-    year = str(parsed_date.year)
+    year = date_string
 
     ins, created = Institution.objects.get_or_create(name__iexact=institution_name)
     if created or not ins.name:
@@ -179,8 +229,9 @@ def job(request):
     if request.method == "GET":
         profile=Profile.objects.get(userID=request.user)
         user_skills = Profile.objects.get(userID=request.user).skills.all()
-        recommended = JobPostings.objects.filter(jobRequirements__in=user_skills).distinct()
-        topRecommended = JobPostings.objects.filter(jobRequirements__in=user_skills).annotate(common_skills_count=Count('jobRequirements'))\
+        user_application = JobApplication.objects.filter(applicantID=profile)
+        recommended = JobPostings.objects.filter(jobRequirements__in=user_skills).exclude(Q(id__in=user_application.values('jobID'))).distinct()
+        topRecommended = JobPostings.objects.filter(jobRequirements__in=user_skills).exclude(Q(id__in=user_application.values('jobID'))).annotate(common_skills_count=Count('jobRequirements'))\
         .filter(common_skills_count__gte=3)\
         .distinct()[:3]
         recommended_data_all = []
@@ -192,6 +243,7 @@ def job(request):
             
 
             recommended_data = {
+                'id': reco.id,
                 'company' : reco.companyID.companyName,
                 'title' : reco.jobTitle,
                 'desc' : reco.jobDescription,
@@ -206,6 +258,7 @@ def job(request):
             skills = [skills.name for skills in reco.jobRequirements.all()]
 
             topReco_data = {
+                'id': reco.id,
                 'company' : topReco.companyID.companyName,
                 'title' : topReco.jobTitle,
                 'desc' : topReco.jobDescription,
@@ -218,3 +271,25 @@ def job(request):
             topRecommended_data_all.append(topReco_data)
 
         return render(request, template, {'user':profile,'pageName':'job','recommended':recommended_data_all,'topRecommended':topRecommended_data_all})
+    else:
+        #return JsonResponse({'message':"HI",'data':request.POST})
+        profile = Profile.objects.get(userID=request.user)
+        jobPost = JobPostings.objects.get(id=request.POST['id'])
+
+        JobApplication.objects.create(applicantID=profile, jobID=jobPost)
+
+        return JsonResponse({'status':True,'message':'Application has been sent'})
+
+
+def addAward(request):
+
+    profile = Profile.objects.get(userID=request.user)
+    Awards.objects.create(user=profile,title=request.POST['title'],awardForm=request.POST['from'],date=request.POST['year'])
+
+    return JsonResponse({'status':True,'message':'The award has been saved','container':'awardContainer'})
+
+def addCertis(request):
+    profile = Profile.objects.get(userID=request.user)
+    Certificates.objects.create(user=profile,title=request.POST['title'],certificateForm=request.POST['from'],date=request.POST['year'])
+
+    return JsonResponse({'status':True,'message':'The certificate has been saved','container':'certisContainer'})

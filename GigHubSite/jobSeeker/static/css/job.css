@@ -9,6 +9,15 @@
 .job_scope {
   font-size: 0.9rem;
 }
+.job_category,
+.job_skills,
+.job_scope {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+}
 .job_description {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -44,10 +53,10 @@
   width: 30%;
 }
 .job_details {
-  width: 65%;
+  width: 58%;
 }
 .job_actions {
-  width: 5%;
+  width: 10%;
 }
 @media screen and (max-width: 1250px) {
   .job {
@@ -57,7 +66,71 @@
     width: 100%;
   }
   .job_actions {
+    flex-direction: row !important;
+    margin-bottom: 1rem;
     order: -1;
-    justify-content: start !important;
+  }
+  .view_job {
+    float: right;
+    width: fit-content !important;
+    padding: 1rem 1.5rem;
+  }
+}
+.view_job {
+  background-color: var(--topaz);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.job_container.modal_show {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: calc(100vw - 20rem);
+  z-index: 2000;
+
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
+  backdrop-filter: blur(10px);
+}
+sidebar.collapsed ~ content .job_container.modal_show {
+  width: calc(100vw - 5rem);
+}
+.job_container.modal_show .job {
+  flex-direction: column;
+  max-height: 75vh;
+  overflow-y: auto;
+}
+.job_container.modal_show .job div {
+  width: 100%;
+}
+.job_container.modal_show .job_actions {
+  order: -1;
+  justify-content: end !important;
+}
+.job_container.modal_show .view_job {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: fit-content !important;
+}
+.job_container.modal_show .job_category,
+.job_container.modal_show .job_skills,
+.job_container.modal_show .job_scope,
+.job_container.modal_show .job_description,
+.job_container.modal_show .job_title {
+  display: block;
+}
+.job_container.modal_show .job_description {
+  margin-top: 1rem;
+}
+.job_container.modal_show .view_job {
+  background-color: #00000000;
+}
+.job_container.modal_show .job iconify-icon:not(.job_saved):not(.job_unsaved) {
+  color: var(--white);
+}
+@media screen and (max-width: 800px) {
+  sidebar.collapsed ~ content .job_container.modal_show {
+    width: 100vw;
   }
 }

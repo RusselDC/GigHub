@@ -18,7 +18,7 @@
 
       <div
         class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'profileSettings'%}active{% endif %}"
-        onclick="window.location.href = `{% url 'jobSeeker:userSettings'%}`"
+        onclick="window.location.href = `{% url 'jobProvider:settings'%}`"
       >
         <iconify-icon icon="iconamoon:profile-circle-fill"></iconify-icon>
         <span>Profile</span>
@@ -29,7 +29,8 @@
         <span>Work</span>
       </div>
 
-      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
+      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2"
+        onclick="window.location.href = `{% url 'jobProvider:companies' %}`">
         <iconify-icon icon="solar:case-bold"></iconify-icon>
         <span>Company</span>
       </div>

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+
 import random
 # Create your models here.
 
@@ -131,7 +132,7 @@ class JobPostings(models.Model):
 class JobApplication(models.Model):
     applicantID = models.ForeignKey(Profile, on_delete=models.CASCADE)
     jobID = models.ForeignKey(JobPostings, on_delete=models.CASCADE)
-    date = models.DateField("application_date")
+    date = models.DateField("application_date", default=datetime.now().date())
     STATUS_CHOICES = [
         ('applied','Applied'),
         ('in_progress','In Progress'),
@@ -178,7 +179,23 @@ class companyStaff(models.Model):
     def __str__(self) -> str:
         return f"{self.company.companyName} : {self.designation}"
 
-    
+
+class Awards(models.Model):
+    user = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    awardForm = models.CharField(max_length=255)
+    date = models.CharField(max_length=5)
+
+
+class Certificates(models.Model):
+    user = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    certificateForm = models.CharField(max_length=255)
+    date = models.CharField(max_length=5)
+
+
+
+
 
     
     

@@ -36,3 +36,9 @@ function showNotifications() {
     notifContainer.style.display = "none";
   }
 }
+
+
+function checklogout()
+{
+  alert("sure?")
+}

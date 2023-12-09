@@ -16,6 +16,78 @@ function Listeners() {
       formContent[index].classList.add("active");
     });
   });
+
+  function populateOnce1(title, from, year, container) {
+    var template = document.getElementById("awardTemplate");
+    var templateContent = template.content.cloneNode(true);
+
+    templateContent.querySelector("#awardTitle").textContent = title;
+    templateContent.querySelector("#awardDates").textContent = year;
+    templateContent.querySelector("#awardLocation").textContent = from;
+
+    document.getElementById(container).appendChild(templateContent);
+  }
+
+  function populateOnce(data) {
+    // Clone the template content
+    var template = document.getElementById("educationalAttainmentTemplate");
+    var templateContent = template.content.cloneNode(true);
+
+    // Populate the cloned template with data
+    templateContent.querySelector("#schoolEd").textContent = data[0];
+    templateContent.querySelector("#awardEd").textContent = data[4];
+    templateContent.querySelector("#courseEd").textContent = data[1];
+    templateContent.querySelector("#majorEd").textContent = data[2];
+    templateContent.querySelector("#dateEd").textContent =
+      "Class of " + data[3];
+
+    // Append the populated template to the container
+    document
+      .getElementById("educationalAttainmentContainer")
+      .appendChild(templateContent);
+  }
+
+  awardsData.forEach((element) => {
+    var template = document.getElementById("awardTemplate");
+    var templateContent = template.content.cloneNode(true);
+
+    templateContent.querySelector("#awardTitle").textContent = element.title;
+    templateContent.querySelector("#awardDates").textContent = element.date;
+    templateContent.querySelector("#awardLocation").textContent = element.from;
+
+    document.getElementById("awardContainer").appendChild(templateContent);
+  });
+
+  collegesData.forEach((element) => {
+    // Clone the template content
+    var template = document.getElementById("educationalAttainmentTemplate");
+    var templateContent = template.content.cloneNode(true);
+
+    // Populate the cloned template with data
+    templateContent.querySelector("#schoolEd").textContent =
+      element.institutions[0];
+    templateContent.querySelector("#awardEd").textContent = element.award;
+    templateContent.querySelector("#courseEd").textContent = element.degrees[0];
+    templateContent.querySelector("#majorEd").textContent = element.majors[0];
+    templateContent.querySelector("#dateEd").textContent =
+      "Class of " + element.yearGraduated;
+
+    // Append the populated template to the container
+    document
+      .getElementById("educationalAttainmentContainer")
+      .appendChild(templateContent);
+  });
+
+  certis.forEach((element) => {
+    var template = document.getElementById("awardTemplate");
+    var templateContent = template.content.cloneNode(true);
+
+    templateContent.querySelector("#awardTitle").textContent = element.title;
+    templateContent.querySelector("#awardDates").textContent = element.date;
+    templateContent.querySelector("#awardLocation").textContent = element.from;
+
+    document.getElementById("certisContainer").appendChild(templateContent);
+  });
 }
 
 function showValue(selectElement, input) {
@@ -460,15 +532,18 @@ function ShowForms1(form, formInput, element) {
   var honorsContainer3 = document.querySelector("#honorsContainer3");
   var awardTemplate = document.querySelector("#awardTemplate");
   var addDetailsButton = document.querySelector("#addDetailsButton");
+  let url = "";
 
   if (formKey == 1) {
     title.innerHTML = "Honor";
     key = formKey;
   } else if (formKey == 2) {
     title.innerHTML = "Awards";
+    url = "/user/awards/";
     key = formKey;
   } else if (formKey == 3) {
     title.innerHTML = "Certificate";
+    url = "/user/certificates/";
     key = formKey;
   }
   formInput.style.display = "flex";
@@ -479,7 +554,7 @@ function ShowForms1(form, formInput, element) {
   addDetailsButton.onclick = () => {
     const newElement = awardTemplate.content.cloneNode(true);
     const newTitle = newElement.querySelector("#awardTitle");
-    const newDate = newElement.querySelector("#awardDate");
+    //  const newDate = newElement.querySelector("#awardDate");
     const awardTitleHidden = newElement.querySelector("#awardTitleHidden");
     const awardDateHidden = newElement.querySelector("#awardDateHidden");
     const awardLocation = newElement.querySelector("#awardLocation");
@@ -488,7 +563,7 @@ function ShowForms1(form, formInput, element) {
     awardDateValue = awardDate.value;
 
     newTitle.innerText = awardNameValue;
-    newDate.innerText = awardDateValue;
+    //newDate.innerText = awardDateValue;
     awardLocation.innerText = schoolAttended.value.trim();
     awardTitleHidden.value = awardNameValue;
     awardDateHidden.value = awardDateValue;
@@ -500,16 +575,12 @@ function ShowForms1(form, formInput, element) {
     //   awardDate.value = "";
     // }
     if (key == 2) {
-      form.action = "/dyanlang/";
+      form.action = "/user/awards/";
       SubmitForm(form);
-      awardName.value = "";
-      awardDate.value = "";
     }
     if (key == 3) {
-      form.action = "/ditolang/";
+      form.action = "/user/certificates/";
       SubmitForm(form);
-      awardName.value = "";
-      awardDate.value = "";
     }
   };
 }
@@ -531,13 +602,43 @@ function SubmitForm(form) {
       confirmButtonText: "Confirm",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          text: "Information saved!",
-          icon: "success",
-          showConfirmButton: false,
-        }).then(() => {
-          form.submit();
+        $.ajax({
+          type: "POST",
+          url: form.action,
+          data: {
+            csrfmiddlewaretoken: token,
+            title: document.getElementById("awardName").value,
+            from: document.getElementById("School").value,
+            year: document.getElementById("awardDate").value,
+          },
+          success: (data) => {
+            if (data.status) {
+              Swal.fire({
+                text: data.message,
+                icon: "success",
+                showConfirmButton: false,
+              }).then(() => {
+                let container = data.container;
+                populateOnce1(
+                  document.getElementById("awardName").value,
+                  document.getElementById("School").value,
+                  document.getElementById("awardDate").value,
+                  container
+                );
+              });
+            }
+          },
+          error: (err) => {
+            console.log(err.responseText);
+          },
         });
+        //Swal.fire({
+        //  text: "Information saved!",
+        //  icon: "success",
+        //  showConfirmButton: false,
+        //}).then(() => {
+        //  form.submit();
+        //});
       }
     });
   }
@@ -619,7 +720,7 @@ function DeleteAward(element) {
   var awardContainer = element.closest(".awardContainer");
   awardContainer.parentNode.removeChild(awardContainer);
 }
-function DeleteEducation() {
+function DeleteEducation(element) {
   Swal.fire({
     title: "Delete ?",
     text: "You won't be able to revert this",
@@ -633,7 +734,9 @@ function DeleteEducation() {
         icon: "success",
         showConfirmButton: false,
       }).then(() => {
-        profileForm.submit();
+        const parent1 = element.parentNode;
+        const parent2 = parent1.parentNode;
+        parent2.remove();
       });
     }
   });
@@ -652,3 +755,78 @@ schoolAttended.addEventListener("input", () => {
     award.innerText = schoolAttended.value;
   });
 });
+
+function Closeform2(form, formInput2) {
+  formInput2.style.display = "none";
+  form.style.display = "none";
+}
+
+function ValidateEmployment(form) {
+  var inputs = form.querySelectorAll("input");
+  isValid = true;
+
+  inputs.forEach((input) => {
+    if (input.id == "dateEnded") {
+    } else {
+      if (input.value == "") {
+        ShowError(input, "Field Required");
+        isValid = false;
+        console.log(input.innerHTML);
+      } else {
+        RemoveError(input);
+      }
+    }
+  });
+
+  if (isValid) {
+    Swal.fire({
+      title: "Save Information",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Confirm",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          text: "Information saved!",
+          icon: "success",
+          showConfirmButton: false,
+        }).then(() => {
+          // $.ajax({
+          //   type: "POST",
+          //   url: "/user/education/",
+          //   data: {
+          //     csrfmiddlewaretoken: token,
+          //     uni: document.getElementById("schoolAttended").value,
+          //     deg: document.getElementById("course").value,
+          //     maj: document.getElementById("major").value,
+          //     award: document.getElementById("award").value,
+          //     graduated: document.getElementById("graduated").value,
+          //   },
+          //   success: function (data) {
+          //     populateOnce(data.data);
+          //     Closeform(educAddForm, formsInput);
+          //   },
+          //   error: function (err) {
+          //     console.log(err.responseText);
+          //   },
+          // });
+          console.log("yey");
+        });
+      }
+    });
+  }
+}
+function addDutyField() {
+  // Create a new duties input field
+  var newDutyField = document.createElement("div");
+  newDutyField.classList.add("inputContainer");
+  newDutyField.innerHTML = `
+        <label for="duties">Duties</label>
+        <input type="text" class="inputBox" name="duties[]" placeholder="New Duty">
+        <div class="errorMessage"></div>
+    `;
+
+  // Append the new duties input field to the employmentHistoryContainer
+  var employmentHistoryContainer = document.querySelector(".dutiesList");
+  employmentHistoryContainer.appendChild(newDutyField);
+}

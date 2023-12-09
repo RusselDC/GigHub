@@ -5,5 +5,6 @@ from . import views
 app_name = "jobProvider"
 
 urlpatterns = [
-    path('company/',views.companies, name="companies")
+    path('company/',views.companies, name="companies"),
+    path('settings/',views.settings, name="settings")
 ]
