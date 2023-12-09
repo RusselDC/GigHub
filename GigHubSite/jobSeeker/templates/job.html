@@ -61,7 +61,9 @@
           class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between mb-3"
         >
           <div class="job_main">
-            <h4 class="job_title fw-bold mb-1" id="title">Software Developer</h4>
+            <h4 class="job_title fw-bold mb-1" id="title">
+              Software Developer
+            </h4>
             <div class="job_company" id="company">ByteCraft Solutions</div>
           </div>
           <div class="job_details align-self-center">
@@ -105,9 +107,15 @@
               icon="iconoir:bookmark-solid"
               class="job_saved"
             ></iconify-icon>
-            <div class="view_job fw-bold w-100 text-center py-1 rounded-2" id="view_job">
+            <div
+              class="view_job fw-bold w-100 text-center py-1 rounded-2"
+              id="view_job"
+            >
               MORE
             </div>
+          </div>
+          <div class="apply_btn fw-bold px-3 py-2 rounded-2 shadow">
+            Apply Now
           </div>
         </div>
       </div>
@@ -139,11 +147,11 @@
         templateContent.getElementById("company").textContent = reco.company;
         templateContent.getElementById("description").textContent = reco.desc;
         templateContent.getElementById("requirements").textContent =
-          reco.requirements.join(",")
-          //only for debug purposes
-          //templateContent.getElementById('view_job').addEventListener('click', () => {
-          //applyJob(reco.id);
-          //});
+          reco.requirements.join(",");
+        //only for debug purposes
+        //templateContent.getElementById('view_job').addEventListener('click', () => {
+        //applyJob(reco.id);
+        //});
         document.getElementById("jobList").appendChild(templateContent);
       });
     } else {
@@ -170,21 +178,18 @@
       document.getElementById("topReco_list").appendChild(templateContent);
     }
 
-
-
-    function applyJob(id)
-    {
+    function applyJob(id) {
       $.ajax({
-        url:"{% url 'jobSeeker:job' %}",
-        type:"POST",
-        data:{'csrfmiddlewaretoken':token,'id':id},
-        success:(data)=>{
-          console.log(data)
+        url: "{% url 'jobSeeker:job' %}",
+        type: "POST",
+        data: { csrfmiddlewaretoken: token, id: id },
+        success: (data) => {
+          console.log(data);
         },
-        error:(err)=>{
-          console.log(err.responseText)
-        }
-      })
+        error: (err) => {
+          console.log(err.responseText);
+        },
+      });
     }
   </script>
 </html>
