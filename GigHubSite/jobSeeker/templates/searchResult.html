@@ -1,0 +1,154 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="website icon" type="png " href="{{ '/media/site/logo.png' }}" />
+    <title>Jobs</title>
+
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/275edc9f9d.js"
+      crossorigin="anonymous"
+      defer></script>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script src="{% static 'js/template.js' %}" defer></script>
+    <script src="{% static 'js/searchResults.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'css/template.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/search_results.css' %}" />
+    <script>
+      var token = '{{csrf_token}}'
+      var recommended = {{recommended|safe}};
+      var topReco = {{topRecommended|safe}};
+      console.log(recommended)
+    </script>
+  </head>
+  <body>
+    {% include 'partials/template.html' with user=user %}
+
+    <content class="p-4 pb-5 d-flex flex-column">
+      <!-- <label
+        class="search_jobs d-flex align-items-center py-1 px-2 rounded-2 mb-3 align-self-end">
+        <input
+          type="text"
+          class="pe-2"
+          placeholder="Search by Name, Location, Skills, etc.," />
+        <button class="d-flex align-items-center gap-1 rounded-2 px-2 py-1">
+          <iconify-icon icon="mingcute:search-line"></iconify-icon>Search
+        </button>
+      </label> -->
+
+      <div class="filter d-flex align-items-center gap-1">
+        <div class="d-flex align-items-center gap-1">
+          <iconify-icon icon="majesticons:filter" class="fs-5"></iconify-icon>
+          <span class="fw-bold">Filter By</span>
+        </div>
+        <div class="column_filter px-2 py-1 rounded-2" id="jobTitle">
+          Job Title
+        </div>
+        <div class="column_filter px-2 py-1 rounded-2" id="company">
+          Company
+        </div>
+        <!-- <div class="column_filter px-2 py-1 rounded-2" id="date">
+          <input type="date" />
+        </div> -->
+        <div class="column_filter dropdown">
+          <div class="ddown d-flex align-items-center rounded-2">
+            <input
+              type="text"
+              id="status"
+              class="px-2 py-1"
+              readonly="readonly"
+              placeholder="Status" />
+            <iconify-icon icon="mingcute:down-fill" class="pe-2"></iconify-icon>
+          </div>
+          <div class="ddown_options position-absolute rounded-3 shadow">
+            <div class="ddown_opt px-2 rounded-2 mx-2 my-1">Hired</div>
+            <div class="ddown_opt px-2 rounded-2 mx-2 my-1">In Progress</div>
+            <div class="ddown_opt px-2 rounded-2 mx-2 my-1">Applied</div>
+            <div class="ddown_opt px-2 rounded-2 mx-2 my-1">Rejected</div>
+          </div>
+        </div>
+        <div class="filter_clear px-3 py-1 rounded-2">Clear</div>
+      </div>
+      <div class="myTable p-3 rounded-2 mt-3">
+        <table id="jobTable" class="display" style="width: 100%">
+          <thead>
+            <tr>
+              <th class="py-2 text-center">Job Title</th>
+              <th class="py-2 text-center">Company</th>
+              <th class="py-2 text-center">Date Applied</th>
+              <th class="py-2 text-center">Status</th>
+              <th class="py-2 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-title="Job Title">Web Developer</td>
+              <td data-title="Company">ABC Company</td>
+              <td data-title="Date Applied">2023-01-01</td>
+              <td data-title="Status">Hired</td>
+              <td data-title="Actions">
+                <iconify-icon icon="solar:eye-broken"></iconify-icon>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="Job Title">Frontend Developer</td>
+              <td data-title="Company">XYZ Tech</td>
+              <td data-title="Date Applied">2023-02-15</td>
+              <td data-title="Status">In Progress</td>
+              <td data-title="Actions">
+                <iconify-icon icon="solar:eye-broken"></iconify-icon>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="Job Title">Full Stack Developer</td>
+              <td data-title="Company">123 Solutions</td>
+              <td data-title="Date Applied">2023-03-20</td>
+              <td data-title="Status">Applied</td>
+              <td data-title="Actions">
+                <iconify-icon icon="solar:eye-broken"></iconify-icon>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="Job Title">Back-End Developer</td>
+              <td data-title="Company">Tech Innovators</td>
+              <td data-title="Date Applied">2023-04-10</td>
+              <td data-title="Status">Rejected</td>
+              <td data-title="Actions">
+                <iconify-icon icon="solar:eye-broken"></iconify-icon>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="Job Title">UI/UX Designer</td>
+              <td data-title="Company">Creative Designs</td>
+              <td data-title="Date Applied">2023-05-05</td>
+              <td data-title="Status">Hired</td>
+              <td data-title="Actions">
+                <iconify-icon icon="solar:eye-broken"></iconify-icon>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </content>
+  </body>
+</html>

@@ -1,0 +1,293 @@
+* {
+  cursor: default;
+}
+/* .search_jobs {
+  background-color: var(--white);
+  min-width: 400px;
+  width: 40vw;
+  border: solid 2px var(--gainsboro);
+}
+.search_jobs button {
+  border: none;
+  background-color: var(--topaz);
+  color: var(--mango-tango);
+  transition: var(--transition-1);
+  border: solid 2px var(--topaz);
+}
+.search_jobs button:hover {
+  border: solid 2px var(--mango-tango);
+  background-color: var(--white);
+  transition: var(--transition-1);
+}
+.search_jobs input {
+  border: none;
+  outline: none;
+  background: none;
+  flex-grow: 1;
+}
+.search_jobs iconify-icon {
+  font-size: 1.5rem;
+} */
+.filter {
+  font-size: 0.8rem;
+  flex-wrap: wrap;
+}
+.ddown_options {
+  background-color: var(--white);
+  display: none;
+  z-index: 1;
+}
+.ddown,
+.column_filter:not(.column_filter.dropdown) {
+  border: solid 2px var(--gainsboro);
+  background-color: var(--white);
+  width: fit-content;
+}
+.column_filter {
+  cursor: pointer;
+}
+.column_filter input[type="date"] {
+  border: none;
+  outline: none;
+  background: none;
+  text-align: center;
+}
+.ddown input {
+  border: none;
+  outline: none;
+  background: none;
+  width: 6rem;
+}
+.ddown_opt:hover {
+  background-color: var(--topaz);
+  transition: var(--transition-1);
+  cursor: pointer;
+}
+.ddown iconify-icon {
+  color: var(--dark-gray);
+}
+.ddown_opt:nth-of-type(2) {
+  color: var(--mango-tango);
+}
+.ddown_opt:nth-of-type(3) {
+  color: #2f88da;
+}
+.ddown_opt:nth-of-type(4) {
+  color: #ed3d25;
+}
+.filter_clear {
+  background-color: #e36251;
+  cursor: pointer;
+  color: var(--white);
+}
+.myTable {
+  background-color: var(--white);
+}
+thead tr th {
+  background-color: var(--topaz);
+}
+thead tr th:nth-of-type(1) {
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+thead tr th:nth-last-of-type(1) {
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+tbody tr {
+  border: solid 1x var(--dark-gray);
+}
+tbody tr td {
+  text-align: center;
+}
+table.dataTable.display > tbody > tr > td {
+  height: 8vh;
+}
+.dataTables_wrapper .dataTables_filter input {
+  outline: none;
+  border-radius: 0.25rem;
+}
+.dataTables_wrapper .dataTables_filter {
+  margin-bottom: 1rem;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: var(--topaz);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  background: none;
+  background-color: var(--topaz);
+}
+table.dataTable.display > tbody > tr.odd > .sorting_1,
+table.dataTable.order-column.stripe > tbody > tr.odd > .sorting_1 {
+  box-shadow: none !important;
+}
+sidebar:not(sidebar.collapsed) ~ content .dataTables_info {
+  left: 21rem;
+}
+.dataTables_info {
+  position: fixed;
+  left: 7rem;
+  bottom: 1rem;
+}
+.dataTables_paginate {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.dataTables_paginate span a:not(.current):hover {
+  /* border: solid 2px var(--mango-tango); */
+  color: var(--mango-tango);
+}
+.dataTables_paginate a {
+  text-decoration: none;
+  color: var(--black);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+}
+.paginate_button.disabled {
+  color: var(--gray);
+  cursor: default;
+}
+.dataTables_wrapper .dataTables_filter input {
+  padding: 0.25rem 0.5rem;
+  margin-left: 0.5rem;
+  border: solid 2px var(--gainsboro);
+  min-width: 200px;
+  width: calc(100vw - 30rem);
+}
+table.dataTable thead > tr > th.sorting_asc:before {
+  opacity: 0.6;
+  position: absolute;
+} /* table.dataTable.row-border > tbody > tr > th,
+table.dataTable.row-border > tbody > tr > td,
+table.dataTable.display > tbody > tr > th,
+table.dataTable.display > tbody > tr > td {
+  border-top: none !important;
+} */
+table.dataTable.display > tbody > tr.even > .sorting_1,
+table.dataTable.order-column.stripe > tbody > tr.even > .sorting_1,
+table.dataTable.hover > tbody > tr:hover > *,
+table.dataTable.display > tbody > tr:hover > *,
+table.dataTable.stripe > tbody > tr.odd > *,
+table.dataTable.display > tbody > tr.odd > * {
+  box-shadow: none;
+}
+table.dataTable.display > tbody > tr.odd > .sorting_1,
+table.dataTable.display > tbody > tr.even > .sorting_1 {
+  background-color: var(--isabelline);
+}
+/* tr td iconify-icon {
+  color: red;
+} */
+tr td:nth-last-of-type(2) {
+  font-weight: 600;
+}
+@media screen and (max-width: 1350px) {
+  table.dataTable.display > tbody > tr > td {
+    border-top: none !important;
+  }
+  thead {
+    display: none;
+  }
+  tr {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  tbody tr td::before {
+    content: attr(data-title);
+    font-weight: bold;
+    display: block;
+    width: 30%;
+    color: var(--black);
+  }
+  tbody tr td {
+    text-align: left;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 0 1rem;
+  }
+  tbody tr td {
+    border: solid 2px var(--mango-tango);
+    border-bottom: none;
+    border-top: none;
+    /* border-radius: 0.5rem 0.5rem 0 0; */
+  }
+  tbody tr td {
+    border-bottom: solid 2px var(--gainsboro);
+  }
+  tbody tr td:nth-of-type(1) {
+    border: solid 2px var(--mango-tango);
+    border-bottom: none;
+    border-radius: 0.5rem 0.5rem 0 0;
+    background-color: var(--topaz) !important;
+  }
+  tbody tr td:nth-last-of-type(1) {
+    border-bottom: solid 2px var(--mango-tango);
+    border-radius: 0 0 0.5rem 0.5rem;
+  }
+  /* .dataTables_wrapper .dataTables_filter {
+    padding: 0 2rem;
+  } */
+  .dataTables_empty::before {
+    width: 0;
+  }
+  .dataTables_empty {
+    justify-content: center;
+    border-radius: 0.5rem !important;
+  }
+  .dataTables_filter label {
+    display: flex;
+    align-items: center;
+  }
+  .dataTables_filter label input {
+    flex-grow: 1;
+  }
+  sidebar.collapsed ~ content .dataTables_info {
+    display: none;
+  }
+  sidebar.collapsed ~ content .dataTables_info,
+  .dataTables_paginate {
+    position: static;
+  }
+  .dataTables_paginate {
+    justify-content: center;
+  }
+  /* sidebar.collapsed ~ content .dataTables_info {
+    padding: 1rem;
+    left: 0;
+    bottom: 0;
+    background-color: var(--white);
+  }
+  .dataTables_paginate {
+    padding: 1rem;
+    background-color: var(--white);
+    bottom: 0;
+    right: 0;
+  } */
+}
+#jobTitle.selected {
+  border-color: var(--mango-tango);
+  color: var(--mango-tango);
+}
+#company.selected {
+  border-color: var(--mango-tango);
+  color: var(--mango-tango);
+}
+@media screen and (max-width: 1003px) {
+  /* content .filter {
+    flex-direction: column;
+  } */
+}
+.goUp iconify-icon {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  font-size: 2rem;
+  color: var(--gray);
+  cursor: pointer;
+}

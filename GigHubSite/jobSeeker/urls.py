@@ -11,5 +11,6 @@ urlpatterns = [
     path('account/email/',views.accountEmail, name="accountEmail"),
     path('account/password/',views.accountPassword,name="accountPassword"),
     path('dashboard/',views.dashboard,name="dashboard"),
-    path('job/',views.job,name="job")
+    path('job/',views.job,name="job"),
+    path('searchResult/',views.searchResult,name="searchResult")
 ]

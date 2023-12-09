@@ -11,6 +11,11 @@ import json
 # Create your views here.
 
 
+def searchResult(request):
+    template="searchResult.html"
+    if request.method == "GET":
+        return render(request, template)
+    
 def profileSettings(request):
     template = 'userSettings.html'
     if request.method == "GET":
