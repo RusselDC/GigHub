@@ -490,6 +490,8 @@ form {
 
 .formsInput form {
   width: 40vw;
+  min-width: 400px;
+  max-width: 80vw;
   border-radius: 0.4vw;
   padding: 0.9rem;
   background-color: var(--white);
@@ -525,6 +527,8 @@ form {
 #employmentAddForm {
   flex-direction: column;
   width: 40vw;
+  min-width: 400px;
+  max-width: 80vw;
   height: 438px;
   border-radius: 0.4vw;
   padding: 0.9rem;
@@ -536,7 +540,8 @@ form {
   max-height: 256.6px;
   overflow-y: auto;
 }
-.dutiesList::-webkit-scrollbar {
+.dutiesList::-webkit-scrollbar,
+.educAddForm::-webkit-scrollbar {
   display: block;
 }
 
@@ -639,12 +644,11 @@ form {
 }
 
 .educAddForm {
-  width: 100%;
-  height: 70vh;
+  overflow-y: auto;
+  max-height: 60vh;
   gap: 1vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   padding-top: 0.9rem;
 }
 
