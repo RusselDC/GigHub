@@ -11,11 +11,12 @@ $(".view_job").click(function () {
 // change job btn txt on modal view
 $(".view_job").click(function () {
   let id = $(this).attr('data-id')
+  alert(id)
   var jobContainer = $(this).closest(".job_container");
   if (jobContainer.hasClass("modal_show")) {
     $(this).html("<iconify-icon icon='ic:round-close'></iconify-icon>");
     $('.apply_btn').bind('click',()=>{
-      applyJob(id)
+      //applyJob(id)
     })
   } else {
     $(this).html("MORE");

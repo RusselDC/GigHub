@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, JobApplication
+from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, JobApplication, EmploymentHistory
 from GigHub import utils
 from django.contrib.auth.models import User
 from datetime import date, datetime
@@ -13,8 +13,9 @@ import json
 
 def searchResult(request):
     template="searchResult.html"
+    profile = Profile.objects.get(userID=request.user)
     if request.method == "GET":
-        return render(request, template)
+        return render(request, template,{'user':profile})
     
 def profileSettings(request):
     template = 'userSettings.html'
@@ -32,6 +33,20 @@ def profileSettings(request):
 
 
         awards_data_list = []
+
+        employment_queryset = EmploymentHistory.objects.filter(user=profile)
+        employment_data_list = []
+
+        for employment in employment_queryset:
+            employment_data = {
+                'name':employment.companyName,
+                'position':employment.position,
+                'start':employment.date_started.strftime('%B %Y'),
+                'end':employment.date_ended.strftime('%B %Y') if employment.date_ended is not None else 'Present',
+                'duties':employment.getDuties()
+            }
+
+            employment_data_list.append(employment_data)
         
         for college in colleges_queryset:
             institutions = [institution.name for institution in college.institution.all()]
@@ -75,7 +90,7 @@ def profileSettings(request):
         bdate = profile.birthDate
         today = date.today()
         age = today.year - bdate.year - ((today.month, today.day) < (bdate.month, bdate.day))
-        return render(request, template, {'certis':certificate_data_list,'awards':awards_data_list,'user':profile, 'age':age, 'statuses':profile.STATUS_CHOICES, 'pageName':'profileSettings', 'pagePart': 1, 'colleges':college_data_list, 'degrees':deg,'insitutions':ins})
+        return render(request, template, {'employment':employment_data_list,'certis':certificate_data_list,'awards':awards_data_list,'user':profile, 'age':age, 'statuses':profile.STATUS_CHOICES, 'pageName':'profileSettings', 'pagePart': 1, 'colleges':college_data_list, 'degrees':deg,'insitutions':ins})
     elif request.method == "POST":
         
         profile = Profile.objects.get(userID=request.user)
@@ -105,6 +120,21 @@ def profileSettings(request):
         awards_data_list = []
         ins = Institution.objects.all()
         deg = Degrees.objects.all()
+
+
+        employment_queryset = EmploymentHistory.objects.filter(user=profile)
+        employment_data_list = []
+
+        for employment in employment_queryset:
+            employment_data = {
+                'name':employment.companyName,
+                'position':employment.position,
+                'start':employment.date_started.strftime('%B %Y'),
+                'end':employment.date_ended.strftime('%B %Y') if employment.date_ended is not None else 'Present',
+                'duties':employment.getDuties()
+            }
+
+            employment_data_list.append(employment_data)
 
         college_data_list = []
         for college in colleges_queryset:
@@ -149,7 +179,7 @@ def profileSettings(request):
         bdate = profile.birthDate
         today = date.today()
         age = today.year - bdate.year - ((today.month, today.day) < (bdate.month, bdate.day))
-        return render(request, template, {'certis':certificate_data_list,'awards':awards_data_list,'user':profile, 'age':age, 'statuses':profile.STATUS_CHOICES, 'pageName':'profileSettings', 'prompt':'Profile has been saved', 'pagePart': 1, 'colleges':college_data_list, 'degrees':deg,'insitutions':ins})
+        return render(request, template, {'employment':employment_data_list,'certis':certificate_data_list,'awards':awards_data_list,'user':profile, 'age':age, 'statuses':profile.STATUS_CHOICES, 'pageName':'profileSettings', 'prompt':'Profile has been saved', 'pagePart': 1, 'colleges':college_data_list, 'degrees':deg,'insitutions':ins})
     
 
 def profileEducation(request):
@@ -292,3 +322,30 @@ def addCertis(request):
     Certificates.objects.create(user=profile,title=request.POST['title'],certificateForm=request.POST['from'],date=request.POST['year'])
 
     return JsonResponse({'status':True,'message':'The certificate has been saved','container':'certisContainer'})
+
+
+def addEmployment(request):
+    profile = Profile.objects.get(userID=request.user)
+    duties = request.POST.getlist('duties[]')
+    name = request.POST['name']
+    position = request.POST['position']
+    start = request.POST['start']
+    end = request.POST['end']
+
+    if end == '':
+        end = None
+
+    emp = EmploymentHistory(
+        user=profile,
+        companyName=name,
+        position=position,
+        date_started=start,
+        date_ended = end,
+        duties=duties
+    )
+
+    emp.duties = emp.setDuties(emp.duties)
+    emp.save()
+
+    return JsonResponse({'status':True,'message':'Employment history has been saved'})
+

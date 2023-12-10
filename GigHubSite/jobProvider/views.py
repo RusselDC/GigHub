@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, Company, Industry, companyStaff
+from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, Company, Industry, companyStaff, JobApplication, Skills
 from GigHub import utils
 from django.contrib.auth.models import User
 from datetime import date, datetime
@@ -257,4 +257,101 @@ def getCompany(request, coID):
 
 
     return JsonResponse({'status':True,'data':companyData})
+
+def jobPostings(request):
+    template = "jobPostings.html"
+    if request.method == "GET":
+        skillsset = Skills.objects.annotate(profile_count=Count('profile')).order_by('-profile_count')[:5]
+
+        user = Profile.objects.get(userID=request.user)
+        companies = Company.objects.filter(employerID=user)
+        companies_data_list = []
+
+        for co in companies:
+
+            company_data = {
+                'id':co.id,
+                'name':co.companyName,
+            }
+
+            companies_data_list.append(company_data)
+
+        jobs = JobPostings.objects.filter(companyID__in=companies)
+
+        job_data_list = []
+
+        for job in jobs:
+            skills = [skills.name for skills in job.jobRequirements.all()][:3]
+
+            job_data = {
+                'id':job.id,
+                'title':job.jobTitle,
+                'desc':job.jobDescription[:310 - 3] + "...",
+                'company':job.companyID.companyName,
+                'reqs':', '.join(skills),
+                'scope':job.scope,
+                'timeline':job.timeline,
+                'posted':job.datePosted.strftime('%B %Y')
+            }
+
+            job_data_list.append(job_data)
+
+
+
+
+
+        return render(request,template,{'skills':skillsset,'user':user,'companies':companies_data_list,'jobs':job_data_list})
+    else:
+        
+        id = request.POST['companyID']
+        title = request.POST['jobTitle']
+        overview = request.POST['projectOverview']
+        scale = request.POST['projectScale']
+        timeline = request.POST['projectTimeline']
+        skills = request.POST.getlist('skills[]')
+        desc = request.POST['description']
+        
+
+        jobPosting = JobPostings.objects.create(
+            companyID=Company.objects.get(id=id),
+            jobTitle=title,
+            jobDescription=desc,
+            category=overview,
+            scope=scale,
+            timeline=timeline
+            )
+
+        for skill in skills:
+            skl, cre = Skills.objects.get_or_create(name__iexact=skill)
+            jobPosting.jobRequirements.add(skl)
+            if cre or not skl.name:
+                skl.name = skills
+                skl.save()
+                
+
+        jobPosting.save()
+
+        return redirect('jobProvider:jobPostings')
+    
+def jobPosting(request,jobID):
+    template = "jobPosting.html"
+    jobPosting = JobPostings.objects.get(id=jobID)
+
+    applicants = JobApplication.objects.filter(jobID=jobPosting)
+    applicants_data_list = []
+
+    for applicant in applicants:
+        applicant_data = {
+            'id':applicant.id,
+            'name' : f"{applicant.applicantID.fName} {applicant.applicantID.lName}",
+            'email' : applicant.applicantID.userID.username,
+            'date': applicant.date.strftime('%Y-%m-%d'),
+            'status':applicant.applicationStatus
+        }
+        applicants_data_list.append(applicant_data)
+
+
+    
+    user = Profile.objects.get(userID=request.user) 
+    return render(request,template,{'user':user,'applicants':applicants_data_list})
 

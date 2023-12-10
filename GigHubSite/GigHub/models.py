@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+from django.utils import timezone
 
 import random
 # Create your models here.
@@ -105,6 +106,7 @@ class JobPostings(models.Model):
     scope = models.CharField(max_length=100, null=True)
     timeline = models.CharField(max_length=100, null=True)
     isApproved = models.BooleanField(default=False)
+    datePosted = models.DateField(default=timezone.now())
     deadLine = models.DateField(null=True)
 
     #def setJobRequirements(self, values):
@@ -131,10 +133,11 @@ class JobPostings(models.Model):
 class JobApplication(models.Model):
     applicantID = models.ForeignKey(Profile, on_delete=models.CASCADE)
     jobID = models.ForeignKey(JobPostings, on_delete=models.CASCADE)
-    date = models.DateField("application_date", default=datetime.now().date())
+    date = models.DateField("application_date", default=timezone.now())
     STATUS_CHOICES = [
         ('applied','Applied'),
         ('in_progress','In Progress'),
+        ('cancelled','Cancelled'),
         ('rejected','Rejected'),
         ('hired','Hired')
     ]
@@ -195,7 +198,22 @@ class Certificates(models.Model):
 
 
 
+class EmploymentHistory(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    companyName = models.CharField(max_length=100)
+    position = models.CharField(max_length=100)
+    date_started = models.DateField()
+    date_ended = models.DateField(null=True)
+    duties = models.TextField(null=True)
 
+    def setDuties(self, values):
+        return ','.join(map(str, values))
+
+    def getDuties(self):
+        if self.duties:
+            return self.duties.split(',')
+        else:
+            return []
     
     
 

@@ -47,6 +47,8 @@ function Listeners() {
       .appendChild(templateContent);
   }
 
+  
+
   awardsData.forEach((element) => {
     var template = document.getElementById("awardTemplate");
     var templateContent = template.content.cloneNode(true);
@@ -791,26 +793,35 @@ function ValidateEmployment(form) {
           icon: "success",
           showConfirmButton: false,
         }).then(() => {
-          // $.ajax({
-          //   type: "POST",
-          //   url: "/user/education/",
-          //   data: {
-          //     csrfmiddlewaretoken: token,
-          //     uni: document.getElementById("schoolAttended").value,
-          //     deg: document.getElementById("course").value,
-          //     maj: document.getElementById("major").value,
-          //     award: document.getElementById("award").value,
-          //     graduated: document.getElementById("graduated").value,
-          //   },
-          //   success: function (data) {
-          //     populateOnce(data.data);
-          //     Closeform(educAddForm, formsInput);
-          //   },
-          //   error: function (err) {
-          //     console.log(err.responseText);
-          //   },
-          // });
-          console.log("yey");
+          let duties = document.querySelectorAll("#duties");
+          let dutiesArr = []
+
+          duties.forEach(element=>{
+            dutiesArr.push(element.value)
+          })
+
+          console.log(dutiesArr)
+          
+
+          $.ajax({
+            type: "POST",
+            url: "/user/employment/",
+            data: {
+              csrfmiddlewaretoken: token,
+              name: document.getElementById("companyName").value,
+              position: document.getElementById("position").value,
+              start: document.getElementById("dateStarted").value,
+              end: document.getElementById("dateEnded").value,
+              duties: dutiesArr,
+            },
+            success: function (data) {
+              window.location.reload()
+            },
+            error: function (err) {
+              console.log(err.responseText);
+            },
+          });
+          
         });
       }
     });
@@ -819,14 +830,26 @@ function ValidateEmployment(form) {
 function addDutyField() {
   // Create a new duties input field
   var newDutyField = document.createElement("div");
+  var duties = document.querySelectorAll('#duties')
+  
   newDutyField.classList.add("inputContainer");
   newDutyField.innerHTML = `
         <label for="duties">Duties</label>
-        <input type="text" class="inputBox" name="duties[]" placeholder="New Duty">
+        <input type="text" class="inputBox" id="duties" name="duties[]" placeholder="New Duty">
         <div class="errorMessage"></div>
     `;
+    
 
   // Append the new duties input field to the employmentHistoryContainer
   var employmentHistoryContainer = document.querySelector(".dutiesList");
-  employmentHistoryContainer.appendChild(newDutyField);
+  if(duties.length >= 5)
+  {
+    Swal.fire({
+      icon: "error",
+      text: "5 is max!",
+    });
+  }else{
+    employmentHistoryContainer.appendChild(newDutyField);
+  }
+  
 }

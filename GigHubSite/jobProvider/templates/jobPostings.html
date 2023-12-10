@@ -1,0 +1,295 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{% static 'js/all.js' %}" defer></script>
+    <script src="{% static 'js/jobPosting.js' %}" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/275edc9f9d.js" crossorigin="anonymous" defer></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jobPosting.css' %}">
+    
+    <link rel="website icon" type="png " href="{{ '/media/site/logo.png' }}">
+    <title>Profile Emp</title>
+</head>
+
+<body>
+    <div class="bodyContainer" id="bodyContainer">
+        {% include 'partials/navandside.html' with user=user %}
+        <div class="mainContainer">
+            <div class="main">
+                <div class="title">Job Posts</div>
+                <div class="title1">
+                    <select name="" id="selectCompany">
+                        <option selected  value="">All</option>
+                        {% for company in companies %}
+                        <option value="{{company.id}}" data-value="{{company.name}}">{{company.name}}</option>
+                        {% endfor %}
+                        
+                    </select>
+                    <div class="searchbar">
+                        <input type="text" placeholder="Search..">
+                        <button class="mainButton" type="button"
+                            onclick="ShowForm(document.getElementById('formContainer'))">Post</button>
+                    </div>
+                </div>
+                <div class="postContainer">
+                    {% for job in jobs %}
+                    <div class="postHolder" data-value=1>
+                        <div class="postTitle" id="postTitle">
+                            <span>{{job.title}}</span>
+                            <iconify-icon icon="tabler:dots"
+                                onclick="ShowOptions(this.closest('.postTitle').querySelector('#options'),this)"></iconify-icon>
+                            <div class="options" id="options">
+                                <!--ShowApplicants(this.closest('.postHolder'),this)-->
+                                <span  onclick="window.location.href = '/provider/job/{{job.id}}'">View
+                                    Applicants</span>
+                                <span>Mark as Closed</span>
+                            </div>
+                        </div>
+                        <div class="groupt">
+                            <div class="group">
+                                <div class="groupInfo">
+                                    <span class="groupTitle">
+                                        Date Posted: 
+                                    </span>
+                                    <span class="groupContent">
+                                        {{job.posted}}
+                                    </span>
+                                </div>
+                                <div class="groupInfo">
+                                    <span class="groupTitle">
+                                        Company:
+                                    </span>
+                                    <span class="groupContent">
+                                        {{job.company}}
+                                    </span>
+                                </div>
+                                <div class="groupInfo">
+                                    <span class="groupTitle">
+                                        Skill Needed:
+                                    </span>
+                                    <span class="groupContent">
+                                        {{job.reqs}}
+                                    </span>
+                                </div>
+                                <div class="groupInfo">
+                                    <span class="groupTitle">
+                                        Skill Needed:
+                                    </span>
+                                    <span class="groupContent">
+                                        {{job.reqs}}
+                                    </span>
+                                </div>
+                                <div class="groupInfo">
+                                    <span class="groupTitle">
+                                        Scope & Timeline:
+                                    </span>
+                                    <span class="groupContent">
+                                        {{job.scope}} | {{job.timeline}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="groupInfo">
+                                    <span class="groupTitle">
+                                        
+                                    </span>
+                                    <span class="groupContent">
+                                        Description: {{job.desc}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="formContainer" id="formContainer">
+            <form action="{% url 'jobProvider:jobPostings' %}" method="POST" id="postForm">
+                {% csrf_token %}
+                <div class="formTitle">Add Job Post for&nbsp; <span id="comp"></span> <span id="closeButton"
+                        onclick="CloseForm(document.getElementById('formContainer'))">x</span>
+                </div>
+                <div class="formGroup1">
+                    <div class="formGroup2">
+                        <div class="formGroup">
+                            <label for="jobTitle" class="formLabel">Job Title</label>
+                            <input type="hidden" name="companyID" id="companyID">
+                            <input type="text" name="jobTitle" id="jobTitle"
+                                placeholder="ex. Product Manager for Cutting-Edge Tech Solutions" class="inputBox">
+                            <span class="errorMessage"></span>
+                        </div>
+                        <div class="formGroup">
+                            <label for="projectOverview" class="formLabel">Project Overview</label>
+                            <select name="projectOverview" id="projectOverview" class="inputBox">
+                                <option value="" selected disabled>Select Project Overview</option>
+                                <option value="Full Time">Full Time</option>
+                                <optgroup label="Part Time">
+                                    <option value="Flexible Hours">Flexible Hours</option>
+                                    <option value="Weekends Only">Weekends Only</option>
+                                    <option value="Evening Shift">Evening Shift</option>
+                                    <option value="Day Shift">Day Shift</option>
+                                    <option value="Custom Schedule">Custom Schedule</option>
+                                </optgroup>
+                            </select>
+                            <span class="errorMessage"></span>
+                        </div>
+                        <div class="formGroup">
+                            <label for="projectScale" class="formLabel">Project Scale</label>
+                            <select name="projectScale" id="projectScale" class="inputBox">
+                                <option value="" selected disabled>Select Project Scale</option>
+                                <option value="Large ">Large (Extensive Initiatives)</option>
+                                <option value="Medium">Medium (Well-Defined Project)</option>
+                                <option value="Small">Small (Quick Tasks)</option>
+                            </select>
+                            <span class="errorMessage"></span>
+                        </div>
+                        <div class="formGroup">
+                            <label for="projectTimeline" class="formLabel">Project Timeline</label>
+                            <select name="projectTimeline" id="projectTimeline" class="inputBox">
+                                <option value="" selected disabled>Select Project Timeline</option>
+                                <option value="More than 6 months">More than 6 months</option>
+                                <option value="3 to 6 months">3 to 6 months</option>
+                                <option value="1 to 3 months">1 to 3 months</option>
+                            </select>
+                            <span class="errorMessage"></span>
+                        </div>
+                    </div>
+                    <div class="formGroup2">
+                        <div class="formGroup">
+                            <label for="addSkillInput" class="formLabel">Search Skills or Add Your Own
+                                ( For best results, add 3-5 skills )
+                            </label>
+                            <div class="inputGroup">
+                                <input type="text" id="addSkillInput"
+                                    placeholder="Enter Skills (e.g., Python, Project Management)" class="inputBox">
+                                <button type="button" class="mainButton"
+                                    onclick="addSkillInputText(document.getElementById('addSkillInput'))"> Add Skill
+                                </button>
+                            </div>
+                            <div class="formGroup">
+                                <span class="formLabel">Selected Skills</span>
+                                <div class=" selectedContainer" id="selectedContainer">
+                                    <!--<div class="skills">
+                                        <span id="skillAddElement">asdad</span>
+                                        <input type="hidden" name="skills[]" value="" id="skillAddInput">
+                                        <iconify-icon icon="octicon:x-12" onclick="removeSkill(this)"></iconify-icon>
+                                    </div>-->
+                                </div>
+                                <span class="formLabel">Recommended Skills</span>
+                                <div class="popularSkillContainer" id="popularSkillContainer">
+                                    {% for skill in skills %}
+                                    <div class="skills">
+                                        <span id="skill">{{skill.name}}</span>
+                                        <iconify-icon icon="uil:plus" onclick="addSkill(this)"></iconify-icon>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="formGroup">
+                            <label for="description" class="formLabel">Description</label>
+                            <textarea name="description" id="description" placeholder="" class="inputBox"
+                                oninput="autoResizeTextarea(this)"></textarea>
+                            <span class="errorMessage"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttonContainer">
+                    <button type="button" class="mainButton"
+                        onclick="ValidatePost(document.getElementById('postForm'))">Submit</button>
+                </div>
+        </div>
+        </form>
+    </div>
+    </div>
+
+    <template id="skillAdd">
+        <div class="skills">
+            <span id="skillAddElement">asdad</span>
+            <input type="hidden" name="skills[]" value="" id="skillAddInput">
+            <iconify-icon icon="octicon:x-12" onclick="removeSkill(this)"></iconify-icon>
+        </div>
+    </template>
+
+    <template id="skillRecommended">
+        <div class="skills">
+            <span id="skill">asdad</span>
+            <iconify-icon icon="uil:plus" onclick="addSkill(this)"></iconify-icon>
+        </div>
+    </template>
+
+    <template id="postTemplate">
+        <div class="postHolder" data-value=1>
+            <div class="postTitle" id="postTitle">
+                <span>Software Devs</span>
+                <iconify-icon icon="tabler:dots"
+                    onclick="ShowOptions(this.closest('.postTitle').querySelector('#options'),this)"></iconify-icon>
+                <div class="options" id="options">
+                    <span onclick="ShowApplicants(this.closest('.postHolder'),this)">View
+                        Applicants</span>
+                    <span>Mark as Closed</span>
+                </div>
+            </div>
+            <div class="groupt">
+                <div class="group">
+                    <div class="groupInfo">
+                        <span class="groupTitle">
+                            Date Posted:
+                        </span>
+                        <span class="groupContent">
+
+                        </span>
+                    </div>
+                    <div class="groupInfo">
+                        <span class="groupTitle">
+                            Category:
+                        </span>
+                        <span class="groupContent">
+
+                        </span>
+                    </div>
+                    <div class="groupInfo">
+                        <span class="groupTitle">
+                            Skill Needed:
+                        </span>
+                        <span class="groupContent">
+
+                        </span>
+                    </div>
+                    <div class="groupInfo">
+                        <span class="groupTitle">
+                            Scope & Timeline:
+                        </span>
+                        <span class="groupContent">
+
+                        </span>
+                    </div>
+                </div>
+                <div class="group">
+                    <div class="groupInfo">
+                        <span class="groupTitle">
+                            Description:
+                        </span>
+                        <span class="groupContent">
+
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</body>
+
+
+</html>

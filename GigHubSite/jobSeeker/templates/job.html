@@ -140,7 +140,7 @@
       recommended.forEach((reco) => {
         var template = document.getElementById("jobTemplate");
         var templateContent = template.content.cloneNode(true);
-
+        
         templateContent.getElementById("title").textContent = reco.title;
         templateContent.getElementById("company").textContent = reco.company;
         templateContent.getElementById("description").textContent = reco.desc;

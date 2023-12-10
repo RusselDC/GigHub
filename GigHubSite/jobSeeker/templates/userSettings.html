@@ -27,6 +27,8 @@
             var token = '{{csrf_token}}'
             var awardsData = {{awards|safe}};
             var certis = {{certis|safe}};
+            var employments = {{employment|safe}}
+            console.log(employments)
     </script>
 </head>
 
@@ -213,37 +215,35 @@
                 <div class="formContent">
                     <div class="formTitle"><span>Employment History</span><button class="mainButton" type="button"
                             onclick="ShowForms(employmentAddForm, formsInput2)">Add</button></div>
+                    <div id="employmentHistoryContainer" style="width: 100%; height: fit-content;">
+                     {% for employment in employment %}
+                     <div class="employed">
+                        <div class="company_name" id="companyNames">{{employment.name}}</div>
+                        <div class="position" id="companyPosition">{{employment.position}}</div>
+                        <div class="date fw-normal">From <span class="fw-bold" id="dateStart">{{employment.start}}</span>&nbsp;<span class="fw-normal">to</span>&nbsp;<span class="fw-bold" id="dateEnd">{{employment.end}}</span></div>
+            
+                        <div class="mt-3 duties">
+                            <span class="fw-bold">Duties</span>
+                            <ul class="" id="dutiesList">
+                                {% for list in employment.duties %}
+                                    <li>{{list}}</li>
+                                {% endfor %}
+                                
+                            </ul>
+                        </div>
+                        <div class="employment">
+                            <button onclick="DeleteEducation(this)">
+                                <iconify-icon icon="tabler:trash-filled"></iconify-icon>
+                                Delete
+                            </button>
+                        </div>
+                     </div>
+                     {% endfor %}
+                    
+                    </div>
 
                             
-                        <div class="employed">
-                            <div class="company_name">MYM Entertainment</div>
-                            <div class="position">Chief Executive Officer</div>
-                            <div class="date fw-normal">From <span class="fw-bold">2002</span>&nbsp;<span class="fw-normal">to</span>&nbsp;<span class="fw-bold">2008</span></div>
-
-                            <div class="mt-3 duties">
-                                <span class="fw-bold">Duties</span>
-                                <ul class="d-flex gap-1 flex-wrap justify-content-evenly">
-                                    <li>Singer</li>
-                                    <li>Manager</li>
-                                    <li>Dancer</li>
-                                    <li>Actor</li>
-                                    <li>Singer</li>
-                                    <li>Manager</li>
-                                    <li>Dancer</li>
-                                    <li>Actor</li>
-                                </ul>
-                            </div>
-                            <div class="employment">
-                                <button>
-                                    <iconify-icon icon="solar:pen-bold"></iconify-icon>
-                                    Edit
-                                </button>
-                                <button onclick="DeleteEducation(this)">
-                                    <iconify-icon icon="tabler:trash-filled"></iconify-icon>
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
+                        
                            
                 </div>
                 <div class="formContent">
@@ -494,9 +494,50 @@
     </template>
 
 
+    <template id="employmentTemplate">
+        <div class="employed">
+            <div class="company_name" id="companyNames">MYM Entertainment</div>
+            <div class="position" id="companyPosition">Chief Executive Officer</div>
+            <div class="date fw-normal">From <span class="fw-bold" id="dateStart">2002</span>&nbsp;<span class="fw-normal">to</span>&nbsp;<span class="fw-bold" id="dateEnd">2008</span></div>
 
-
+            <div class="mt-3 duties">
+                <span class="fw-bold">Duties</span>
+                <ul class="" id="dutiesList">
+                    
+                </ul>
+            </div>
+            <div class="employment">
+                <button onclick="DeleteEducation(this)">
+                    <iconify-icon icon="tabler:trash-filled"></iconify-icon>
+                    Delete
+                </button>
+            </div>
+        </div>
+    </template>
 </body>
+
+    <!--<script defer>
+        employments.forEach(element => {
+            let duties = element.duties
+            let template = document.getElementById('employmentTemplate')
+            let templateContent = template.cloneNode(true)
+
+            templateContent.querySelector('#companyNames').textContent = element.name
+            templateContent.querySelector('#companyPosition').textContent = element.position
+            templateContent.querySelector('#dateStart').textContent = element.start
+            templateContent.querySelector('#dateEnd').textContent = element.end
+
+            let parentList = templateContent.querySelector('#dutiesList') 
+
+            duties.forEach(duty => {
+                let childList = document.createElement('li')
+                childList.textContent = duty
+                parentList.appendChild(childList)
+            })
+
+            document.getElementById('employmentHistoryContainer').appendChild(templateContent)
+        })
+    </script>-->
 
 
 </html>

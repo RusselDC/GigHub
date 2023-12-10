@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile,Company,JobApplication,JobPostings,passwordOTP,collegeTaken,Skills,Institution,Degrees,Majors,Industry,companyStaff,Awards,Certificates
+from .models import Profile,Company,JobApplication,JobPostings,passwordOTP,collegeTaken,Skills,Institution,Degrees,Majors,Industry,companyStaff,Awards,Certificates, EmploymentHistory
 
 # Register your models here.
 
@@ -17,3 +17,4 @@ admin.site.register(companyStaff)
 admin.site.register(Majors)
 admin.site.register(Awards)
 admin.site.register(Certificates)
+admin.site.register(EmploymentHistory)
