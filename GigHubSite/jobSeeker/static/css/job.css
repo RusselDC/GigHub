@@ -1,7 +1,6 @@
 .job {
   background-color: var(--white);
   width: 90%;
-  display: flex;
 }
 .job_company,
 .job_description,
@@ -33,7 +32,7 @@
   -webkit-line-clamp: 3;
   text-overflow: ellipsis;
 }
-.job iconify-icon:not(.msg button iconify-icon) {
+.job iconify-icon {
   font-size: 2rem;
   cursor: pointer;
   color: var(--mango-tango);
@@ -87,8 +86,8 @@
   top: 0;
   right: 0;
   height: 100vh;
-  width: calc(100vw - 20rem);
-  z-index: 100;
+  width: 100%;
+  z-index: 2000;
 
   background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
   backdrop-filter: blur(10px);
@@ -127,9 +126,7 @@ sidebar.collapsed ~ content .job_container.modal_show {
 .job_container.modal_show .view_job {
   background-color: #00000000;
 }
-.job_container.modal_show
-  .job
-  iconify-icon:not(.job_saved):not(.job_unsaved):not(.msg button iconify-icon) {
+.job_container.modal_show .job iconify-icon:not(.job_saved):not(.job_unsaved) {
   color: var(--white);
 }
 @media screen and (max-width: 800px) {
@@ -137,6 +134,7 @@ sidebar.collapsed ~ content .job_container.modal_show {
     width: 100vw;
   }
 }
+
 .apply_btn {
   display: none;
 }
@@ -156,11 +154,12 @@ sidebar.collapsed ~ content .job_container.modal_show {
   color: var(--mango-tango);
   transition: var(--transition-1);
 }
+
 .search_jobs {
   background-color: var(--white);
   /* width: fit-content; */
   min-width: 400px;
-  width: 40vw;
+  max-width: calc(50vw - 18rem);
   border: solid 3px var(--gainsboro);
 }
 .search_jobs button {
@@ -183,50 +182,4 @@ sidebar.collapsed ~ content .job_container.modal_show {
 }
 .search_jobs iconify-icon {
   font-size: 1.5rem;
-}
-.tabJobs {
-  display: none;
-}
-.job_container.modal_show .tabJobs {
-  display: block;
-  width: 90%;
-}
-.tabJob {
-  background-color: var(--gainsboro);
-  border-radius: 0.5rem 0.5rem 0 0;
-  transition: var(--transition-1);
-  cursor: pointer;
-  margin-right: 0.5rem;
-}
-.tabJob.currTab {
-  transition: var(--transition-1);
-  background-color: var(--white);
-}
-.user {
-  background-color: var(--topaz);
-  color: var(--black);
-  max-width: 50%;
-  width: fit-content !important;
-  border-radius: 0.5rem 0.5rem 0 0.5rem;
-}
-.provider {
-  background-color: var(--gainsboro);
-  color: var(--black);
-  width: fit-content !important;
-  max-width: 50%;
-  border-radius: 0.5rem 0.5rem 0.5rem 0;
-}
-.msg button {
-  color: var(--mango-tango) !important;
-  border: solid 3px var(--mango-tango);
-  padding: 0.25rem;
-  font-size: 1.5rem;
-  background-color: var(--isabelline);
-  border-radius: 50%;
-}
-.msg input{
-  outline: none;
-  background: none;
-  background-color: var(--isabelline);
-  border: none;
 }
