@@ -19,7 +19,28 @@
     <link rel="stylesheet" href="{% static 'css/all.css' %}">
     <link rel="stylesheet" href="{% static 'css/jobPostingClone.css' %}">
     <link rel="website icon" type="png " href="{{ '/media/site/logo.png' }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+        integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.13"></script>
     <title>Admin</title>
+    <style>
+        .sortContainer {
+            width: 100%;
+            height: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sortTitle {
+            width: fit-content;
+            height: fit-content;
+            font-size: var(--larger);
+            color: var(--orangeMain);
+        }
+    </style>
 </head>
 
 <body>
@@ -27,8 +48,13 @@
         {% include 'partial/navandside3.html' with user=user %}
         <div class="mainContainer">
             <div class="main">
-                <div class="title">
-                    <center><span style="font-size: 50px;">Job Postings</span></center>
+                <div class="sortContainer">
+                    <div class="sortGroup">
+                        <span class="sortTitle">Job Postings</span>
+                    </div>
+                    <div class="sortGroup">
+                        <button type="button" class="mainButton" onclick="PrintReport()">Print</button>
+                    </div>
                 </div>
                 <div class="tableContainer">
                     <table>
@@ -53,7 +79,7 @@
                                     {{app.datePosted}}
                                 </td>
                                 <td class="actionTable">
-                                    <iconify-icon icon="mingcute:check-fill"  id="accept"
+                                    <iconify-icon icon="mingcute:check-fill" id="accept"
                                         onclick="AcceptApplicant(this,this.closest('tr').getAttribute('data-value'))"></iconify-icon>
                                 </td>
                             </tr>
@@ -98,8 +124,8 @@
                             </div>
                             <div class="group4">
                                 <ul id="educationList">
-                                    
-                                   
+
+
                                 </ul>
 
                             </div>
@@ -109,9 +135,9 @@
                                 EXPERIENCE
                             </div>
                             <div id="experienceContainer" style="width: 100%;height: fit-content;">
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class="group3">
                             <div class="groupTitle">
@@ -119,7 +145,7 @@
                             </div>
                             <div class="group4">
                                 <ul id="awardList">
-                                    
+
                                 </ul>
 
                             </div>
@@ -130,7 +156,7 @@
                             </div>
                             <div class="group4">
                                 <ul id="certificateList">
-                                    
+
                                 </ul>
 
                             </div>
@@ -151,7 +177,7 @@
                         </div>
                         <div class="commentContainer">
 
-                            
+
                         </div>
                         <form id="submitReply">
                             {% csrf_token %}
@@ -203,7 +229,7 @@
                         <span id="majorName"></span>
                         <span id="yearOf"></span>
                     </div>
-                    
+
                 </div>
             </li>
         </template>
@@ -225,8 +251,8 @@
                     </li>
                 </ul>
                 <ul id="dutyList">
-                    
-                    
+
+
                 </ul>
             </div>
         </template>
@@ -249,6 +275,52 @@
             </li>
         </template>
 </body>
+<script>
+    function PrintReport() {
+        const pdf = new jsPDF("portrait");
+        var pageHeight = pdf.internal.pageSize.height;
+        var bottomMargin = 5;
+        var yPos = pageHeight - bottomMargin;
+        pdf.setTextColor(229, 123, 30);
+        pdf.setFontSize(16);
+        pdf.text(10, 15 + 0.95, "Job Postings");
 
+        const tableElement = document
+            .querySelector(".tableContainer")
+            .querySelector("table");
+        const tableData = pdf.autoTableHtmlToJson(tableElement, true);
+        const addFooters = (doc) => {
+            const pageCount = doc.internal.getNumberOfPages();
+            doc.setTextColor(128, 128, 128);
+            doc.setFontSize(10);
+            for (var i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.text("Generated by GIGHUB", 85, yPos, {
+                    align: "center",
+                });
+            }
+        };
+
+        pdf.autoTable({
+            head: [["Job Title", "Company", "Date Posted"]],
+            body: tableData.data,
+            theme: "striped",
+            margin: { horizontal: 10 },
+            startY: 20,
+            pageBreak: "auto",
+            tableWidth: "auto",
+            headStyles: { halign: "center", valign: "middle" },
+            bodyStyles: { halign: "center", valign: "middle" },
+            columnStyles: {
+                0: { cellWidth: 60 },
+                1: { cellWidth: 40 },
+                2: { cellWidth: "auto" },
+            },
+        });
+        addFooters(pdf);
+        pdf.save("JobPostings.pdf");
+    }
+
+</script>
 
 </html>
