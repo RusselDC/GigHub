@@ -247,11 +247,11 @@ tr td:nth-last-of-type(2) {
   .dataTables_filter label input {
     flex-grow: 1;
   }
-  sidebar.collapsed ~ content .dataTables_info {
-    display: none;
-  }
   sidebar.collapsed ~ content .dataTables_info,
   .dataTables_paginate {
+    position: static;
+  }
+  .dataTables_info {
     position: static;
   }
   .dataTables_paginate {
@@ -307,7 +307,7 @@ tr td:nth-last-of-type(2) {
   display: none;
   width: calc(100vw - 15rem);
 }
-content.expand  .message_cont {
+content.expand .message_cont {
   width: calc(100vw - 5rem);
 }
 .chats {
@@ -354,4 +354,9 @@ content.expand  .message_cont {
   top: 1rem;
   right: 1rem;
   color: var(--white);
+}
+@media screen and (max-width: 800px) {
+  content.expand .message_cont {
+    width: 100vw;
+  }
 }

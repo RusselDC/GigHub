@@ -15,6 +15,7 @@ def searchResult(request):
     template="searchResult.html"
     profile = Profile.objects.get(userID=request.user)
     if request.method == "GET":
+<<<<<<< HEAD
 
 
         jobs = JobApplication.objects.filter(applicantID=profile)
@@ -22,6 +23,9 @@ def searchResult(request):
 
 
         return render(request, template,{'user':profile,'jobs':jobs})
+=======
+        return render(request, template,{'user':profile, 'pageName': 'searchResult'})
+>>>>>>> e33efc1fc6738d031cae9cc5e5dda8c8342dac54
     
 def profileSettings(request):
     template = 'userSettings.html'
