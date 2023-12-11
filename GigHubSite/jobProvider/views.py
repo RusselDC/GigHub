@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, Company, Industry, companyStaff, JobApplication, Skills
+from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, Company, Industry, companyStaff, JobApplication, Skills, EmploymentHistory,Room,Message
 from GigHub import utils
 from django.contrib.auth.models import User
 from datetime import date, datetime
@@ -346,7 +346,7 @@ def jobPosting(request,jobID):
             'name' : f"{applicant.applicantID.fName} {applicant.applicantID.lName}",
             'email' : applicant.applicantID.userID.username,
             'date': applicant.date.strftime('%Y-%m-%d'),
-            'status':applicant.applicationStatus
+            'status':applicant.get_applicationStatus_display
         }
         applicants_data_list.append(applicant_data)
 
@@ -355,3 +355,136 @@ def jobPosting(request,jobID):
     user = Profile.objects.get(userID=request.user) 
     return render(request,template,{'user':user,'applicants':applicants_data_list})
 
+def getApplicant(request, applicantID):
+    app = JobApplication.objects.get(id=applicantID)
+
+    name = f"{app.applicantID.fName} {app.applicantID.lName}"
+    email = app.applicantID.userID.username
+    contact = app.applicantID.contactNo
+
+    education_data_list = []
+
+    for education in collegeTaken.objects.filter(userID=app.applicantID):
+        institutions = [institution.name for institution in education.institution.all()]
+        degrees = [degree.name for degree in education.degree.all()]
+        
+
+        education_data = {
+            'school':institutions,
+            'course':degrees,
+            'year':education.yearGraduated,
+            'award':education.award
+        }
+        
+        education_data_list.append(education_data)
+
+
+    employment_data_list = []
+
+    for employment in EmploymentHistory.objects.filter(user=app.applicantID):
+
+        employment_data = {
+            'name':employment.companyName,
+            'position':employment.position,
+            'start':employment.date_started.strftime('%B %Y'),
+            'end':employment.date_ended.strftime('%B %Y') if employment.date_ended is not None else 'Present',
+            'duties':employment.getDuties()
+        }
+
+        employment_data_list.append(employment_data)
+
+    awards_data_list = []
+
+    for award in Awards.objects.filter(user=app.applicantID):
+
+        award_data = {
+            'title':award.title,
+            'from':award.awardForm,
+            'date':award.date
+        }
+        awards_data_list.append(award_data)
+
+    certificate_data_list = []
+
+    for certificate in Certificates.objects.filter(user=app.applicantID):
+
+        certiifcate_data = {
+            'title':certificate.title,
+            'from':certificate.certificateForm,
+            'date':certificate.date
+        }
+
+        certificate_data_list.append(certiifcate_data)
+
+    skills_data_list = []
+
+    for skill in app.applicantID.skills.all():
+
+        skills_data_list.append(skill.name)
+
+    room = Room.objects.get(jobApp=app)
+    messages = Message.objects.filter(message=room)
+
+
+    message_data_list = []
+    for message in messages:
+        message_data = {
+            'content':message.messageContent,
+            'sender':message.sender.image.url,
+            'role':message.sender.role,
+            'date':message.date.strftime("%B %d, %Y %I:%M %p")
+            
+        }
+
+        message_data_list.append(message_data)
+    
+
+
+
+
+
+
+    return JsonResponse({'name':name,'email':email,'contact':contact,'colleges':education_data_list,'employment':employment_data_list,'awards':awards_data_list,'certificates':certificate_data_list,'skills':skills_data_list,'messages':message_data_list,'room':room.id})
+
+def sendReply(request):
+    profile = Profile.objects.get(userID=request.user)
+    room = Room.objects.get(id=request.POST['roomID'])
+
+    Message.objects.create(
+        message=room,
+        messageContent=request.POST['replyInput'],
+        sender=profile,
+        senderRole = profile.role
+    )
+
+
+
+
+    return JsonResponse({"data":request.POST})
+
+
+
+def acceptApplication(request,applicantID):
+
+    app = JobApplication.objects.get(id=applicantID)
+    app.applicationStatus = "in_progress"
+    app.save()
+
+
+
+
+    return JsonResponse({"status":True})
+
+def hireApplication(request,applicantID):
+    app = JobApplication.objects.get(id=applicantID)
+    app.applicationStatus = "hired"
+    app.save()
+
+    
+    return JsonResponse({"status":True})
+
+def rejectApplication(request,applicantID):
+    app = JobApplication.objects.get(id=applicantID)
+    app.applicationStatus = "rejected"
+    app.save()
+    return JsonResponse({"status":True})

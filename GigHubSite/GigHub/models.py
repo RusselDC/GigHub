@@ -217,6 +217,25 @@ class EmploymentHistory(models.Model):
     
     
 
+class Activities(models.Model):
+    viewer = models.ManyToManyField(Profile)
+    content = models.CharField(max_length=255)
+    dateandtime = models.DateTimeField(auto_now_add=True)
+
+class Room(models.Model):
+    jobApp = models.ForeignKey(JobApplication, on_delete=models.CASCADE)
+
+
+class Message(models.Model):
+    date = models.DateTimeField(auto_now_add=True, null=True)
+    message = models.ForeignKey(Room, on_delete=models.CASCADE)
+    messageContent = models.CharField(max_length=255)
+    sender = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    senderRole = models.CharField(max_length=50)
+    
+
+
+    
        
 
 

@@ -49,18 +49,22 @@
       </label>
       <h3 class="fw-bold">Recommended For You</h3>
       <div
-        class="jobs_list mt-4 d-flex flex-column justify-content-center align-items-center gap-3"
+        class="jobs_list mt-4 d-flex flex-column  gap-3"
         id="topReco_list"></div>
 
       <h3 class="fw-bold mt-5">
         Discover Your Next Chapter: Browse Jobs Now!"
       </h3>
       <div
-        class="jobs_list mt-4 d-flex flex-column justify-content-center align-items-center gap-3"
-        id="jobList"></div>
+        class="jobs_list mt-4 d-flex flex-column   gap-3"
+        id="jobList">
+      
+      
+      </div>
     </content>
     <template id="jobTemplate">
       <div
+        id="jobContainer"
         class="job_container d-flex justify-content-center align-items-center">
         <div
           class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between mb-3">
@@ -170,7 +174,9 @@
         templateContent.getElementById("description").textContent = reco.desc;
         templateContent.getElementById("requirements").textContent =
           reco.requirements.join(",");
+          templateContent.getElementById('view_job').setAttribute('data-id',reco.id);
         document.getElementById("topReco_list").appendChild(templateContent);
+        
       });
     } else {
       var template = document.getElementById("notopReco");
@@ -184,7 +190,10 @@
         type: "POST",
         data: { csrfmiddlewaretoken: token, id: id },
         success: (data) => {
-          alert(data.message)
+          Swal.fire({
+          text: data.message,
+          icon: "success"
+          });
         },
         error: (err) => {
           console.log(err.responseText);

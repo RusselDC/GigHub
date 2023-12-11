@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, JobApplication, EmploymentHistory
+from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, JobApplication, EmploymentHistory, Room
 from GigHub import utils
 from django.contrib.auth.models import User
 from datetime import date, datetime
@@ -305,7 +305,9 @@ def job(request):
         profile = Profile.objects.get(userID=request.user)
         jobPost = JobPostings.objects.get(id=request.POST['id'])
 
-        JobApplication.objects.create(applicantID=profile, jobID=jobPost)
+        jobAppl = JobApplication.objects.create(applicantID=profile, jobID=jobPost)
+
+        Room.objects.create(jobApp=jobAppl)
 
         return JsonResponse({'status':True,'message':'Application has been sent'})
 
