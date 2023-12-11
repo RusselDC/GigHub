@@ -1,0 +1,131 @@
+.stat {
+  gap: 0.5rem;
+  background-color: var(--white);
+  /* min-width: 300px; */
+  width: calc(calc(100vw - 12rem) / 4);
+}
+.stat.app iconify-icon {
+  font-size: 1.5rem;
+  background-color: #b3b3dc;
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: var(--white);
+}
+.stat.app .count {
+  color: #b3b3dc;
+  font-size: 2rem;
+  /* text-shadow: 1px 1px 2px var(--gray); */
+}
+.stat.act iconify-icon {
+  font-size: 1.5rem;
+  background-color: #008080;
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: var(--white);
+}
+.stat.act .count {
+  color: #008080;
+  font-size: 2rem;
+  /* text-shadow: 1px 1px 2px var(--gray); */
+}
+.stat.pend iconify-icon {
+  font-size: 1.5rem;
+  background-color: #2f88da;
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: var(--white);
+}
+.stat.pend .count {
+  color: #2f88da;
+  font-size: 2rem;
+  /* text-shadow: 1px 1px 2px var(--gray); */
+}
+.stat.exp iconify-icon {
+  font-size: 1.5rem;
+  background-color: #001f3f;
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: var(--white);
+}
+.stat.exp .count {
+  color: #001f3f;
+  font-size: 2rem;
+  /* text-shadow: 1px 1px 2px var(--gray); */
+}
+.activity {
+  font-size: 0.9rem;
+  border-bottom: var(--gainsboro) solid 1px;
+  padding: 0.5rem 0;
+}
+.activity:hover {
+  background-color: var(--white-smoke);
+}
+.activity span {
+  color: var(--mango-tango);
+}
+.activity_notif {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.activity:nth-of-type(odd) iconify-icon {
+  font-size: 1.25rem;
+  background-color: #2f88da;
+  padding: 0.4rem;
+  border-radius: 50%;
+  color: var(--white);
+}
+.activity:nth-of-type(even) iconify-icon {
+  font-size: 1.25rem;
+  background-color: #008080;
+  padding: 0.4rem;
+  border-radius: 50%;
+  color: var(--white);
+}
+.container {
+  height: 15rem;
+  background-color: var(--white);
+}
+.activities_list {
+  height: 15rem;
+}
+.hact {
+  height: 90%;
+  overflow-y: auto;
+}
+.container.line {
+  max-width: none;
+  height: auto;
+  max-height: 15rem;
+}
+#jobPosting_overview {
+  width: 100%;
+}
+@media screen and (max-width: 1401px) {
+  .col2 {
+    flex-direction: column;
+  }
+  .container.pie {
+    height: auto;
+  }
+  #application_overview {
+    height: 15rem !important;
+  }
+}
+@media screen and (max-width: 1300px) {
+  .statistics {
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+  }
+  .stat {
+    width: calc(calc(100vw - 25rem) / 2);
+  }
+}
+@media screen and (max-width: 1300px) {
+  .statistics {
+    flex-direction: column;
+  }
+  .stat {
+    width: 100%;
+  }
+}

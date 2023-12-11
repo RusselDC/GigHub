@@ -38,7 +38,7 @@
     {% include 'partials/template.html' with user=user %}
 
     <content class="p-4 pb-5 d-flex flex-column">
-      <div class="message_cont">
+      <div class="message_cont" id="messageCont" >
         <div class="msg d-flex flex-column">
           <div class="close_msg fs-3">
             <iconify-icon icon="zondicons:close-outline"></iconify-icon>
@@ -128,7 +128,9 @@
               <td data-title="Date Applied">{{job.date}}</td>
               <td data-title="Status">{{job.get_applicationStatus_display}}</td>
               <td data-title="Actions">
-                <iconify-icon icon="solar:eye-broken" onclick="showMessage({{job.id}})" data-id="{{job.id}}"></iconify-icon>
+                
+                <iconify-icon icon="solar:eye-broken"  data-id="{{job.id}}" onclick="showMesssages({{job.id}})"></iconify-icon>
+                
               </td>
             </tr>
             {% endfor %}
@@ -205,6 +207,49 @@
     const formattedDateTime = `${month} ${day}, ${year} ${formattedHours}:${minutes < 10 ? '0' : ''}${minutes} ${period}`;
   
     return formattedDateTime;
+  }
+
+
+
+  function showMesssages(id)
+  {
+    document.querySelector("#messageCont").style.display = "flex"
+  $.ajax({
+    type:"GET",
+    url:`/user/getMessage/${id}/`,
+    success:(data)=>{
+      
+      document.getElementById("chatContaner").innerHTML = ""
+      document.getElementById('roomToken').value = id
+      data.messages.forEach(message=>{
+        
+        
+        if(message.role == "JP")
+        {
+          let template = document.getElementById('providerReply')
+          var templateContent = template.content.cloneNode(true);
+
+          templateContent.querySelector('#content').textContent = message.content
+          templateContent.querySelector('#date').textContent = message.date
+
+          document.querySelector('#chatContaner').appendChild(templateContent)
+        }
+        else
+        {
+          let template = document.getElementById('seekerReply')
+          var templateContent = template.content.cloneNode(true);
+
+          templateContent.querySelector('#content').textContent = message.content
+          templateContent.querySelector('#date').textContent = message.date
+
+          document.querySelector('#chatContaner').appendChild(templateContent)
+        }
+        
+      })
+    },error:(err)=>{
+      console.log(err.responseText)
+    }
+  })
   }
   </script>
 </html>
