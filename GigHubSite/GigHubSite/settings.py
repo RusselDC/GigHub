@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'GigHub.apps.GighubConfig',
     'jobSeeker.apps.JobseekerConfig',
-    'jobProvider.apps.JobproviderConfig'
+    'jobProvider.apps.JobproviderConfig',
+    'gigAdmin.apps.GigadminConfig',
+    
 
 ]
 

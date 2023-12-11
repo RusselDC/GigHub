@@ -22,7 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('GigHub.urls')),
     path('user/',include('jobSeeker.urls')),
-    path('provider/',include('jobProvider.urls'))
+    path('provider/',include('jobProvider.urls')),
+    path('administrator/',include('gigAdmin.urls'))
 ]
 
 if settings.DEBUG:

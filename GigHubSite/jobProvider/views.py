@@ -331,6 +331,8 @@ def jobPostings(request):
                 
 
         jobPosting.save()
+
+        
         shared_skills = jobPosting.jobRequirements.all()
 
         matching_profiles = Profile.objects.annotate(

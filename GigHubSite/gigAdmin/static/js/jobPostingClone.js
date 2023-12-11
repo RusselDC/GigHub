@@ -1,6 +1,10 @@
-function AcceptApplicant(id) {
+function AcceptApplicant(btn,id) {
+
+    let parent = btn.parentNode;
+    let parentP = parent.parentNode;
+    
     Swal.fire({
-      title: "Hire Applicant",
+      title: "Accept this job posting?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Confirm",
@@ -8,19 +12,17 @@ function AcceptApplicant(id) {
       if (result.isConfirmed) {
         $.ajax({
           type:"GET",
-          url:`/provider/hire/${id}`,
+          url:`/administrator/accept/${id}`,
           success:function(data){
+            console.log(data)
             if(data.status)
             {
-              btn.style = "display:none"
-              let parentNode = btn.parentNode
-              parentNode.parentNode.querySelector('.statusTable').textContent = "Hired"
-              let acceptElement = parentNode.querySelector("#rejectBtn");
-              acceptElement.style = "display:''"
               Swal.fire({
-                text: "Applicant Hired",
+                text: "Job Posting Listed",
                 icon: "success",
                 showConfirmButton: false,
+              }).then(()=>{
+                parentP.remove()
               });
             }
           },error:function(err){
@@ -32,76 +34,7 @@ function AcceptApplicant(id) {
     });
   }
 
-  function MoveOnApplicant(btn,id)
-  {
-    
-    Swal.fire({
-      title: "Accept Applicant",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Confirm",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        $.ajax({
-          type:"GET",
-          url:`/provider/accept/${id}`,
-          success:function(data){
-            if(data.status)
-            {
-              btn.style = "display:none"
-              let parentNode = btn.parentNode
-              let acceptElement = parentNode.querySelector("#accept");
-              acceptElement.style = "display:''"
-              parentNode.parentNode.querySelector('.statusTable').textContent = "In Progress"
-              Swal.fire({
-                text: "Applicant Accepted",
-                icon: "success",
-                showConfirmButton: false,
-              });
-            }
-          },error:function(err){
-            console.log(err.responseText)
-          }
-        })
-    
-      }
-    });
-  }
   
-  function RejectApplicant(btn,id) {
-    Swal.fire({
-      title: "Reject Applicant",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Confirm",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        $.ajax({
-          type:"GET",
-          url:`/provider/reject/${id}`,
-          success:function(data){
-            if(data.status)
-            {
-              btn.style = "display:none"
-              let parentNode = btn.parentNode
-              parentNode.parentNode.querySelector('.statusTable').textContent = "Rejected"
-              let acceptElement = parentNode.querySelector("#rejectBtn");
-                acceptElement.style = "display: none"
-                let progress = parentNode.querySelector("#onprogress");
-                progress.style = "display: none"
-                Swal.fire({
-                  text: "Applicant Rejected",
-                  icon: "success",
-                  showConfirmButton: false,
-                });
-              }
-            },error:function(err){
-            console.log(err.responseText)
-          }
-        })
-      }
-    });
-  }
   
   const formTitles = document.querySelectorAll(".options"),
     formContent = document.querySelectorAll(".container");

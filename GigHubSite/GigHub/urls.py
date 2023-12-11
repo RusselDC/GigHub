@@ -22,5 +22,6 @@ urlpatterns = [
     path('register_education/', views.register_education, name="register_education"),
     path('register_skills/', views.register_skills, name="register_skills"),
     path('register_moreInfo/', views.register_moreInfo, name="register_moreInfo"),
-    path('getMajors/<str:degreeName>/', views.getMajors, name="getMajors")
+    path('getMajors/<str:degreeName>/', views.getMajors, name="getMajors"),
+    path('disabled/',views.disabled,name="disabled")
 ]

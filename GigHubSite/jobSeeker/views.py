@@ -15,7 +15,6 @@ def searchResult(request):
     template="searchResult.html"
     profile = Profile.objects.get(userID=request.user)
     if request.method == "GET":
-<<<<<<< HEAD
 
 
         jobs = JobApplication.objects.filter(applicantID=profile)
@@ -23,9 +22,6 @@ def searchResult(request):
 
 
         return render(request, template,{'user':profile,'jobs':jobs})
-=======
-        return render(request, template,{'user':profile, 'pageName': 'searchResult'})
->>>>>>> e33efc1fc6738d031cae9cc5e5dda8c8342dac54
     
 def profileSettings(request):
     template = 'userSettings.html'
@@ -286,8 +282,8 @@ def job(request):
         profile=Profile.objects.get(userID=request.user)
         user_skills = Profile.objects.get(userID=request.user).skills.all()
         user_application = JobApplication.objects.filter(applicantID=profile)
-        recommended = JobPostings.objects.filter(jobRequirements__in=user_skills).exclude(Q(id__in=user_application.values('jobID'))).distinct()
-        topRecommended = JobPostings.objects.filter(jobRequirements__in=user_skills).exclude(Q(id__in=user_application.values('jobID'))).annotate(common_skills_count=Count('jobRequirements'))\
+        recommended = JobPostings.objects.filter(isApproved=True).exclude(Q(id__in=user_application.values('jobID'))).distinct()
+        topRecommended = JobPostings.objects.filter(jobRequirements__in=user_skills,isApproved=True).exclude(Q(id__in=user_application.values('jobID'))).annotate(common_skills_count=Count('jobRequirements'))\
         .filter(common_skills_count__gte=3)\
         .distinct()[:3]
         recommended_data_all = []

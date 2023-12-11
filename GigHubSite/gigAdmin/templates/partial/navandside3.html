@@ -1,0 +1,70 @@
+<div class="navbar w-auto d-flex align-items-center justify-content-between">
+  <div class="leftNavBar w-auto d-flex align-items-center">
+      <i class="fa-solid fa-bars" onclick="toggleSidebar(this)"></i>
+      
+  </div>
+  <div class="rightNavbar w-auto h-100 d-flex align-items-center">
+      
+      <div class="infoContainer d-flex align-items-center">
+          <div class="imgLogin">
+              <img src="/media/{{ user.image }}" alt="">
+          </div>
+          <div class="greetings">
+              <span class="greet">Good Day!</span>
+              <div class="nameLogin">{{user.fName}} {{user.lName}}</div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="sideBar">
+  <div class="imgGroupSidebar">
+      <img src="{{ '/media/site/logo.png' }}" alt="">
+      <img src="{{ '/media/site/logoText.png' }}" alt="" id="hiddenIMG">
+  </div>
+  <nav>
+      <ul>
+          <li class="">
+              <a href="{% url 'gigAdmin:gigAdmin' %}">
+                  <iconify-icon icon="ic:round-dashboard"></iconify-icon>
+                  <span class="links">Job Postings</span>
+              </a>
+          </li>
+         
+          <li class="">
+              <a href="{% url 'gigAdmin:jobProviders' %}">
+                  <iconify-icon icon="iconamoon:profile-circle-fill"></iconify-icon>
+                  <span class="links">Job Providers</span>
+              </a>
+          </li>
+          <li class="">
+              <a href="{% url 'gigAdmin:jobSeekers' %}">
+                  <i class="fa-solid fa-user-tie"></i>
+                  <span class="links">Job Seekers</span>
+              </a>
+          </li>
+          <li class="" onclick="logout()">
+              <a href="#">
+                  <iconify-icon icon="basil:logout-solid"></iconify-icon>
+                  <span class="links">Logout</span>
+              </a>
+              
+          </li>
+      </ul>
+  </nav>
+  <script>
+    function logout()
+    {
+     Swal.fire({
+     text: "Are you sure?",
+     icon: "question",
+     showCancelButton: true,
+     confirmButtonText: "Yes",
+     }).then((result)=>{
+         if(result.isConfirmed)
+         {
+             window.location.href = "/logout/"
+         }
+     });
+    }
+  </script>
+</div>

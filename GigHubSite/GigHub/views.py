@@ -72,6 +72,8 @@ def login(request):
         if user is not None and user.is_active:
             auth_login(request, user)
             profile = Profile.objects.get(userID=user)
+            if profile.is_active is not True:
+                return redirect('GigHub:disabled')
             image_url = profile.image.url if profile.image else ''
             birth_date_str = profile.birthDate.strftime('%Y-%m-%d') if profile.birthDate else ''
             userData = request.session['user_profile'] = {
@@ -96,6 +98,8 @@ def login(request):
                 return redirect('jobProvider:settings')
             elif profile.role == "JS":
                 return redirect('jobSeeker:userSettings')
+            else:
+                return redirect('gigAdmin:gigAdmin')
         else:
             return render(request, template, context={'errorMsg' : 'Invalid Credentials'})
 
@@ -511,3 +515,7 @@ def privacy_policy(request):
 def aboutUs(request):
     if request.method == "GET":
         return render(request, "aboutUs.html")
+
+def disabled(request):
+
+    return render(request, 'disabled.html')

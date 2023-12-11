@@ -1,0 +1,254 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script src="{% static 'js/all.js' %}" defer></script>
+    <script src="{% static 'js/jobPostingClone.js' %}" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/275edc9f9d.js" crossorigin="anonymous" defer></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jobPostingClone.css' %}">
+    <link rel="website icon" type="png " href="{{ '/media/site/logo.png' }}">
+    <title>Admin</title>
+</head>
+
+<body>
+    <div class="bodyContainer" id="bodyContainer">
+        {% include 'partial/navandside3.html' with user=user %}
+        <div class="mainContainer">
+            <div class="main">
+                <div class="title">
+                    <center><span style="font-size: 50px;">Job Postings</span></center>
+                </div>
+                <div class="tableContainer">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="profileTable">Job Title</th>
+                                <th class="nameTable">Company</th>
+                                <th class="dateTable">Date Posted</th>
+                                <th class="actionTable">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for app in posts %}
+                            <tr data-value="{{app.id}}">
+                                <td class="profileTable">
+                                    {{app.jobTitle}}
+                                </td>
+                                <td class="nameTable">
+                                    {{app.companyID.companyName}}
+                                </td>
+                                <td class="dateTable">
+                                    {{app.datePosted}}
+                                </td>
+                                <td class="actionTable">
+                                    <iconify-icon icon="mingcute:check-fill"  id="accept"
+                                        onclick="AcceptApplicant(this,this.closest('tr').getAttribute('data-value'))"></iconify-icon>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <div class="viewDetails" id="viewDetails" onclick="HideModal(event, this)">
+            <div class="detailsContainer" id="detailsContainer">
+                <div class="optionsContainer">
+                    <div class="options active">Resume</div>
+                    <div class="options ">Comment</div>
+                </div>
+                <div class="containers">
+                    <div class="container active">
+                        <div class="group">
+                            <div class="group1">
+                                <span id="name">John Kenneth Arellano</span>
+                                <!--<a href="#" id="github">Github</a>
+                                <a href="#" id="linkedIn">Linked In</a>-->
+                            </div>
+                            <div class="group2">
+                                <span id="email">kennetharellano110818@gmail.com</span>
+                                <span id="number">09519077637</span>
+                            </div>
+                        </div>
+                        <!--<div class="group3">
+                            <div class="groupTitle">
+                                SUMARRY
+                            </div>
+                            <span>
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, veritatis quo sed eius
+                                sint minima at ullam. Inventore, debitis.
+                            </span>
+                        </div>-->
+                        <div class="group3">
+                            <div class="groupTitle">
+                                EDUCATION
+                            </div>
+                            <div class="group4">
+                                <ul id="educationList">
+                                    
+                                   
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="group3">
+                            <div class="groupTitle">
+                                EXPERIENCE
+                            </div>
+                            <div id="experienceContainer" style="width: 100%;height: fit-content;">
+                                
+                            </div>
+                            
+                        </div>
+                        <div class="group3">
+                            <div class="groupTitle">
+                                AWARDS
+                            </div>
+                            <div class="group4">
+                                <ul id="awardList">
+                                    
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="group3">
+                            <div class="groupTitle">
+                                CERTIFICATES
+                            </div>
+                            <div class="group4">
+                                <ul id="certificateList">
+                                    
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="group3">
+                            <div class="groupTitle">
+                                SKILLS
+                            </div>
+                            <div class="group4">
+                                <span id="techSkills"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="postContainer">
+                            <span class="postTitle" id="postTitle"></span>
+                        </div>
+                        <div class="commentContainer">
+
+                            
+                        </div>
+                        <form id="submitReply">
+                            {% csrf_token %}
+                            <input type="hidden" name="roomID" id="roomIDcontainer">
+                            <textarea name="replyInput" id="replyInput" placeholder="Reply here" autocomplete="off"
+                                oninput="autoResizeTextarea(this)" spellcheck="false"></textarea>
+                            <button type="button" class="mainButton"
+                                onclick="ValidateReply(document.querySelector('#replyInput'),document.querySelector('#submitReply'))"><iconify-icon
+                                    icon="ic:round-send"></iconify-icon></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <template id="userReplyTemplate">
+            <div class="userReply">
+                <div class="imgHolder">
+                    <img src="/media/{{ user.image }}" alt="" id="userImg">
+                </div>
+                <div class="userReplyContainer" id="userReplyContainer">
+                    <span class="replyUserContent">
+                    </span>
+                    <span class="userDateTime" id="userDateTime"></span>
+                </div>
+            </div>
+        </template>
+        <template id="providerReplyTemplate">
+            <div class="providerReply">
+                <div class="providerReplyContainer" id="providerReplyContainer">
+                    <span class="replyProviderContent">
+
+                    </span>
+                    <span class="providerDateTime" id="providerDateTime"></span>
+                </div>
+                <div class="imgHolder">
+                    <img src="/media/{{ user.image }}" alt="" id="userImg">
+                </div>
+            </div>
+        </template>
+
+        <template id="educationTemplate">
+            <li>
+                <div class="group">
+                    <div class="group1">
+                        <span id="collegeName">Bulacan State Universty </span>
+                        <span id="CourseName">Bachelor of Science in Infromation Technology;</span>
+                    </div>
+                    <div class="group2">
+                        <span id="majorName"></span>
+                        <span id="yearOf"></span>
+                    </div>
+                    
+                </div>
+            </li>
+        </template>
+
+
+        <template id="employmentTemplate">
+            <div class="group4">
+                <ul>
+                    <li>
+                        <div class="group">
+                            <div class="group1">
+                                <span>Software Contracting </span>
+                                <span>Backend Developer Freelancer</span>
+                            </div>
+                            <div class="group2">
+                                <span>Feb 2022 - Present</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul id="dutyList">
+                    
+                    
+                </ul>
+            </div>
+        </template>
+        <template id="duties">
+            <li class="li2">
+                <span id="dutySpan"> : Software Contracting </span>
+            </li>
+        </template>
+        <template id="awardsTemplate">
+            <li>
+                <div class="group">
+                    <div class="group1">
+                        <span id="awardName">Software Contracting </span>
+                        <span id="awardFrom">Backend Developer Freelancer</span>
+                    </div>
+                    <div class="group2">
+                        <span id="awardDate">Feb 2022 - Present</span>
+                    </div>
+                </div>
+            </li>
+        </template>
+</body>
+
+
+</html>
