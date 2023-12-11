@@ -1,9 +1,7 @@
 $(document).ready(function () {
-  $("#jobTable tbody td iconify-icon").on("click", function () {
-    // Set the display property of the parent element with class message_cont to 'flex'
-    $(".message_cont").css("display", "flex");
-    // $("content").css("overflow-y", "hidden");
-  });
+  
+
+ 
 
   $(".close_msg").on("click", function () {
     // Set the display property of the parent element with class message_cont to 'none'
@@ -113,3 +111,43 @@ $(document).ready(function () {
     dataTable.draw();
   });
 });
+function showMessage(id)
+{
+  $.ajax({
+    type:"GET",
+    url:`/user/getMessage/${id}/`,
+    success:(data)=>{
+   
+      document.getElementById("chatContaner").innerHTML = ""
+      document.getElementById('roomToken').value = id
+      data.messages.forEach(message=>{
+        
+        
+        if(message.role == "JP")
+        {
+          let template = document.getElementById('providerReply')
+          var templateContent = template.content.cloneNode(true);
+
+          templateContent.querySelector('#content').textContent = message.content
+          templateContent.querySelector('#date').textContent = message.date
+
+          document.querySelector('#chatContaner').appendChild(templateContent)
+        }
+        else
+        {
+          let template = document.getElementById('seekerReply')
+          var templateContent = template.content.cloneNode(true);
+
+          templateContent.querySelector('#content').textContent = message.content
+          templateContent.querySelector('#date').textContent = message.date
+
+          document.querySelector('#chatContaner').appendChild(templateContent)
+        }
+        $(".message_cont").css("display", "flex");
+      })
+    },error:(err)=>{
+      console.log(err.responseText)
+    }
+  })
+  
+}

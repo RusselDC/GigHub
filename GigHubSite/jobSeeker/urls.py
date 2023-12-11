@@ -13,6 +13,8 @@ urlpatterns = [
     path('dashboard/',views.dashboard,name="dashboard"),
     path('job/',views.job,name="job"),
     path('searchResult/',views.searchResult,name="searchResult"),
-    path('employment/',views.addEmployment,name="employment")
+    path('employment/',views.addEmployment,name="employment"),
+    path('getMessage/<int:appID>/',views.getMessage,name="getMessage"),
+    path('sendMessage/',views.sendMessage,name="sendMessage")
 
 ]

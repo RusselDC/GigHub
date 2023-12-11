@@ -1,0 +1,106 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="website icon" type="png " href="{{ '/media/site/logo.png' }}" />
+    <title>Dashboard</title>
+
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"
+    ></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/275edc9f9d.js"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <script src="{% static 'js/template.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'css/template.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+
+    <script src="{% static 'js/providerdashboard.js' %}" defer></script>
+    <script src="{% static 'js/dashboard_chart.js' %}" defer></script>
+    <script>
+      let statuses = {{statuses|safe}}
+      console.log(statuses)
+    </script>
+    
+  </head>
+  <body>
+    {% include 'partials/navandside2.html' with user=user %}
+    <content class="p-4 pb-5">
+      <h3>Overview</h3>
+      <div class="d-flex statistics gap-3 justify-content-center mt-3">
+        <div
+          class="stat app w-50 px-3 py-3 shadow rounded-3 d-flex align-items-center"
+        >
+          <iconify-icon icon="icon-park-solid:click"></iconify-icon>
+          <div class="lh-sm">
+            <div class="count fw-bold">{{appsNo}}</div>
+            <div class="categ">Applications</div>
+          </div>
+        </div>
+        <div
+          class="stat act w-50 px-3 py-3 shadow rounded-3 d-flex align-items-center"
+        >
+          <iconify-icon icon="ant-design:eye-filled"></iconify-icon>
+          <div class="lh-sm">
+            <div class="count fw-bold">{{activePosting}}</div>
+            <div class="categ">Active Postings</div>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="col2 d-flex gap-3">
+        <div class="flex-grow-1">
+          <h3 class="mt-5 mb-3">Recent Activity</h3>
+          <div
+            class="container d-flex align-items-center justify-content-center activities_list px-3 shadow rounded-3"
+          >
+            <div class="hact w-100">
+              {% for act in acts %}
+              <div class="activity d-flex align-items-center gap-2">
+                <iconify-icon icon="icon-park-solid:click"></iconify-icon>
+                <div class="activity_notif">
+                  <span>{{act.content}}</span>
+                  
+                </div>
+              </div>
+              {% endfor %}
+              
+              
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="mt-5 mb-3">Application Overview</h3>
+          <div
+            class="container pie d-flex justify-content-center align-items-center p-3 shadow rounded-3"
+          >
+            <canvas id="application_overview"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="mt-5 mb-3">Application Overview</h3>
+      <div
+        class="container line d-flex justify-content-center p-3 shadow rounded-3"
+      >
+        <canvas id="jobPosting_overview"></canvas>
+      </div>
+    </content>
+  </body>
+</html>

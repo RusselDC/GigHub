@@ -16,4 +16,5 @@ urlpatterns = [
     path('accept/<int:applicantID>/',views.acceptApplication,name="acceptApplication"),
     path('hire/<int:applicantID>/',views.hireApplication,name="acceptApplication"),
     path('reject/<int:applicantID>/',views.rejectApplication,name="acceptApplication"),
+    path('dashboard/',views.dashboard,name="dashboard")
 ]

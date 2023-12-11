@@ -515,3 +515,35 @@ def rejectApplication(request,applicantID):
     activity.save()
 
     return JsonResponse({"status":True})
+
+
+def dashboard(request):
+    
+    profile = Profile.objects.get(userID=request.user)
+    acts = Activities.objects.filter(viewer=profile).order_by('-dateandtime')
+    applications = 0
+    activePostings = 0
+    pending = 0
+    review = 0
+    hired = 0
+    rejected = 0
+    companies = Company.objects.filter(employerID=profile)
+    for company in companies:
+        jobPosting = JobPostings.objects.filter(companyID=company)
+        
+        for job in jobPosting:
+            applications += len(JobApplication.objects.filter(jobID=job))
+            pending += len(JobApplication.objects.filter(jobID=job,applicationStatus="applied"))
+            review += len(JobApplication.objects.filter(jobID=job,applicationStatus="in_progress"))
+            hired += len(JobApplication.objects.filter(jobID=job,applicationStatus="hired"))
+            rejected += len(JobApplication.objects.filter(jobID=job,applicationStatus="rejected"))
+
+    for company in companies:
+        activePostings += len(JobPostings.objects.filter(companyID=company, isApproved=True))
+        
+
+    
+
+    template = "dashboardProvider.html"
+
+    return render(request, template, {'user':profile,'acts':acts,'appsNo':applications,'activePosting':activePostings,'statuses':{'pending':pending,'review':review,'hired':hired,'rejected':rejected}})

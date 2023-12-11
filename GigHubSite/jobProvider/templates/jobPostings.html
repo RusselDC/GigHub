@@ -28,17 +28,18 @@
             <div class="main">
                 <div class="title">Job Posts</div>
                 <div class="title1">
-                    <select name="" id="selectCompany">
-                        <option selected  value="">All</option>
-                        {% for company in companies %}
-                        <option value="{{company.id}}" data-value="{{company.name}}">{{company.name}}</option>
-                        {% endfor %}
-                        
-                    </select>
+                    
                     <div class="searchbar">
-                        <input type="text" placeholder="Search..">
+                        <input type="text" placeholder="Search.." style="display: none;">
                         <button class="mainButton" type="button"
                             onclick="ShowForm(document.getElementById('formContainer'))">Post</button>
+                            <select name="" id="selectCompany">
+                                <option selected  value="">All</option>
+                                {% for company in companies %}
+                                <option value="{{company.id}}" data-value="{{company.name}}" >{{company.name}}</option>
+                                {% endfor %}
+                                
+                            </select>
                     </div>
                 </div>
                 <div class="postContainer">
@@ -75,20 +76,13 @@
                                 </div>
                                 <div class="groupInfo">
                                     <span class="groupTitle">
-                                        Skill Needed:
+                                        Skills Needed:
                                     </span>
                                     <span class="groupContent">
                                         {{job.reqs}}
                                     </span>
                                 </div>
-                                <div class="groupInfo">
-                                    <span class="groupTitle">
-                                        Skill Needed:
-                                    </span>
-                                    <span class="groupContent">
-                                        {{job.reqs}}
-                                    </span>
-                                </div>
+                                
                                 <div class="groupInfo">
                                     <span class="groupTitle">
                                         Scope & Timeline:

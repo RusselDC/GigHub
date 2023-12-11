@@ -367,11 +367,11 @@
             <div class="companyDetails" id="companyDetails">
                 <div class="companyDetailsHeader">
                     <span class="formTitles active">Details</span>
-                    <span class="formTitles">Employees</span>
+                    <span class="formTitles" style="display: none;">Employees</span>
                     <span class="backButton" onclick="BackButton()">x</span>
                 </div>
                 <div class="companyDetailsBody">
-                    <section class="companyDetailsSection">
+                    <section class="companyDetailsSection active">
 
                         <form action="{% url 'jobProvider:editCompany' %}" method="POST" id="formEdit">
                             <div class="formGroup">

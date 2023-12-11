@@ -10,7 +10,7 @@
     <div class="tabs_list d-flex flex-column">
       <div
         class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'dashBoard'%}active{% endif %}"
-        onclick="window.location.href = `#`"
+        onclick="window.location.href = `{% url 'jobProvider:dashboard' %}`"
       >
         <iconify-icon icon="ic:round-dashboard"></iconify-icon>
         <span>Dashboard</span>

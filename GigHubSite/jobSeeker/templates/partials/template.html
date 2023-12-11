@@ -36,7 +36,8 @@
         <span>Job Postings</span>
       </div>
 
-      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
+      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2"
+        onclick="window.location.href = `{% url 'jobSeeker:searchResult' %}`">
         <i class="fa-solid fa-user-tie"></i>
         <span>Job Applications</span>
       </div>
@@ -55,7 +56,7 @@
     <iconify-icon icon="ci:hamburger-md" class="burger"></iconify-icon>
   </div>
   <div class="right d-flex align-items-center gap-2">
-    <iconify-icon icon="basil:notification-solid" class="notif"></iconify-icon>
+    
     <img
       src="{{ user.image.url }}"
       alt="my_profile"

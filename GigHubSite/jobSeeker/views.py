@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, JobApplication, EmploymentHistory, Room, Activities
+from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, JobApplication, EmploymentHistory, Room, Activities,Message
 from GigHub import utils
 from django.contrib.auth.models import User
 from datetime import date, datetime
@@ -15,7 +15,13 @@ def searchResult(request):
     template="searchResult.html"
     profile = Profile.objects.get(userID=request.user)
     if request.method == "GET":
-        return render(request, template,{'user':profile})
+
+
+        jobs = JobApplication.objects.filter(applicantID=profile)
+
+
+
+        return render(request, template,{'user':profile,'jobs':jobs})
     
 def profileSettings(request):
     template = 'userSettings.html'
@@ -367,4 +373,38 @@ def addEmployment(request):
     emp.save()
 
     return JsonResponse({'status':True,'message':'Employment history has been saved'})
+
+
+
+def getMessage(request, appID):
+    app = JobApplication.objects.get(id=appID)
+    room = Room.objects.get(jobApp=app)
+    messages = Message.objects.filter(message=room)
+
+
+    message_data_list = []
+    for message in messages:
+        message_data = {
+            'content':message.messageContent,
+            'sender':message.sender.image.url,
+            'role':message.sender.role,
+            'date':message.date.strftime("%B %d, %Y %I:%M %p")
+            
+        }
+
+        message_data_list.append(message_data)
+    return JsonResponse({'messages':message_data_list})
+
+
+def sendMessage(request):
+    profile = Profile.objects.get(userID=request.user)
+    room = Room.objects.get(id=request.POST['id'])
+
+    Message.objects.create(
+        message=room,
+        messageContent=request.POST['content'],
+        sender=profile,
+        senderRole = profile.role
+    )
+    return JsonResponse({'status':True})
 
