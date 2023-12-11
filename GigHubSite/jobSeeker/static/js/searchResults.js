@@ -1,4 +1,13 @@
 $(document).ready(function () {
+  $("#jobTable tbody td iconify-icon").on("click", function () {
+    // Set the display property of the parent element with class message_cont to 'flex'
+    $(".message_cont").css("display", "flex");
+  });
+
+  $(".close_msg").on("click", function () {
+    // Set the display property of the parent element with class message_cont to 'none'
+    $(this).closest(".message_cont").css("display", "none");
+  });
   $(".filter_clear").click(function () {
     $(".column_filter, .filter_clear").removeClass("selected");
     $("#status").val("");

@@ -291,3 +291,58 @@ tr td:nth-last-of-type(2) {
   color: var(--gray);
   cursor: pointer;
 }
+
+/* message modal */
+.message_cont {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  height: calc(100vh - 5rem);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
+  backdrop-filter: blur(10px);
+  display: none;
+}
+.msg {
+  background-color: var(--white);
+  width: 80%;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+}
+.user {
+  background-color: var(--topaz);
+  color: var(--black);
+  max-width: 50%;
+  width: fit-content !important;
+  border-radius: 0.5rem 0.5rem 0 0.5rem;
+}
+.provider {
+  background-color: var(--gainsboro);
+  color: var(--black);
+  width: fit-content !important;
+  max-width: 50%;
+  border-radius: 0.5rem 0.5rem 0.5rem 0;
+}
+.msg button {
+  color: var(--mango-tango) !important;
+  border: solid 3px var(--mango-tango);
+  padding: 0.25rem;
+  font-size: 1.5rem;
+  background-color: var(--isabelline);
+  border-radius: 50%;
+}
+.msg input {
+  outline: none;
+  background: none;
+  background-color: var(--isabelline);
+  border: none;
+}
+.close_msg {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: var(--white);
+}
