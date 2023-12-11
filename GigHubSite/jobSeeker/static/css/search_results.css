@@ -247,9 +247,6 @@ tr td:nth-last-of-type(2) {
   .dataTables_filter label input {
     flex-grow: 1;
   }
-  sidebar.collapsed ~ content .dataTables_info {
-    display: none;
-  }
   sidebar.collapsed ~ content .dataTables_info,
   .dataTables_paginate {
     position: static;
