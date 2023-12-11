@@ -24,14 +24,14 @@
       <div
         class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'job'%}active{% endif %}"
         onclick="window.location.href = `{% url 'jobSeeker:job'%}`">
-        <i class="fa-solid fa-user-tie"></i>
+        <iconify-icon icon="gg:feed"></iconify-icon>
         <span>Job Postings</span>
       </div>
 
       <div
         class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'searchResult'%}active{% endif %}"
         onclick="window.location.href = `{% url 'jobSeeker:searchResult'%}`">
-        <i class="fa-solid fa-user-tie"></i>
+        <iconify-icon icon="ph:read-cv-logo-fill"></iconify-icon>
         <span>Job Applications</span>
       </div>
     </div>
