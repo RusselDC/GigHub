@@ -59,54 +59,49 @@
                   <span class="links">Dashboard</span>
               </a>
           </li>
+         
           <li class="">
-              <a href="/Admin/Dashboard1.html">
-                  <iconify-icon icon="ic:round-dashboard"></iconify-icon>
-                  <span class="links">Dashboard Employer</span>
-              </a>
-          </li>
-          <li class="">
-              <a href="/Admin/Profile.html">
-                  <iconify-icon icon="iconamoon:profile-circle-fill"></iconify-icon>
-                  <span class="links">Profile</span>
-              </a>
-          </li>
-          <li class="">
-              <a href="{% url 'jobSeeker:userSettings' %}">
+              <a href="{% url 'jobProvider:settings' %}">
                   <iconify-icon icon="iconamoon:profile-circle-fill"></iconify-icon>
                   <span class="links">Profile Employer</span>
               </a>
           </li>
+          
           <li class="">
-              <a href="/Admin/Work.html">
-                  <iconify-icon icon="solar:case-bold"></iconify-icon>
-                  <span class="links">Work</span>
-              </a>
-          </li>
-          <li class="">
-              <a href="/Admin/Company.html">
+              <a href="{% url 'jobProvider:companies' %}">
                   <iconify-icon icon="mdi:company"></iconify-icon>
                   <span class="links">Company</span>
               </a>
           </li>
           <li class="">
-              <a href="/Admin/Job.html">
+              <a href="{% url 'jobProvider:jobPostings' %}">
                   <i class="fa-solid fa-user-tie"></i>
-                  <span class="links">Job</span>
+                  <span class="links">Job Postings</span>
               </a>
           </li>
-          <li class="">
-              <a href="/Admin/Job1.html">
-                  <i class="fa-solid fa-user-tie"></i>
-                  <span class="links">Job</span>
-              </a>
-          </li>
-          <li class="">
+          <li class="" onclick="logout()">
               <a href="#">
                   <iconify-icon icon="basil:logout-solid"></iconify-icon>
                   <span class="links">Logout</span>
               </a>
+              
           </li>
       </ul>
   </nav>
+  <script>
+    function logout()
+    {
+     Swal.fire({
+     text: "Are you sure?",
+     icon: "question",
+     showCancelButton: true,
+     confirmButtonText: "Yes",
+     }).then((result)=>{
+         if(result.isConfirmed)
+         {
+             window.location.href = "/logout/"
+         }
+     });
+    }
+  </script>
 </div>

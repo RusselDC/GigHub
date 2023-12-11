@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, JobApplication, EmploymentHistory, Room
+from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, JobApplication, EmploymentHistory, Room, Activities
 from GigHub import utils
 from django.contrib.auth.models import User
 from datetime import date, datetime
@@ -254,8 +254,19 @@ def dashboard(request):
     template ="dashboard.html"
     if request.method == "GET":
         profile=Profile.objects.get(userID=request.user)
+        acts = Activities.objects.filter(viewer=profile).order_by('-dateandtime')
+        apps = len(JobApplication.objects.filter(applicantID=profile))
+        pending = len(JobApplication.objects.filter(applicantID=profile,applicationStatus="applied"))
+        review = len(JobApplication.objects.filter(applicantID=profile,applicationStatus="in_progress"))
+        hired = len(JobApplication.objects.filter(applicantID=profile,applicationStatus="hired"))
+        rejected = len(JobApplication.objects.filter(applicantID=profile,applicationStatus="rejected"))
         
-        return render(request, template, {'user':profile,'pageName':'dashBoard'})
+
+
+        activeJobApps = len(JobPostings.objects.filter(isApproved=True))        
+
+        
+        return render(request, template, {'user':profile,'pageName':'dashBoard','acts':acts,'appsNO':apps,'activeJobApps':activeJobApps,'statuses':{'pending':pending,'review':review,'hired':hired,'rejected':rejected}})
     
     
     
@@ -306,8 +317,14 @@ def job(request):
         jobPost = JobPostings.objects.get(id=request.POST['id'])
 
         jobAppl = JobApplication.objects.create(applicantID=profile, jobID=jobPost)
-
         Room.objects.create(jobApp=jobAppl)
+        company_profiles = jobPost.companyID.employerID.all()
+        activity = Activities(
+        content=f"{profile.fName} {profile.lName} has sent an application on your {jobPost.jobTitle} : {jobPost.companyID.companyName} posting",
+        )
+        activity.save()
+        activity.viewer.set(company_profiles)
+        activity.save()
 
         return JsonResponse({'status':True,'message':'Application has been sent'})
 

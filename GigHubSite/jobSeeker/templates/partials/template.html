@@ -24,27 +24,21 @@
         <span>Profile</span>
       </div>
 
-      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
-        <iconify-icon icon="solar:case-bold"></iconify-icon>
-        <span>Work</span>
-      </div>
+      
 
-      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
-        <iconify-icon icon="solar:case-bold"></iconify-icon>
-        <span>Company</span>
-      </div>
+      
 
       <div
         class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'job'%}active{% endif %}"
         onclick="window.location.href = `{% url 'jobSeeker:job'%}`"
       >
         <i class="fa-solid fa-user-tie"></i>
-        <span>Job</span>
+        <span>Job Postings</span>
       </div>
 
       <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
         <i class="fa-solid fa-user-tie"></i>
-        <span>Job</span>
+        <span>Job Applications</span>
       </div>
     </div>
 

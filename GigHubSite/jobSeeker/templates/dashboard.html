@@ -31,6 +31,10 @@
 
     <script src="{% static 'js/dashboard.js' %}" defer></script>
     <script src="{% static 'js/dashboard_chart.js' %}" defer></script>
+    <script>
+      var statuses = {{statuses|safe}};
+      console.log(statuses)
+    </script>
   </head>
   <body>
     {% include 'partials/template.html' with user=user %}
@@ -38,41 +42,24 @@
       <h3>Overview</h3>
       <div class="d-flex statistics gap-3 justify-content-center mt-3">
         <div
-          class="stat app px-3 py-3 shadow rounded-3 d-flex align-items-center"
+          class="stat app w-50 px-3 py-3 shadow rounded-3 d-flex align-items-center"
         >
           <iconify-icon icon="icon-park-solid:click"></iconify-icon>
           <div class="lh-sm">
-            <div class="count fw-bold">120</div>
+            <div class="count fw-bold">{{appsNO}}</div>
             <div class="categ">Applications</div>
           </div>
         </div>
         <div
-          class="stat act px-3 py-3 shadow rounded-3 d-flex align-items-center"
+          class="stat act w-50 px-3 py-3 shadow rounded-3 d-flex align-items-center"
         >
           <iconify-icon icon="ant-design:eye-filled"></iconify-icon>
           <div class="lh-sm">
-            <div class="count fw-bold">120</div>
+            <div class="count fw-bold">{{activeJobApps}}</div>
             <div class="categ">Active Postings</div>
           </div>
         </div>
-        <div
-          class="stat pend px-3 py-3 shadow rounded-3 d-flex align-items-center"
-        >
-          <iconify-icon icon="ic:twotone-pending-actions"></iconify-icon>
-          <div class="lh-sm">
-            <div class="count fw-bold">120</div>
-            <div class="categ">Pending Approvals</div>
-          </div>
-        </div>
-        <div
-          class="stat exp px-3 py-3 shadow rounded-3 d-flex align-items-center"
-        >
-          <iconify-icon icon="ri:pass-expired-fill"></iconify-icon>
-          <div class="lh-sm">
-            <div class="count fw-bold">120</div>
-            <div class="categ">Expired Postings</div>
-          </div>
-        </div>
+        
       </div>
 
       <div class="col2 d-flex gap-3">
@@ -82,41 +69,17 @@
             class="container d-flex align-items-center justify-content-center activities_list px-3 shadow rounded-3"
           >
             <div class="hact w-100">
+              {% for act in acts %}
               <div class="activity d-flex align-items-center gap-2">
                 <iconify-icon icon="icon-park-solid:click"></iconify-icon>
                 <div class="activity_notif">
-                  <span> “Software Engineer”</span> posting is
-                  <span>Pending for Approval</span>
+                  <span>{{act.content}}</span>
+                  
                 </div>
               </div>
-              <div class="activity d-flex align-items-center gap-2">
-                <iconify-icon icon="icon-park-solid:click"></iconify-icon>
-                <div class="activity_notif">
-                  <span> “Programmer”</span> posting
-                  <span>Received an Application</span>
-                </div>
-              </div>
-              <div class="activity d-flex align-items-center gap-2">
-                <iconify-icon icon="icon-park-solid:click"></iconify-icon>
-                <div class="activity_notif">
-                  <span> “Graphic Designer”</span> posting has
-                  <span>Expired</span>
-                </div>
-              </div>
-              <div class="activity d-flex align-items-center gap-2">
-                <iconify-icon icon="icon-park-solid:click"></iconify-icon>
-                <div class="activity_notif">
-                  <span> “Programmer”</span> posting
-                  <span>Received an Application</span>
-                </div>
-              </div>
-              <div class="activity d-flex align-items-center gap-2">
-                <iconify-icon icon="icon-park-solid:click"></iconify-icon>
-                <div class="activity_notif">
-                  <span> “Graphic Designer”</span> posting has
-                  <span>Expired</span>
-                </div>
-              </div>
+              {% endfor %}
+              
+              
             </div>
           </div>
         </div>
@@ -131,7 +94,7 @@
         </div>
       </div>
 
-      <h3 class="mt-5 mb-3">Company A’s Job Posting Overview</h3>
+      <h3 class="mt-5 mb-3">Your Application Overview</h3>
       <div
         class="container line d-flex justify-content-center p-3 shadow rounded-3"
       >

@@ -15,11 +15,11 @@
     <script src="https://kit.fontawesome.com/275edc9f9d.js" crossorigin="anonymous" defer></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <script src="{% static 'js/template.js' %}" defer></script>
+    <script src="{% static 'js/all.js' %}" defer></script>
     <script src="{% static 'js/addressdropdown.js' %}" defer>!</script>
     <script src="{% static 'js/profile.js' %}" defer></script>
     <link rel="website icon" type="png " href="{{ '/media/site/logo.png' }}">
-    <link rel="stylesheet" href="{% static 'css/template.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <title>Profile</title>
     <script type="text/javascript">
@@ -44,7 +44,7 @@
         </script>
         {% endif %}
         
-        {% include 'partials/navandside2.html' with user=user pageName=pageName %}
+        {% include 'partials/navandside.html' with user=user pageName=pageName %}
        
         
         
@@ -53,8 +53,8 @@
             <div class="formContainer">
                 <div class="formHeader">
                     <span class="formTitles {% if pagePart == 1 %}active{% endif %}">Profile</span>
-                    <span class="formTitles">Education and Accomplishments</span>
-                    <span class="formTitles">Work Status</span>
+                    <span class="formTitles" style="display: none;">Education and Accomplishments</span>
+                    <span class="formTitles" style="display: none;">Work Status</span>
                     <span class="formTitles">Account Security</span>
                 </div>
                 <div class="formContents">
@@ -268,7 +268,7 @@
                             <button class="mainButton" type="button" onclick="ChangePassword(changePasswordForm)">Change
                                 Password</button>
                         </div>
-                    </form>Received
+                    </form>
                 </div>
             </div>
             <div class="profileView"></div>

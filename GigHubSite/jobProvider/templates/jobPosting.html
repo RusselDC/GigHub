@@ -63,7 +63,7 @@
                                     <iconify-icon icon="mdi:eye"
                                         onclick="ViewDetails(document.querySelector('#viewDetails'),{{app.id}})"></iconify-icon>
                                     {% if app.status == "Applied" %}
-                                    <iconify-icon icon="zondicons:exclamation-outline" 
+                                    <iconify-icon icon="zondicons:exclamation-outline"  id="onprogress"
                                         onclick="MoveOnApplicant(this,this.closest('tr').getAttribute('data-value'))"></iconify-icon>
                                     <iconify-icon icon="mingcute:check-fill" id="accept" style="display: none;"
                                         onclick="AcceptApplicant(this,this.closest('tr').getAttribute('data-value'))"></iconify-icon>
@@ -72,7 +72,7 @@
                                     {% elif app.status == "In Progress" %}
                                     <iconify-icon icon="zondicons:exclamation-outline" id="onprogress" style="display: none;"
                                         onclick="MoveOnApplicant(this,this.closest('tr').getAttribute('data-value'))"></iconify-icon>
-                                    <iconify-icon icon="mingcute:check-fill"
+                                    <iconify-icon icon="mingcute:check-fill"  id="accept"
                                         onclick="AcceptApplicant(this,this.closest('tr').getAttribute('data-value'))"></iconify-icon>
                                     <iconify-icon icon="octicon:x-12" id="rejectBtn"
                                         onclick="RejectApplicant(this,this.closest('tr').getAttribute('data-value'))"></iconify-icon>

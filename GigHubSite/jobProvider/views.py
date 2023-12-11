@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from GigHub.models import Profile, collegeTaken, Institution, Majors, Degrees, JobPostings, Awards, Certificates, Company, Industry, companyStaff, JobApplication, Skills, EmploymentHistory,Room,Message
+from GigHub.models import Profile, collegeTaken, Activities,Institution, Majors, Degrees, JobPostings, Awards, Certificates, Company, Industry, companyStaff, JobApplication, Skills, EmploymentHistory,Room,Message
 from GigHub import utils
 from django.contrib.auth.models import User
 from datetime import date, datetime
 from django.contrib.auth.hashers import check_password
-from django.db.models import Count
+from django.db import models
+from django.db.models import Count, Q
 # Create your views here.
 
 
@@ -330,6 +331,20 @@ def jobPostings(request):
                 
 
         jobPosting.save()
+        shared_skills = jobPosting.jobRequirements.all()
+
+        matching_profiles = Profile.objects.annotate(
+        shared_skills_count=Count('skills', filter=models.Q(skills__in=shared_skills))
+        ).filter(shared_skills_count__gte=3)
+
+        activity = Activities(
+            content=f"{jobPosting.companyID.companyName} posted job suited to your skills its titled {jobPosting.jobTitle}"
+        )
+        activity.save()
+        activity.viewer.set(matching_profiles)
+        activity.save()
+
+
 
         return redirect('jobProvider:jobPostings')
     
@@ -470,9 +485,11 @@ def acceptApplication(request,applicantID):
     app.applicationStatus = "in_progress"
     app.save()
 
-
-
-
+    activity = Activities(content=f"Your application in {app.jobID.companyID.companyName} : {app.jobID.jobTitle} has been accepted")
+    activity.save()
+    activity.viewer.add(app.applicantID)
+    activity.save()
+    
     return JsonResponse({"status":True})
 
 def hireApplication(request,applicantID):
@@ -480,6 +497,10 @@ def hireApplication(request,applicantID):
     app.applicationStatus = "hired"
     app.save()
 
+    activity = Activities(content=f"You are now hired in {app.jobID.companyID.companyName} : {app.jobID.jobTitle}")
+    activity.save()
+    activity.viewer.add(app.applicantID)
+    activity.save()
     
     return JsonResponse({"status":True})
 
@@ -487,4 +508,10 @@ def rejectApplication(request,applicantID):
     app = JobApplication.objects.get(id=applicantID)
     app.applicationStatus = "rejected"
     app.save()
+
+    activity = Activities(content=f"Your application in {app.jobID.companyID.companyName} : {app.jobID.jobTitle} has been rejected")
+    activity.save()
+    activity.viewer.add(app.applicantID)
+    activity.save()
+
     return JsonResponse({"status":True})

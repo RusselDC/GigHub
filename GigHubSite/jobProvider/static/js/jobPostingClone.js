@@ -14,6 +14,7 @@ function AcceptApplicant(id) {
             {
               btn.style = "display:none"
               let parentNode = btn.parentNode
+              parentNode.parentNode.querySelector('.statusTable').textContent = "Hired"
               let acceptElement = parentNode.querySelector("#rejectBtn");
               acceptElement.style = "display:''"
               Swal.fire({
@@ -51,6 +52,7 @@ function AcceptApplicant(id) {
               let parentNode = btn.parentNode
               let acceptElement = parentNode.querySelector("#accept");
               acceptElement.style = "display:''"
+              parentNode.parentNode.querySelector('.statusTable').textContent = "In Progress"
               Swal.fire({
                 text: "Applicant Accepted",
                 icon: "success",
@@ -66,7 +68,7 @@ function AcceptApplicant(id) {
     });
   }
   
-  function RejectApplicant(id) {
+  function RejectApplicant(btn,id) {
     Swal.fire({
       title: "Reject Applicant",
       icon: "warning",
@@ -80,13 +82,20 @@ function AcceptApplicant(id) {
           success:function(data){
             if(data.status)
             {
-              Swal.fire({
-                text: "Applicant Rejected",
-                icon: "success",
-                showConfirmButton: false,
-              });
-            }
-          },error:function(err){
+              btn.style = "display:none"
+              let parentNode = btn.parentNode
+              parentNode.parentNode.querySelector('.statusTable').textContent = "Rejected"
+              let acceptElement = parentNode.querySelector("#rejectBtn");
+                acceptElement.style = "display: none"
+                let progress = parentNode.querySelector("#onprogress");
+                progress.style = "display: none"
+                Swal.fire({
+                  text: "Applicant Rejected",
+                  icon: "success",
+                  showConfirmButton: false,
+                });
+              }
+            },error:function(err){
             console.log(err.responseText)
           }
         })

@@ -30,7 +30,7 @@
       var token = '{{csrf_token}}'
       var recommended = {{recommended|safe}};
       var topReco = {{topRecommended|safe}};
-      console.log(recommended)
+      
     </script>
   </head>
   <body>
@@ -40,10 +40,11 @@
       <label
         class="search_jobs d-flex align-items-center py-1 px-2 rounded-2 mb-3">
         <input
+          id="searchInput"
           type="text"
           class="pe-2"
-          placeholder="Search by Name, Location, Skills, etc.," />
-        <button class="d-flex align-items-center gap-1 rounded-2 px-2 py-1">
+          placeholder="Search by job title" />
+        <button class="d-flex align-items-center gap-1 rounded-2 px-2 py-1" onclick="searchJob(document.getElementById('searchInput').value)">
           <iconify-icon icon="mingcute:search-line"></iconify-icon>Search
         </button>
       </label>
@@ -65,7 +66,9 @@
     <template id="jobTemplate">
       <div
         id="jobContainer"
-        class="job_container d-flex justify-content-center align-items-center">
+        class="job_container justify-content-center align-items-center" style="display: flex;"
+        
+        >
         <div
           class="job lh-sm px-4 py-3 rounded-2 shadow-sm d-flex justify-content-between mb-3">
           <div class="job_main">
@@ -200,5 +203,21 @@
         },
       });
     }
+
+    function searchJob(val) {
+    let recommended = document.querySelector("#jobList");
+    let recommendeds = recommended.querySelectorAll("#jobContainer");
+
+    recommendeds.forEach(reco => {
+      
+      if(!reco.querySelector("#title").textContent.includes(val))
+      {
+        reco.style.display = "none";
+      }else{
+        reco.style.display = "flex";
+      }
+      
+    });
+  }
   </script>
 </html>

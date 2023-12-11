@@ -6,7 +6,7 @@ new Chart(ctx, {
     labels: ["Pending", "Accepted", "Reviewed", "Rejected"],
     datasets: [
       {
-        data: [42, 18, 37, 9],
+        data: [statuses.pending, statuses.hired, statuses.review, statuses.rejected],
         backgroundColor: ["#008080", "#2f88da", "#001f3f", "#b3b3dc"],
         borderWidth: 1,
       },
@@ -29,7 +29,7 @@ new Chart(jpo, {
     datasets: [
       {
         label: "Job Posting Overview",
-        data: [42, 18, 37, 9],
+        data: [statuses.pending, statuses.hired, statuses.review, statuses.rejected],
         backgroundColor: ["#008080", "#2f88da", "#001f3f", "#b3b3dc"],
         borderWidth: 5,
         tension: 0.5,
