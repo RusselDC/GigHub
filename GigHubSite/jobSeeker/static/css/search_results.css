@@ -306,6 +306,10 @@ tr td:nth-last-of-type(2) {
   backdrop-filter: blur(10px);
   display: none;
 }
+.chats{
+  height: 70vh;overflow-y: auto;
+  margin-bottom: 1rem;
+}
 .msg {
   background-color: var(--white);
   width: 80%;
