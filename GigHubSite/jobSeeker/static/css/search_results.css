@@ -358,3 +358,8 @@ content.expand .message_cont {
   right: 1rem;
   color: var(--white);
 }
+@media screen and (max-width: 800px) {
+  content.expand .message_cont {
+    width: 100vw;
+  }
+}
