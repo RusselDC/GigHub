@@ -1,6 +1,5 @@
 <sidebar
-  class="shadow d-flex flex-column align-items-center justify-content-between py-3 gap-3"
->
+  class="shadow d-flex flex-column align-items-center justify-content-between py-3 gap-3">
   <div class="logo">
     <img src="{{ '/media/site/logo.png' }}" alt="logo" />
     <img src="{{ '/media/site/logoText.png' }}" />
@@ -10,41 +9,36 @@
     <div class="tabs_list d-flex flex-column">
       <div
         class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'dashBoard'%}active{% endif %}"
-        onclick="window.location.href = `{% url 'jobSeeker:dashboard' %}`"
-      >
+        onclick="window.location.href = `{% url 'jobSeeker:dashboard' %}`">
         <iconify-icon icon="ic:round-dashboard"></iconify-icon>
         <span>Dashboard</span>
       </div>
 
       <div
         class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'profileSettings'%}active{% endif %}"
-        onclick="window.location.href = `{% url 'jobSeeker:userSettings'%}`"
-      >
+        onclick="window.location.href = `{% url 'jobSeeker:userSettings'%}`">
         <iconify-icon icon="iconamoon:profile-circle-fill"></iconify-icon>
         <span>Profile</span>
       </div>
 
-      
-
-      
-
       <div
         class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'job'%}active{% endif %}"
-        onclick="window.location.href = `{% url 'jobSeeker:job'%}`"
-      >
+        onclick="window.location.href = `{% url 'jobSeeker:job'%}`">
         <i class="fa-solid fa-user-tie"></i>
         <span>Job Postings</span>
       </div>
 
-      <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
+      <div
+        class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'searchResult'%}active{% endif %}"
+        onclick="window.location.href = `{% url 'jobSeeker:searchResult'%}`">
         <i class="fa-solid fa-user-tie"></i>
         <span>Job Applications</span>
       </div>
     </div>
 
-    <div onclick="logout()"
-      class="logout tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2"
-    >
+    <div
+      onclick="logout()"
+      class="logout tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2">
       <iconify-icon icon="basil:logout-solid"></iconify-icon>
       <span>Logout</span>
     </div>
@@ -59,8 +53,7 @@
     <img
       src="{{ user.image.url }}"
       alt="my_profile"
-      class="rounded-circle shadow-sm"
-    />
+      class="rounded-circle shadow-sm" />
     <div class="greetings fw-bold lh-sm">
       Good Day!
       <br />
@@ -69,18 +62,16 @@
   </div>
 </header>
 <script>
-  function logout()
-  {
-   Swal.fire({
-   text: "Are you sure?",
-   icon: "question",
-   showCancelButton: true,
-   confirmButtonText: "Yes",
-   }).then((result)=>{
-       if(result.isConfirmed)
-       {
-           window.location.href = "/logout/"
-       }
-   });
+  function logout() {
+    Swal.fire({
+      text: "Are you sure?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/logout/";
+      }
+    });
   }
 </script>

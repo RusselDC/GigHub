@@ -15,7 +15,7 @@ def searchResult(request):
     template="searchResult.html"
     profile = Profile.objects.get(userID=request.user)
     if request.method == "GET":
-        return render(request, template,{'user':profile})
+        return render(request, template,{'user':profile, 'pageName': 'searchResult'})
     
 def profileSettings(request):
     template = 'userSettings.html'
