@@ -310,6 +310,7 @@ def jobPostings(request):
         scale = request.POST['projectScale']
         timeline = request.POST['projectTimeline']
         skills = request.POST.getlist('skills[]')
+        
         desc = request.POST['description']
         
 
@@ -326,7 +327,7 @@ def jobPostings(request):
             skl, cre = Skills.objects.get_or_create(name__iexact=skill)
             jobPosting.jobRequirements.add(skl)
             if cre or not skl.name:
-                skl.name = skills
+                skl.name = skill
                 skl.save()
                 
 

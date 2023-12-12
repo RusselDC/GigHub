@@ -45,6 +45,7 @@ def profileSettings(request):
 
         for employment in employment_queryset:
             employment_data = {
+                'id':employment.id,
                 'name':employment.companyName,
                 'position':employment.position,
                 'start':employment.date_started.strftime('%B %Y'),
@@ -60,6 +61,7 @@ def profileSettings(request):
             majors = [major.name for major in college.major.all()]
 
             college_data = {
+                'id':college.id,
                 'institutions': institutions,
                 'degrees': degrees,
                 'majors': majors,
@@ -133,6 +135,7 @@ def profileSettings(request):
 
         for employment in employment_queryset:
             employment_data = {
+                'id':employment.id,
                 'name':employment.companyName,
                 'position':employment.position,
                 'start':employment.date_started.strftime('%B %Y'),
@@ -151,6 +154,7 @@ def profileSettings(request):
             
 
             college_data = {
+                'id':college.id,
                 'institutions': institutions,
                 'degrees': degrees,
                 'majors': majors,
@@ -282,18 +286,40 @@ def job(request):
         profile=Profile.objects.get(userID=request.user)
         user_skills = Profile.objects.get(userID=request.user).skills.all()
         user_application = JobApplication.objects.filter(applicantID=profile)
-        recommended = JobPostings.objects.filter(isApproved=True).exclude(Q(id__in=user_application.values('jobID'))).distinct()
         topRecommended = JobPostings.objects.filter(jobRequirements__in=user_skills,isApproved=True).exclude(Q(id__in=user_application.values('jobID'))).annotate(common_skills_count=Count('jobRequirements'))\
         .filter(common_skills_count__gte=3)\
         .distinct()[:3]
+
+        
+        recommended = JobPostings.objects.filter(isApproved=True)\
+        .exclude(Q(id__in=user_application.values('jobID')))\
+        .exclude(id__in=topRecommended.values('id'))\
+        .distinct()
+        
+        
+
+        
         recommended_data_all = []
         topRecommended_data_all = []
 
-        for reco in recommended:
-            
-            skills = [skills.name for skills in reco.jobRequirements.all()]
-            
 
+        for topReco in topRecommended:
+            skills = [skills.name for skills in topReco.jobRequirements.all()]
+
+            topReco_data = {
+                'id': topReco.id,
+                'company' : topReco.companyID.companyName,
+                'title' : topReco.jobTitle,
+                'desc' : topReco.jobDescription,
+                'requirements' : skills
+            }
+
+            topRecommended_data_all.append(topReco_data)
+        
+        
+        
+        for reco in recommended:
+            skills = [skills.name for skills in reco.jobRequirements.all()]
             recommended_data = {
                 'id': reco.id,
                 'company' : reco.companyID.companyName,
@@ -303,18 +329,7 @@ def job(request):
             }
             recommended_data_all.append(recommended_data)
 
-        for topReco in topRecommended:
-            skills = [skills.name for skills in reco.jobRequirements.all()]
-
-            topReco_data = {
-                'id': reco.id,
-                'company' : topReco.companyID.companyName,
-                'title' : topReco.jobTitle,
-                'desc' : topReco.jobDescription,
-                'requirements' : skills
-            }
-
-            topRecommended_data_all.append(topReco_data)
+        
 
         return render(request, template, {'user':profile,'pageName':'job','recommended':recommended_data_all,'topRecommended':topRecommended_data_all})
     else:
@@ -407,4 +422,17 @@ def sendMessage(request):
         senderRole = profile.role
     )
     return JsonResponse({'status':True})
+
+def deleteEducation(request,educID):
+    college = collegeTaken.objects.filter(id=educID)
+    if college is not None:
+        college.delete()
+    return JsonResponse({'status':True})
+
+def deleteWork(request,workID):
+    work = EmploymentHistory.objects.filter(id=workID)
+    if work is not None:
+        work.delete()
+    return JsonResponse({'status':True})
+
 

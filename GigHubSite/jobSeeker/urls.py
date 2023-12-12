@@ -15,6 +15,8 @@ urlpatterns = [
     path('searchResult/',views.searchResult,name="searchResult"),
     path('employment/',views.addEmployment,name="employment"),
     path('getMessage/<int:appID>/',views.getMessage,name="getMessage"),
-    path('sendMessage/',views.sendMessage,name="sendMessage")
+    path('sendMessage/',views.sendMessage,name="sendMessage"),
+    path('deleteEducation/<int:educID>/',views.deleteEducation,name="deleteEducation"),
+    path('deleteWork/<int:workID>/',views.deleteWork,name="deleteWork")
 
 ]

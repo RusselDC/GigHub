@@ -17,36 +17,7 @@ function Listeners() {
     });
   });
 
-  function populateOnce1(title, from, year, container) {
-    var template = document.getElementById("awardTemplate");
-    var templateContent = template.content.cloneNode(true);
-
-    templateContent.querySelector("#awardTitle").textContent = title;
-    templateContent.querySelector("#awardDates").textContent = year;
-    templateContent.querySelector("#awardLocation").textContent = from;
-
-    document.getElementById(container).appendChild(templateContent);
-  }
-
-  function populateOnce(data) {
-    // Clone the template content
-    var template = document.getElementById("educationalAttainmentTemplate");
-    var templateContent = template.content.cloneNode(true);
-
-    // Populate the cloned template with data
-    templateContent.querySelector("#schoolEd").textContent = data[0];
-    templateContent.querySelector("#awardEd").textContent = data[4];
-    templateContent.querySelector("#courseEd").textContent = data[1];
-    templateContent.querySelector("#majorEd").textContent = data[2];
-    templateContent.querySelector("#dateEd").textContent =
-      "Class of " + data[3];
-
-    // Append the populated template to the container
-    document
-      .getElementById("educationalAttainmentContainer")
-      .appendChild(templateContent);
-  }
-
+  
   
 
   awardsData.forEach((element) => {
@@ -73,6 +44,8 @@ function Listeners() {
     templateContent.querySelector("#majorEd").textContent = element.majors[0];
     templateContent.querySelector("#dateEd").textContent =
       "Class of " + element.yearGraduated;
+
+      templateContent.querySelector("#deleteBtn").setAttribute('data-id',element.id)
 
     // Append the populated template to the container
     document
@@ -723,6 +696,7 @@ function DeleteAward(element) {
   awardContainer.parentNode.removeChild(awardContainer);
 }
 function DeleteEducation(element) {
+  
   Swal.fire({
     title: "Delete ?",
     text: "You won't be able to revert this",
@@ -731,15 +705,71 @@ function DeleteEducation(element) {
     confirmButtonText: "Confirm",
   }).then((result) => {
     if (result.isConfirmed) {
-      Swal.fire({
-        text: "Deleted",
-        icon: "success",
-        showConfirmButton: false,
-      }).then(() => {
-        const parent1 = element.parentNode;
-        const parent2 = parent1.parentNode;
-        parent2.remove();
-      });
+
+      $.ajax({
+        type:'GET',
+        url:`/user/deleteEducation/${element.getAttribute('data-id')}`,
+        success:function(data)
+        {
+          if(data.status)
+          {
+            Swal.fire({
+              text: "Deleted",
+              icon: "success",
+              showConfirmButton: false,
+            }).then(() => {
+              const parent1 = element.parentNode;
+              const parent2 = parent1.parentNode;
+              parent2.remove();
+            });  
+          }
+                  
+        },
+        error:function(err)
+        {
+          console.log(err.responseText)
+        }
+      })
+      
+    }
+  });
+}
+function DeleteWork(element) {
+  
+  Swal.fire({
+    title: "Delete ?",
+    text: "You won't be able to revert this",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Confirm",
+  }).then((result) => {
+    if (result.isConfirmed) {
+
+      $.ajax({
+        type:'GET',
+        url:`/user/deleteWork/${element.getAttribute('data-id')}`,
+        success:function(data)
+        {
+          if(data.status)
+          {
+            Swal.fire({
+              text: "Deleted",
+              icon: "success",
+              showConfirmButton: false,
+            }).then(() => {
+              const parent1 = element.parentNode;
+              const parent2 = parent1.parentNode;
+              parent2.remove();
+            });  
+          }
+                  
+        },
+        error:function(err)
+        {
+          console.log(err.responseText)
+        }
+      })
+      
     }
   });
 }
