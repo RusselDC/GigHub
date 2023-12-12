@@ -506,7 +506,10 @@ def register_moreInfo(request):
         profile.verificationLevel = 4
         profile.save()
         
-        return redirect('jobSeeker:userSettings')
+        if profile.role == "JS":
+            return redirect('jobSeeker:userSettings')
+        else:
+            return redirect('jobProvier:settings')
 
 
 def privacy_policy(request):
