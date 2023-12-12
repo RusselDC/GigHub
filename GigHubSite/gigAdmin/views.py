@@ -46,7 +46,7 @@ def disableProvider(request, personID):
 def enableProvider(request, personID):
     user = Profile.objects.get(id=personID)
 
-    user.is_active = False
+    user.is_active = True
     user.save()
 
     return redirect('gigAdmin:jobProviders')
