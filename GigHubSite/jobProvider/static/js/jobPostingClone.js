@@ -1,4 +1,4 @@
-function AcceptApplicant(id) {
+function AcceptApplicant(btn,id) {
   Swal.fire({
     title: "Hire Applicant",
     icon: "warning",
