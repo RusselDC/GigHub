@@ -6,29 +6,29 @@
     <img src="{{ '/media/site/logoText.png' }}" />
   </div>
 
-  <div class="d-flex flex-column flex-grow-1 justify-content-between">
+  <div class="d-flex flex-column flex-grow-1 w-100 px-5 justify-content-between">
     <div class="tabs_list d-flex flex-column">
       <div
-        class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'dashBoard'%}active{% endif %}"
+        class="tabs d-flex align-items-center gap-1 px-3 py-1 w-100 rounded-2 {% if pageName == 'dashBoard'%}active{% endif %}"
         onclick="window.location.href = `{% url 'jobProvider:dashboard' %}`"
       >
-        <iconify-icon icon="ic:round-dashboard"></iconify-icon>
-        <span>Dashboard</span>
+        <iconify-icon icon="ic:round-dashboard" style="font-size: 40px; margin-right: 10px;"></iconify-icon>
+        <span style="font-size: 20px;">Dashboard</span>
       </div>
 
       <div
         class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'profileSettings'%}active{% endif %}"
         onclick="window.location.href = `{% url 'jobProvider:settings'%}`"
       >
-        <iconify-icon icon="iconamoon:profile-circle-fill"></iconify-icon>
-        <span>Profile</span>
+        <iconify-icon icon="iconamoon:profile-circle-fill" style="font-size: 40px; margin-right: 10px;"></iconify-icon>
+        <span style="font-size: 20px;">Profile</span>
       </div>
 
       
 
       <div class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2"
         onclick="window.location.href = `{% url 'jobProvider:companies' %}`">
-        <iconify-icon icon="solar:case-bold"></iconify-icon>
+        <iconify-icon icon="solar:case-bold" style="font-size: 40px; margin-right: 10px;"></iconify-icon>
         <span>Company</span>
       </div>
 
@@ -36,8 +36,8 @@
         class="tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2 {% if pageName == 'job'%}active{% endif %}"
         onclick="window.location.href = `{% url 'jobProvider:jobPostings'%}`"
       >
-        <i class="fa-solid fa-user-tie"></i>
-        <span>Job</span>
+        <i class="fa-solid fa-user-tie" style="font-size: 40px; margin-right: 10px;"></i>
+        <span style="font-size: 20px;">Job</span>
       </div>
 
     </div>
@@ -45,8 +45,8 @@
     <div onclick="logout()"
       class="logout tabs d-flex align-items-center gap-1 px-3 py-1 rounded-2"
     >
-      <iconify-icon icon="basil:logout-solid"></iconify-icon>
-      <span>Logout</span>
+      <iconify-icon icon="basil:logout-solid" style="font-size: 40px; margin-right: 10px;"></iconify-icon>
+      <span style="font-size: 20px;">Logout</span>
     </div>
   </div>
 </sidebar>
@@ -55,12 +55,15 @@
     <iconify-icon icon="ci:hamburger-md" class="burger"></iconify-icon>
   </div>
   <div class="right d-flex align-items-center gap-2">
-    <iconify-icon icon="basil:notification-solid" class="notif"></iconify-icon>
-    <img
+    
+    <div id="shadow" style="height: auto; width: auto;">
+      <img
       src="{{ user.image.url }}"
       alt="my_profile"
       class="rounded-circle shadow-sm"
-    />
+      style="height: 80px;width: 80px;"
+    /></div>
+    
     <div class="greetings fw-bold lh-sm">
       Good Day!
       <br />
